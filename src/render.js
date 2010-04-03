@@ -1,14 +1,16 @@
 var Render = {}
 
+// ----------------------------------------------------------------------------
+
 Render.Line =
 function Line (left, top, right, bottom, width)
 {
   this.elem   = this.setupElem()
-  this.left   = left   || 0
-  this.top    = top    || 0
-  this.right  = right  || 0
-  this.bottom = bottom || 0
-  this.width  = width  || 10
+  property(this, "left",   left   || 0, this.render)
+  property(this, "top",    top    || 0, this.render)
+  property(this, "right",  right  || 0, this.render)
+  property(this, "bottom", bottom || 0, this.render)
+  property(this, "width",  width  || 5, this.render)
 }
 
 Render.Line.prototype.setupElem =
@@ -34,14 +36,17 @@ function render ()
   this.elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
 }
 
+// ----------------------------------------------------------------------------
+
 Render.Rect =
 function Rect (left, top, right, bottom)
 {
   this.elem   = this.setupElem()
-  this.left   = left   || 0
-  this.top    = top    || 0
-  this.right  = right  || 0
-  this.bottom = bottom || 0
+
+  property(this, "left",   left   || 0, this.render)
+  property(this, "top",    top    || 0, this.render)
+  property(this, "right",  right  || 0, this.render)
+  property(this, "bottom", bottom || 0, this.render)
 }
 
 Render.Rect.prototype.setupElem =
