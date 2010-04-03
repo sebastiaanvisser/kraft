@@ -67,3 +67,42 @@ function render ()
   this.elem.style.height = (this.bottom - this.top) + "px"
 }
 
+// ----------------------------------------------------------------------------
+
+Render.Ellipse =
+function Ellipse (left, top, right, bottom)
+{
+  this.elem   = this.setupElem()
+
+  property(this, "left",   left   || 0, this.render)
+  property(this, "top",    top    || 0, this.render)
+  property(this, "right",  right  || 0, this.render)
+  property(this, "bottom", bottom || 0, this.render)
+}
+
+Render.Ellipse.prototype.setupElem =
+function setupElem ()
+{
+  var elem = document.createElement("div")
+  elem.setAttribute("class", "rect")
+  elem.style.position = "absolute"
+  return elem
+}
+
+Render.Ellipse.prototype.render =
+function render ()
+{
+  var w = this.right  - this.left;
+  var h = this.bottom - this.top;
+
+  this.elem.style.left   = this.left + "px"
+  this.elem.style.top    = this.top  + "px"
+  this.elem.style.width  = w         + "px"
+  this.elem.style.height = h         + "px"
+
+  this.elem.style.borderTopLeftRadius     =
+  this.elem.style.borderTopRightRadius    =
+  this.elem.style.borderBottomLeftRadius  =
+  this.elem.style.borderBottomRightRadius = w/2 + "px " + h/2 + "px "
+}
+
