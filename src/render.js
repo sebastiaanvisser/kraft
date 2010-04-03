@@ -34,3 +34,31 @@ function render ()
   this.elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
 }
 
+Render.Rect =
+function Rect (left, top, right, bottom)
+{
+  this.elem   = this.setupElem()
+  this.left   = left   || 0
+  this.top    = top    || 0
+  this.right  = right  || 0
+  this.bottom = bottom || 0
+}
+
+Render.Rect.prototype.setupElem =
+function setupElem ()
+{
+  var elem = document.createElement("div")
+  elem.setAttribute("class", "rect")
+  elem.style.position = "absolute"
+  return elem
+}
+
+Render.Rect.prototype.render =
+function render ()
+{
+  this.elem.style.left   = this.left                + "px"
+  this.elem.style.top    = this.top                 + "px"
+  this.elem.style.width  = (this.right - this.left) + "px"
+  this.elem.style.height = (this.bottom - this.top) + "px"
+}
+

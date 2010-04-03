@@ -1,3 +1,9 @@
+Rendering:
+  - points
+  - lines
+  - rectangles
+  - circles/ellipses
+  - triangles
 
 Grid:
   - snapping
