@@ -1,4 +1,21 @@
-body
+html, body
 {
-  background: #eee;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
+
+#canvas
+{
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+
+  x-webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  background: #bbb url("grid.png");
+  overflow: hidden;
+}
+
