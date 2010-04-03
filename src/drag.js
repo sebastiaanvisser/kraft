@@ -1,20 +1,20 @@
-function Draggable (container, target, pivot, lockX, lockY, callback)
+function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
 {
+  // Dragging elements.
   this.container = container
   this.target    = target
   this.pivot     = pivot
 
-  this.lockX = false
-  this.lockY = false
+  // Locking and snappig constraints.
+  this.lockX = lockX || false
+  this.lockY = lockY || false
+  this.snapX = snapX || 1
+  this.snapY = snapY || 1
 
-  this.snapX  = 1
-  this.snapY  = 1
-  // this.snapDX = 6
-  // this.snapDY = 6
-
+  // Set target cursor based on drag direction.
   this.pivot.style.cursor = "move"
-  // this.target.__shape.cursor = "ew-resize"
-  // this.target.__shape.cursor = "ns-resize"
+  if (this.lockX) this.pivot.style.cursor = "ns-resize"
+  if (this.lockY) this.pivot.style.cursor = "ew-resize"
 
   // State, private.
   this.dragging      = false
@@ -27,8 +27,12 @@ function Draggable (container, target, pivot, lockX, lockY, callback)
   ( function start (e)
     {
       me.dragging = true
-      me.dragOrigin   = { x : e.clientX,            y : e.clientY           }
-      me.targetOrigin = { x : me.target.offsetLeft, y : me.target.offsetTop }
+      me.dragOrigin   = { x : e.clientX
+                        , y : e.clientY
+                        }
+      me.targetOrigin = { left  : me.target.left,  top    : me.target.top
+                        , right : me.target.right, bottom : me.target.bottom
+                        }
       return false
     }
   )
@@ -45,12 +49,19 @@ function Draggable (container, target, pivot, lockX, lockY, callback)
   ( function drag (e)
     {
       if (!me.dragging) return true
+
       var dx = e.clientX - me.dragOrigin.x
       var dy = e.clientY - me.dragOrigin.y
-      var px = me.targetOrigin.x + dx,
-      var py = me.targetOrigin.y + dy
-      if (!me.lockX) me.target.style.left = (Math.round(px / me.snapX) * me.snapX) + "px"
-      if (!me.lockY) me.target.style.top  = (Math.round(py / me.snapY) * me.snapY) + "px"
+
+      var left   = me.targetOrigin.left   + dx
+      var right  = me.targetOrigin.right  + dx
+      var top    = me.targetOrigin.top    + dy
+      var bottom = me.targetOrigin.bottom + dy
+
+      if (!me.lockX) { me.target.left   = Math.round(left   / me.snapX) * me.snapX
+                       me.target.right  = Math.round(right  / me.snapX) * me.snapX }
+      if (!me.lockY) { me.target.top    = Math.round(top    / me.snapY) * me.snapY
+                       me.target.bottom = Math.round(bottom / me.snapY) * me.snapY }
     }
   )
 
