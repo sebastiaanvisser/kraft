@@ -1,3 +1,9 @@
+Grouping:
+  - cropping
+  - intersect
+  - union
+  - subtract
+
 Rendering:
   - points
   - lines
