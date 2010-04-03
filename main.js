@@ -20,6 +20,6 @@ var l = new Render.Line(100, 50, 200, 300, 10)
 new Draggable(canvas, l, l.elem, false, false, 50, 50)
 render(canvas, l, "#000")
 
-render(canvas, l.handleA, "blue")
+// render(canvas, l.handleA, "blue")
 // render(canvas, l.handleB, "blue")
 

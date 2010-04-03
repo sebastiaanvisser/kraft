@@ -6,14 +6,16 @@ Render.Line =
 function Line (left, top, right, bottom, width)
 {
   this.elem   = this.setupElem()
-  property(this, "left",   left   || 0, effect(this.render))
-  property(this, "top",    top    || 0, effect(this.render))
-  property(this, "right",  right  || 0, effect(this.render))
-  property(this, "bottom", bottom || 0, effect(this.render))
-  property(this, "width",  width  || 5, effect(this.render))
+  this.property("left",   left   || 0, Base.effect(this.render))
+  this.property("top",    top    || 0, Base.effect(this.render))
+  this.property("right",  right  || 0, Base.effect(this.render))
+  this.property("bottom", bottom || 0, Base.effect(this.render))
+  this.property("width",  width  || 5, Base.effect(this.render))
 
   this.createHandles()
 }
+
+Render.Line.prototype = new Base
 
 Render.Line.prototype.setupElem =
 function setupElem ()
@@ -22,6 +24,13 @@ function setupElem ()
   elem.setAttribute("class", "line")
   elem.style.position = "absolute"
   return elem
+}
+
+Render.Line.prototype.createHandles =
+function createHandles ()
+{
+  // this.handleA = new Render.Ellipse(10, 10, 30, 30)
+  // mkConstraint(this, "left", this.handleA, "left", C.eq, C.eq)
 }
 
 Render.Line.prototype.render =
@@ -45,11 +54,13 @@ function Rect (left, top, right, bottom)
 {
   this.elem   = this.setupElem()
 
-  property(this, "left",   left   || 0, effect(this.render))
-  property(this, "top",    top    || 0, effect(this.render))
-  property(this, "right",  right  || 0, effect(this.render))
-  property(this, "bottom", bottom || 0, effect(this.render))
+  this.property("left",   left   || 0, Base.effect(this.render))
+  this.property("top",    top    || 0, Base.effect(this.render))
+  this.property("right",  right  || 0, Base.effect(this.render))
+  this.property("bottom", bottom || 0, Base.effect(this.render))
 }
+
+Render.Rect.prototype = new Base
 
 Render.Rect.prototype.setupElem =
 function setupElem ()
@@ -76,11 +87,13 @@ function Ellipse (left, top, right, bottom)
 {
   this.elem   = this.setupElem()
 
-  property(this, "left",   left   || 0, effect(this.render))
-  property(this, "top",    top    || 0, effect(this.render))
-  property(this, "right",  right  || 0, effect(this.render))
-  property(this, "bottom", bottom || 0, effect(this.render))
+  this.property("left",   left   || 0, Base.effect(this.render))
+  this.property("top",    top    || 0, Base.effect(this.render))
+  this.property("right",  right  || 0, Base.effect(this.render))
+  this.property("bottom", bottom || 0, Base.effect(this.render))
 }
+
+Render.Ellipse.prototype = new Base
 
 Render.Ellipse.prototype.setupElem =
 function setupElem ()
