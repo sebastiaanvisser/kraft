@@ -1,0 +1,15 @@
+
+Grid:
+  - snapping
+  - guides
+  - ruler
+  - customizable
+
+Layers.
+
+Dragging:
+  - horizontally
+  - vertically
+  - fixed angle
+  - radial
+
