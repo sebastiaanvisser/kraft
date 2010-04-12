@@ -17,9 +17,9 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
   if (this.lockY) this.pivot.style.cursor = "ew-resize"
 
   // State, private.
-  this.dragging      = false
-  this.dragOrigin    = {}
-  this.targetOrigin  = {}
+  this.dragging     = false
+  this.dragOrigin   = {}
+  this.targetOrigin = {}
 
   var me = this
 
@@ -27,12 +27,8 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
   ( function start (e)
     {
       me.dragging = true
-      me.dragOrigin   = { x : e.clientX
-                        , y : e.clientY
-                        }
-      me.targetOrigin = { left  : me.target.left,  top    : me.target.top
-                        , right : me.target.right, bottom : me.target.bottom
-                        }
+      me.dragOrigin   = { x : e.clientX,      y : e.clientY     }
+      me.targetOrigin = { x : me.target.left, y : me.target.top }
       return false
     }
   )
@@ -52,16 +48,11 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
 
       var dx = e.clientX - me.dragOrigin.x
       var dy = e.clientY - me.dragOrigin.y
+      var x  = me.targetOrigin.x + dx
+      var y  = me.targetOrigin.y + dy
 
-      var left   = me.targetOrigin.left   + dx
-      var right  = me.targetOrigin.right  + dx
-      var top    = me.targetOrigin.top    + dy
-      var bottom = me.targetOrigin.bottom + dy
-
-      if (!me.lockX) { me.target.left   = Math.round(left   / me.snapX) * me.snapX
-                       me.target.right  = Math.round(right  / me.snapX) * me.snapX }
-      if (!me.lockY) { me.target.top    = Math.round(top    / me.snapY) * me.snapY
-                       me.target.bottom = Math.round(bottom / me.snapY) * me.snapY }
+      if (!me.lockX) me.target.left = Math.round(x / me.snapX) * me.snapX
+      if (!me.lockY) me.target.top  = Math.round(y / me.snapY) * me.snapY
     }
   )
 
