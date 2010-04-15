@@ -56,15 +56,36 @@ function render ()
 
 // ----------------------------------------------------------------------------
 
+Point =
+function Point (x, y)
+{
+  this.baseInit()
+
+  this.property("x", x || 0)
+  this.property("y", y || 0)
+}
+
+Point.prototype = new Base
+
+Point.mid = 
+function mid (c, a, b)
+{
+  C.mid(c.x, a.x, b.x)
+  C.mid(c.y, a.y, b.y)
+}
+
 Render.Rect =
 function Rect (x0, y0, x1, y1)
 {
+  this.baseInit()
+  this.onchange(this.render)
+
   this.elem = this.setupElem()
 
-  this.property("x0", x0 || 0, this.render)
-  this.property("y0", y0 || 0, this.render)
-  this.property("x1", x1 || 0, this.render)
-  this.property("y1", y1 || 0, this.render)
+  this.p0 = new Point(x0, y0)
+  this.p1 = new Point(x1, y1)
+
+  this.center = new Point()
 
   this.property("width")
   this.property("height")
@@ -73,45 +94,64 @@ function Rect (x0, y0, x1, y1)
   this.property("top")
   this.property("bottom")
 
-  compose( this.width,  function (s) { return s.x1.get() - s.x0.get()      }
-         , this.x0,     function (s) { return s.x0.get()                   }
-         , this.x1,     function (s) { return s.x0.get() + s.width.get()   })              
-  compose( this.left,   function (s) { return s.x0.get()                   }
-         , this.x1,     function (s) { return s.left.get() + s.width.get() }
-         , this.x0,     function (s) { return s.left.get()                 })
-  compose( this.height, function (s) { return s.y1.get() - s.y0.get()      }
-         , this.y0,     function (s) { return s.y0.get()                   }
-         , this.y1,     function (s) { return s.y0.get() + s.height.get()  })
-  compose( this.top,    function (s) { return s.y0.get()                   }
-         , this.y1,     function (s) { return s.top.get() + s.height.get() }
-         , this.y0,     function (s) { return s.top.get()                  })
+  C.sub0 (this.width,   this.p1.x, this.p0.x)
+  C.sub0 (this.height,  this.p1.y, this.p0.y)
+  C.min0 (this.left,    this.p0.x, this.p1.x)
+  C.min0 (this.top,     this.p0.y, this.p1.y)
+  C.max0 (this.right,   this.p0.x, this.p1.x)
+  C.max0 (this.bottom,  this.p0.y, this.p1.y)
 
-
-/*
-  compose( this, "right", function (r, x0, x1) { return x1          }
-         , this, "x0",    function (r, x0, x1) { return r - x1 + x0 }
-         , this, "x1",    function (r, x0, x1) { return r           }
-         )
-
-  compose( this, "height", function (h, y0, y1) { return y1 - y0 }
-         , this, "y0",     function (h, y0, y1) { return y0      }
-         , this, "y1",     function (h, y0, y1) { return y0 + h  }
-         )
-
-  compose( this, "top",    function (t, y0, y1) { return y0          }
-         , this, "y0",     function (t, y0, y1) { return t           }
-         , this, "y1",     function (t, y0, y1) { return t + y1 - y0 }
-         )
-
-  compose( this, "bottom", function (b, y0, y1) { return y1          }
-         , this, "y0",     function (b, y0, y1) { return b - y1 + y0 }
-         , this, "y1",     function (b, y0, y1) { return b           }
-         )
-*/
+  Point.mid (this.center, this.p0, this.p1)
 
 }
 
 Render.Rect.prototype = new Base
+
+Render.Rect.prototype.mkHandles =
+function mkHandles ()
+{
+  function mkHandle ()
+  {
+    var h = new Render.Rect(0, 0, 20, 20)
+    h.elem.className += " handle"
+    return h
+  }
+
+
+  this.handles = {}
+  this.handles.topLeft     = mkHandle()
+  this.handles.topRight    = mkHandle()
+  this.handles.bottomLeft  = mkHandle()
+  this.handles.bottomRight = mkHandle()
+  this.handles.midLeft     = mkHandle()
+  this.handles.midRight    = mkHandle()
+  this.handles.midTop      = mkHandle()
+  this.handles.midBottom   = mkHandle()
+
+  C.eq(this.handles.topLeft.center.x,     this.p0.x)
+  C.eq(this.handles.topLeft.center.y,     this.p0.y)
+
+  C.eq(this.handles.topRight.center.x,    this.p1.x)
+  C.eq(this.handles.topRight.center.y,    this.p0.y)
+
+  C.eq(this.handles.bottomLeft.center.x,  this.p0.x)
+  C.eq(this.handles.bottomLeft.center.y,  this.p1.y)
+
+  C.eq(this.handles.bottomRight.center.x, this.p1.x)
+  C.eq(this.handles.bottomRight.center.y, this.p1.y)
+
+  C.eq(this.handles.midLeft.center.x,     this.p0.x)
+  C.eq(this.handles.midLeft.center.y,     this.center.y)
+
+  C.eq(this.handles.midRight.center.x,    this.p1.x)
+  C.eq(this.handles.midRight.center.y,    this.center.y)
+
+  C.eq(this.handles.midTop.center.x,      this.center.x)
+  C.eq(this.handles.midTop.center.y,      this.p0.y)
+
+  C.eq(this.handles.midBottom.center.x,   this.center.x)
+  C.eq(this.handles.midBottom.center.y,   this.p1.y)
+}
 
 Render.Rect.prototype.setupElem =
 function setupElem ()
@@ -126,10 +166,10 @@ Render.Rect.prototype.render =
 function render ()
 {
 if (Debug) console.log("render")
-  this.elem.style.left   = (this.x0.get()                ) + "px"
-  this.elem.style.top    = (this.y0.get()                ) + "px"
-  this.elem.style.width  = (this.x1.get() - this.x0.get()) + "px"
-  this.elem.style.height = (this.y1.get() - this.y0.get()) + "px"
+  this.elem.style.left   = (this.p0.x.get()                  ) + "px"
+  this.elem.style.top    = (this.p0.y.get()                  ) + "px"
+  this.elem.style.width  = (this.p1.x.get() - this.p0.x.get()) + "px"
+  this.elem.style.height = (this.p1.y.get() - this.p0.y.get()) + "px"
 }
 
 // ----------------------------------------------------------------------------

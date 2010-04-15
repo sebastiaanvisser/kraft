@@ -1,5 +1,6 @@
 html, body
 {
+  background: #ddd;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -19,12 +20,21 @@ html, body
   overflow: hidden;
 }
 
-#canvas .rect
+#canvas .panel
 {
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
-  position: absolute;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 6px;
+  padding: 0;
+  x-webkit-transition-property: left top width height right bottom opacity;
+  x-webkit-transition-duration: 0.1s;
+  overflow: hidden;
+}
+
+#canvas .handle
+{
+  background: rgba(0,0,0, 0.8);
+  -webkit-border-radius: 10px;
   padding: 0;
   x-webkit-transition-property: left top width height right bottom opacity;
   x-webkit-transition-duration: 0.1s;

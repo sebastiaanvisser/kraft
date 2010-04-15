@@ -33,6 +33,8 @@ if (Debug) console.log(Property.depth, "setting", this.name, "to", v)
   for (var i = 0; i < this.effects.length; i++)
     this.effects[i].call(this.obj, v)
 
+  this.obj.appEffects()
+
   Property.depth--
   this.busy = false
 }
@@ -84,12 +86,31 @@ function compose (t, f /* ... */)
   trigger.app(false)
 }
 
-// --------------------------------
+function Base () { }
 
-function Base ()
+Base.prototype.baseInit =
+function baseInit ()
 {
-  this.$ = { id : Base.nextId++, properties : {} }
+  this.$ = { id         : Base.nextId++
+           , properties : {}
+           , onchange   : []
+           }
   Base.objects[this.$.id] = this
+}
+
+
+
+Base.prototype.onchange =
+function onchange (f)
+{
+  this.$.onchange.push(f)
+}
+
+Base.prototype.appEffects =
+function appEffects (v)
+{
+  for (var i = 0; i < this.$.onchange.length; i++)
+    this.$.onchange[i].call(this, v)
 }
 
 Base.nextId  = 0

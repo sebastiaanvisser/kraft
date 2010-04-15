@@ -1,18 +1,42 @@
-// var C = {}
+var C = {}
 
-// C.eq  = Base.mkConstraint("eq",  1, function eq  (a)    { return a     })
-// C.add = Base.mkConstraint("add", 2, function add (a, b) { return a + b })
-// C.sub = Base.mkConstraint("sub", 2, function sub (a, b) { return a - b })
-// C.mul = Base.mkConstraint("mul", 2, function mul (a, b) { return a * b })
-// C.div = Base.mkConstraint("div", 2, function div (a, b) { return a / b })
+C.getter = function getter (p) { return function () { return p.get() } }
 
-// var C2 = {}
+C.eq = function eq (a, b) { compose(a, C.getter(b), b, C.getter(a)) }
 
-// C2.sum =
-// function sum (o0, p1, o1, p0, o2, p2)
-// {
-  // o1.constraint(p1, C.add(o0, p0, o2, p2))
-  // o2.constraint(p2, C.sub(o1, p1, o0, p0))
-  // o0.constraint(p0, C.sub(o1, p1, o2, p2))
-// }
+C.sub0 =
+function sub0 (a, b, c)
+{
+  compose( a, function (s) { return b.get() - c.get() }
+         , b, function (s) { return c.get() + a.get() }
+         , c, function (s) { return c.get()           }
+         )              
+}
+
+C.mid =
+function mid (a, b, c)
+{
+  compose( a, function (s) { return (b.get() + c.get()) / 2           }
+         , b, function (s) { return a.get() - (c.get() - b.get()) / 2 }
+         , c, function (s) { return a.get() + (c.get() - b.get()) / 2 }
+         )              
+}
+
+C.min0 =
+function min0 (a, b, c)
+{
+  compose( a, function (s) { return b.get()                     }
+         , b, function (s) { return a.get()                     }
+         , c, function (s) { return a.get() + c.get() - b.get() }
+         )
+}
+
+C.max0 =
+function max0 (a, b, c)
+{
+  compose( a, function (s) { return c.get()                     }
+         , b, function (s) { return a.get() - c.get() + b.get() }
+         , c, function (s) { return a.get()                     }
+         )
+}
 
