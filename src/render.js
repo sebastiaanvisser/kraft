@@ -59,30 +59,38 @@ function render ()
 Render.Rect =
 function Rect (x0, y0, x1, y1)
 {
-  this.baseInit()
-
   this.elem = this.setupElem()
 
-  this.property("x0", x0 || 0, Base.effect(this.render))
-  this.property("y0", y0 || 0, Base.effect(this.render))
-  this.property("x1", x1 || 0, Base.effect(this.render))
-  this.property("y1", y1 || 0, Base.effect(this.render))
+  this.property("x0", x0 || 0, this.render)
+  this.property("y0", y0 || 0, this.render)
+  this.property("x1", x1 || 0, this.render)
+  this.property("y1", y1 || 0, this.render)
 
-  compose( this, "width", function (w, x0, x1) { return x1 - x0 }
-         , this, "x0",    function (w, x0, x1) { return x0      }
-         , this, "x1",    function (w, x0, x1) { return x0 + w  }
-         )
+  this.property("width")
+  this.property("height")
+  this.property("left")
+  this.property("right")
+  this.property("top")
+  this.property("bottom")
 
-  compose( this, "left",  function (l, x0, x1, w) { return x0     }
-         , this, "x0",    function (l, x0, x1, w) { return l      }
-         , this, "x1",    function (l, x0, x1, w) { return l + w  }
-         , this, "width", function (l, x0, x1, w) { return w      }
-         )
+  compose( this.width,  function (s) { return s.x1.get() - s.x0.get()      }
+         , this.x0,     function (s) { return s.x0.get()                   }
+         , this.x1,     function (s) { return s.x0.get() + s.width.get()   })              
+  compose( this.left,   function (s) { return s.x0.get()                   }
+         , this.x1,     function (s) { return s.left.get() + s.width.get() }
+         , this.x0,     function (s) { return s.left.get()                 })
+  compose( this.height, function (s) { return s.y1.get() - s.y0.get()      }
+         , this.y0,     function (s) { return s.y0.get()                   }
+         , this.y1,     function (s) { return s.y0.get() + s.height.get()  })
+  compose( this.top,    function (s) { return s.y0.get()                   }
+         , this.y1,     function (s) { return s.top.get() + s.height.get() }
+         , this.y0,     function (s) { return s.top.get()                  })
 
-  compose( this, "right", function (r, x0, x1, w) { return x1     }
-         , this, "x0",    function (r, x0, x1, w) { return r - w  }
-         , this, "x1",    function (r, x0, x1, w) { return r      }
-         , this, "width", function (r, x0, x1, w) { return w      }
+
+/*
+  compose( this, "right", function (r, x0, x1) { return x1          }
+         , this, "x0",    function (r, x0, x1) { return r - x1 + x0 }
+         , this, "x1",    function (r, x0, x1) { return r           }
          )
 
   compose( this, "height", function (h, y0, y1) { return y1 - y0 }
@@ -90,17 +98,17 @@ function Rect (x0, y0, x1, y1)
          , this, "y1",     function (h, y0, y1) { return y0 + h  }
          )
 
-  compose( this, "top",    function (l, y0, y1, h) { return y0     }
-         , this, "y0",     function (l, y0, y1, h) { return l      }
-         , this, "y1",     function (l, y0, y1, h) { return l + h  }
-         , this, "height", function (l, y0, y1, h) { return h      }
+  compose( this, "top",    function (t, y0, y1) { return y0          }
+         , this, "y0",     function (t, y0, y1) { return t           }
+         , this, "y1",     function (t, y0, y1) { return t + y1 - y0 }
          )
 
-  compose( this, "bottom", function (r, y0, y1, h) { return y1     }
-         , this, "y0",     function (r, y0, y1, h) { return r - h  }
-         , this, "y1",     function (r, y0, y1, h) { return r      }
-         , this, "height", function (r, y0, y1, h) { return h      }
+  compose( this, "bottom", function (b, y0, y1) { return y1          }
+         , this, "y0",     function (b, y0, y1) { return b - y1 + y0 }
+         , this, "y1",     function (b, y0, y1) { return b           }
          )
+*/
+
 }
 
 Render.Rect.prototype = new Base
@@ -117,10 +125,11 @@ function setupElem ()
 Render.Rect.prototype.render =
 function render ()
 {
-  this.elem.style.left   = (this.x0          ) + "px"
-  this.elem.style.top    = (this.y0          ) + "px"
-  this.elem.style.width  = (this.x1 - this.x0) + "px"
-  this.elem.style.height = (this.y1 - this.y0) + "px"
+if (Debug) console.log("render")
+  this.elem.style.left   = (this.x0.get()                ) + "px"
+  this.elem.style.top    = (this.y0.get()                ) + "px"
+  this.elem.style.width  = (this.x1.get() - this.x0.get()) + "px"
+  this.elem.style.height = (this.y1.get() - this.y0.get()) + "px"
 }
 
 // ----------------------------------------------------------------------------

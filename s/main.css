@@ -15,7 +15,18 @@ html, body
   bottom: 10px;
 
   x-webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
-  background: #bbb url("grid.png");
+  background: #aaa url("grid.png");
   overflow: hidden;
 }
 
+#canvas .rect
+{
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
+  position: absolute;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+  padding: 0;
+  x-webkit-transition-property: left top width height right bottom opacity;
+  x-webkit-transition-duration: 0.1s;
+  overflow: hidden;
+}
