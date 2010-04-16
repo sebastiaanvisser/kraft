@@ -1,12 +1,11 @@
 Debug = false
 
-function Property (o, n, v, e)
+function Property (o, n, v)
 {
   this.obj      = o
   this.name     = n
   this.value    = v
   this.busy     = false
-  this.effects  = e ? [e] : []
   this.triggers = []
 }
 
@@ -29,9 +28,6 @@ if (Debug) console.log(Property.depth, "setting", this.name, "to", v)
 
   for (var i = 0; i < this.triggers.length; i++)
     this.triggers[i][1].app(this.triggers[i][0])
-
-  for (var i = 0; i < this.effects.length; i++)
-    this.effects[i].call(this.obj, v)
 
   this.obj.appEffects()
 
@@ -91,14 +87,13 @@ function Base () { }
 Base.prototype.baseInit =
 function baseInit ()
 {
-  this.$ = { id         : Base.nextId++
-           , properties : {}
-           , onchange   : []
+  this.$ = { id          : Base.nextId++
+           , properties  : {}
+           , onchange    : []
+           , initialized : false
            }
   Base.objects[this.$.id] = this
 }
-
-
 
 Base.prototype.onchange =
 function onchange (f)
@@ -109,17 +104,32 @@ function onchange (f)
 Base.prototype.appEffects =
 function appEffects (v)
 {
+  if (!this.$.initialized) return
   for (var i = 0; i < this.$.onchange.length; i++)
     this.$.onchange[i].call(this, v)
+}
+
+Base.prototype.initialized =
+function initialized ()
+{
+  this.$.initialized = true
+  this.appEffects()
 }
 
 Base.nextId  = 0
 Base.objects = {}
 
 Base.prototype.property =
-function property (name, init, callback)
+function property (name, init)
 {
-  this[name] = new Property(this, name, init, callback)
+  this[name] = new Property(this, name, init)
   this.$.properties[name] = { v : init }
+}
+
+Base.prototype.derivedProp =
+function derivedProp (name, constraint)
+{
+  this.property(name)
+  constraint.apply(null, [this[name]].concat([].slice.call(arguments, 2)))
 }
 

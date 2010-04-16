@@ -67,42 +67,60 @@ function Point (x, y)
 
 Point.prototype = new Base
 
-Point.mid = 
-function mid (c, a, b)
+Point.eq =
+function mid (a, b)
 {
-  C.mid(c.x, a.x, b.x)
-  C.mid(c.y, a.y, b.y)
+  C.eq(a.x, b.x)
+  C.eq(a.y, b.y)
 }
+
+Point.mid         = function mid         (a, b, c) { C.mid(a.x, b.x, c.x); C.mid(a.y, b.y, c.y) }
+Point.topLeft     = function topLeft     (a, b, c) { C.min(a.x, b.x, c.x); C.min(a.y, b.y, c.y) }
+Point.topRight    = function topRight    (a, b, c) { C.max(a.x, b.x, c.x); C.min(a.y, b.y, c.y) }
+Point.bottomLeft  = function bottomLeft  (a, b, c) { C.min(a.x, b.x, c.x); C.max(a.y, b.y, c.y) }
+Point.bottomRight = function bottomRight (a, b, c) { C.max(a.x, b.x, c.x); C.max(a.y, b.y, c.y) }
+
+Base.prototype.derivedPoint =
+function derivedPoint (name, constraint)
+{
+  this[name] = new Point
+  constraint.apply(null, [this[name]].concat([].slice.call(arguments, 2)))
+}
+
+
 
 Render.Rect =
 function Rect (x0, y0, x1, y1)
 {
   this.baseInit()
   this.onchange(this.render)
-
   this.elem = this.setupElem()
 
+  // Absolute view:
   this.p0 = new Point(x0, y0)
-  this.p1 = new Point(x1, y1)
+  this.p1 = new Point(x1, y0)
+  this.p2 = new Point(x0, y1)
+  this.p3 = new Point(x1, y1)
+  C.eq(this.p0.x, this.p2.x)
+  C.eq(this.p1.x, this.p3.x)
+  C.eq(this.p0.y, this.p1.y)
+  C.eq(this.p2.y, this.p3.y)
 
-  this.center = new Point()
+  // Normalized view:
+  this.derivedPoint("center",      Point.mid,         this.p0, this.p3)
+  this.derivedPoint("topLeft",     Point.topLeft,     this.p0, this.p3)
+  this.derivedPoint("topRight",    Point.topRight,    this.p0, this.p3)
+  this.derivedPoint("bottomLeft",  Point.bottomLeft,  this.p0, this.p3)
+  this.derivedPoint("bottomRight", Point.bottomRight, this.p0, this.p3)
 
-  this.property("width")
-  this.property("height")
-  this.property("left")
-  this.property("right")
-  this.property("top")
-  this.property("bottom")
+  this.derivedProp("width",  C.sub0, this.bottomRight.x, this.topLeft.x)
+  this.derivedProp("height", C.sub0, this.bottomRight.y, this.topLeft.y)
+  this.derivedProp("left",   C.min0, this.p0.x, this.p3.x)
+  this.derivedProp("top",    C.min0, this.p0.y, this.p3.y)
+  this.derivedProp("right",  C.max0, this.p0.x, this.p3.x)
+  this.derivedProp("bottom", C.max0, this.p0.y, this.p3.y)
 
-  C.sub0 (this.width,   this.p1.x, this.p0.x)
-  C.sub0 (this.height,  this.p1.y, this.p0.y)
-  C.min0 (this.left,    this.p0.x, this.p1.x)
-  C.min0 (this.top,     this.p0.y, this.p1.y)
-  C.max0 (this.right,   this.p0.x, this.p1.x)
-  C.max0 (this.bottom,  this.p0.y, this.p1.y)
-
-  Point.mid (this.center, this.p0, this.p1)
-
+  this.initialized()
 }
 
 Render.Rect.prototype = new Base
@@ -117,40 +135,20 @@ function mkHandles ()
     return h
   }
 
-
   this.handles = {}
   this.handles.topLeft     = mkHandle()
   this.handles.topRight    = mkHandle()
   this.handles.bottomLeft  = mkHandle()
   this.handles.bottomRight = mkHandle()
-  this.handles.midLeft     = mkHandle()
-  this.handles.midRight    = mkHandle()
-  this.handles.midTop      = mkHandle()
-  this.handles.midBottom   = mkHandle()
+  // this.handles.midLeft     = mkHandle()
+  // this.handles.midRight    = mkHandle()
+  // this.handles.midTop      = mkHandle()
+  // this.handles.midBottom   = mkHandle()
 
-  C.eq(this.handles.topLeft.center.x,     this.p0.x)
-  C.eq(this.handles.topLeft.center.y,     this.p0.y)
-
-  C.eq(this.handles.topRight.center.x,    this.p1.x)
-  C.eq(this.handles.topRight.center.y,    this.p0.y)
-
-  C.eq(this.handles.bottomLeft.center.x,  this.p0.x)
-  C.eq(this.handles.bottomLeft.center.y,  this.p1.y)
-
-  C.eq(this.handles.bottomRight.center.x, this.p1.x)
-  C.eq(this.handles.bottomRight.center.y, this.p1.y)
-
-  C.eq(this.handles.midLeft.center.x,     this.p0.x)
-  C.eq(this.handles.midLeft.center.y,     this.center.y)
-
-  C.eq(this.handles.midRight.center.x,    this.p1.x)
-  C.eq(this.handles.midRight.center.y,    this.center.y)
-
-  C.eq(this.handles.midTop.center.x,      this.center.x)
-  C.eq(this.handles.midTop.center.y,      this.p0.y)
-
-  C.eq(this.handles.midBottom.center.x,   this.center.x)
-  C.eq(this.handles.midBottom.center.y,   this.p1.y)
+  Point.eq(this.handles.topLeft.center,     this.p0)
+  Point.eq(this.handles.topRight.center,    this.p1)
+  Point.eq(this.handles.bottomLeft.center,  this.p2)
+  Point.eq(this.handles.bottomRight.center, this.p3)
 }
 
 Render.Rect.prototype.setupElem =
@@ -166,10 +164,10 @@ Render.Rect.prototype.render =
 function render ()
 {
 if (Debug) console.log("render")
-  this.elem.style.left   = (this.p0.x.get()                  ) + "px"
-  this.elem.style.top    = (this.p0.y.get()                  ) + "px"
-  this.elem.style.width  = (this.p1.x.get() - this.p0.x.get()) + "px"
-  this.elem.style.height = (this.p1.y.get() - this.p0.y.get()) + "px"
+  this.elem.style.left   = this.left.get()   + "px"
+  this.elem.style.top    = this.top.get()    + "px"
+  this.elem.style.width  = this.width.get()  + "px"
+  this.elem.style.height = this.height.get() + "px"
 }
 
 // ----------------------------------------------------------------------------
