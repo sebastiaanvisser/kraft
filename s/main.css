@@ -23,7 +23,7 @@ html, body
 #canvas .panel
 {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  x-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 6px;
   padding: 0;
   x-webkit-transition-property: left top width height right bottom opacity;

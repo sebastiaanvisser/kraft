@@ -40,8 +40,9 @@ function renderable (canvas)
 {
   this.canvas = canvas
   this.elem   = this.setupElem()
-  this.onchange(this.render)
   this.render()
+
+  this.onchange(this.render)
 }
 
 Rect.prototype.setupElem =
@@ -63,6 +64,12 @@ function render ()
   this.elem.style.height = this.height.get() + "px"
 }
 
+Rect.prototype.unrender =
+function unrender ()
+{
+  this.canvas.removeChild(this.elem)
+}
+
 // --------------------------
 
 Rect.prototype.mkHandles =
@@ -71,7 +78,7 @@ function mkHandles ()
   var self = this
   function mkHandle ()
   {
-    var h = new Rect(0, 0, 20, 20)
+    var h = new Rect(0, 0, 10, 10)
     h.renderable(self.canvas)
     h.elem.className += " handle"
     new Draggable(h.canvas, h, h.elem, false, false, 10, 10)
@@ -96,5 +103,12 @@ function mkHandles ()
   Point.eq(this.handles.midRight.center,    this.midRight)
   Point.eq(this.handles.midTop.center,      this.midTop)
   Point.eq(this.handles.midBottom.center,   this.midBottom)
+}
+
+Rect.prototype.removeHandles =
+function removeHandles ()
+{
+  for (var p in this.handles)
+    this.handles[p].unrender()
 }
 
