@@ -6,7 +6,6 @@ function mkPanel ()
   r.renderable(canvas)
   Selection.mkSelectable(r)
   r.elem.className += " panel"
-  // r.mkHandles()
   new Draggable(canvas, r, r.elem, false, false, 10, 10)
   return r
 }

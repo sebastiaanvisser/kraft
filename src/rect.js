@@ -33,6 +33,27 @@ function Rect (x0, y0, x1, y1)
 
 Rect.prototype = new Base
 
+Rect.prototype.destruct =
+function destruct ()
+{
+  this.unrender()
+  this.cleanup()
+
+  this.p0.cleanup()
+  this.p1.cleanup()
+  this.p2.cleanup()
+  this.p3.cleanup()
+  this.center.cleanup()
+  this.topLeft.cleanup()
+  this.topRight.cleanup()
+  this.bottomLeft.cleanup()
+  this.bottomRight.cleanup()
+  this.midLeft.cleanup()
+  this.midRight.cleanup()
+  this.midTop.cleanup()
+  this.midBottom.cleanup()
+}
+
 // --------------------------
 
 Rect.prototype.renderable =
@@ -109,6 +130,6 @@ Rect.prototype.removeHandles =
 function removeHandles ()
 {
   for (var p in this.handles)
-    this.handles[p].unrender()
+    this.handles[p].destruct()
 }
 

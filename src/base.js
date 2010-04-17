@@ -1,12 +1,17 @@
-Debug = false
-
 function Property (o, n, v)
 {
   this.obj      = o
   this.name     = n
   this.value    = v
   this.busy     = false
-  this.triggers = []
+  this.triggers = {}
+}
+
+Property.prototype.cleanup =
+function cleanup ()
+{
+  for (var t in this.triggers)
+    this.triggers[t][1].cleanup()
 }
 
 Property.depth = 0
@@ -22,12 +27,10 @@ function set (v)
   this.busy = true
   Property.depth++
 
-if (Debug) console.log(Property.depth, "setting", this.name, "to", v)
-
   this.value = v
 
-  for (var i = 0; i < this.triggers.length; i++)
-    this.triggers[i][1].app(this.triggers[i][0])
+  for (var t in this.triggers)
+    this.triggers[t][1].app(this.triggers[t][0])
 
   this.obj.appEffects()
 
@@ -45,6 +48,15 @@ function Trigger (t, f, s)
   this.sources = s
 
   Triggers[this.id] = this
+}
+
+Trigger.prototype.cleanup =
+function cleanup ()
+{
+  console.log("cleanup: ", this.id)
+  delete this.target[0].triggers[this.id]
+  for (var i = 0; i < this.sources.length; i++)
+    delete this.sources[i][0].triggers[this.id]
 }
 
 Trigger.prototype.app =
@@ -75,9 +87,9 @@ function compose (t, f /* ... */)
   var trigger = new Trigger(t, f, s)
 
   // Install trigger.
-  trigger.target[0].triggers.push([true, trigger]);
+  trigger.target[0].triggers[trigger.id] = [true, trigger]
   for (var i = 0; i < trigger.sources.length; i++)
-    trigger.sources[i][0].triggers.push([false, trigger]);
+    trigger.sources[i][0].triggers[trigger.id] = [false, trigger]
 
   trigger.app(false)
 }
@@ -92,6 +104,23 @@ function baseInit ()
            , onchange    : []
            }
   Base.objects[this.$.id] = this
+}
+
+Base.prototype.countTriggers =
+function countTriggers ()
+{
+  var c = 0
+  for (var p in this.$.properties)
+    for (var t in this.$.properties[p].triggers)
+      c++
+  return c
+}
+
+Base.prototype.cleanup =
+function cleanup ()
+{
+  for (var p in this.$.properties)
+    this.$.properties[p].cleanup()
 }
 
 Base.prototype.onchange =
@@ -114,7 +143,7 @@ Base.prototype.property =
 function property (name, init)
 {
   this[name] = new Property(this, name, init)
-  this.$.properties[name] = { v : init }
+  this.$.properties[name] = this[name]
 }
 
 Base.prototype.derivedProp =

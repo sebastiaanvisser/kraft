@@ -46,13 +46,13 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
     {
       if (!me.dragging) return true
 
-      var dx = e.clientX - me.dragOrigin.x
-      var dy = e.clientY - me.dragOrigin.y
+      var dx = Math.round((e.clientX - me.dragOrigin.x) / me.snapX) * me.snapX
+      var dy = Math.round((e.clientY - me.dragOrigin.y) / me.snapX) * me.snapY
       var x  = me.targetOrigin.x + dx
       var y  = me.targetOrigin.y + dy
 
-      if (!me.lockX) me.target.left.set(Math.round(x / me.snapX) * me.snapX)
-      if (!me.lockY) me.target.top.set(Math.round(y / me.snapY) * me.snapY)
+      if (!me.lockX) me.target.left.set(x)
+      if (!me.lockY) me.target.top.set(y)
     }
   )
 
