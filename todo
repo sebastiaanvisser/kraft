@@ -17,6 +17,12 @@ Grid:
   - ruler
   - customizable
 
+Selection:
+  - Grouping.
+  - Common actions.
+
+Undostack.
+
 Layers.
 
 Dragging:

@@ -1,22 +1,24 @@
-function render (container, shape, color)
-{
-  container.appendChild(shape.elem)
-  shape.render()
-  new Draggable(container, shape, shape.elem, false, false, 10, 10)
-}
-
 var canvas = $("#canvas")[0]
 
+function mkPanel ()
+{
+  var r = new Rect(100, 50, 200, 300)
+  r.renderable(canvas)
+  r.elem.className += " panel"
+  r.mkHandles()
+  new Draggable(canvas, r, r.elem, false, false, 10, 10)
+}
 
-var r = new Render.Rect(100, 50, 200, 300)
-r.elem.className += " panel"
-render(canvas, r)
+mkPanel()
+mkPanel()
+mkPanel()
+mkPanel()
 
-r.mkHandles()
-render(canvas, r.handles.topLeft)
-render(canvas, r.handles.topRight)
-render(canvas, r.handles.bottomLeft)
-render(canvas, r.handles.bottomRight)
+// r.mkHandles()
+// render(canvas, r.handles.topLeft)
+// render(canvas, r.handles.topRight)
+// render(canvas, r.handles.bottomLeft)
+// render(canvas, r.handles.bottomRight)
 // render(canvas, r.handles.midLeft)
 // render(canvas, r.handles.midRight)
 // render(canvas, r.handles.midTop)

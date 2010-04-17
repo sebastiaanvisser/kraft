@@ -90,7 +90,6 @@ function baseInit ()
   this.$ = { id          : Base.nextId++
            , properties  : {}
            , onchange    : []
-           , initialized : false
            }
   Base.objects[this.$.id] = this
 }
@@ -104,16 +103,8 @@ function onchange (f)
 Base.prototype.appEffects =
 function appEffects (v)
 {
-  if (!this.$.initialized) return
   for (var i = 0; i < this.$.onchange.length; i++)
     this.$.onchange[i].call(this, v)
-}
-
-Base.prototype.initialized =
-function initialized ()
-{
-  this.$.initialized = true
-  this.appEffects()
 }
 
 Base.nextId  = 0
