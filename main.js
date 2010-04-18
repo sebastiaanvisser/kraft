@@ -1,12 +1,14 @@
 var canvas = $("#canvas")[0]
 
+selection = new Selection
+
 function mkPanel ()
 {
-  var r = new Shape(100, 50, 200, 300)
-  r.renderable(canvas)
-  Selection.mkSelectable(r)
+  var r = AdjustableRect.make(canvas, 100, 50, 200, 300)
+  r.decorate(DraggableShape)
+  r.decorate(SelectableShape, selection)
+  r.selectable(r.mkHandles, r.delHandles)
   r.elem.className += " panel"
-  new Draggable(canvas, r, r.elem, false, false, 10, 10)
   return r
 }
 
@@ -14,4 +16,6 @@ r = mkPanel()
 q = mkPanel()
 s = mkPanel()
 t = mkPanel()
+
+
 

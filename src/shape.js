@@ -1,56 +1,86 @@
-Shape =
-function Shape (x0, y0, x1, y1)
+function Shape () {}
+
+Shape.make =
+function make (x0, y0, x1, y1)
 {
-  this.baseInit()
-
-  // Absolute view:
-  this.p0 = new Point(x0, y0)
-  this.p1 = new Point(x1, y0)
-  this.p2 = new Point(x0, y1)
-  this.p3 = new Point(x1, y1)
-  C.eq(this.p0.x, this.p2.x)
-  C.eq(this.p1.x, this.p3.x)
-  C.eq(this.p0.y, this.p1.y)
-  C.eq(this.p2.y, this.p3.y)
-
-  // Normalized view:
-  this.derivedPoint ("center",      Point.mid,         this.p0,            this.p3        )
-  this.derivedPoint ("topLeft",     Point.topLeft,     this.p0,            this.p3        )
-  this.derivedPoint ("topRight",    Point.topRight,    this.p0,            this.p3        )
-  this.derivedPoint ("bottomLeft",  Point.bottomLeft,  this.p0,            this.p3        )
-  this.derivedPoint ("bottomRight", Point.bottomRight, this.p0,            this.p3        )
-  this.derivedPoint ("midLeft",     Point.xy,          this.p0,            this.center    )
-  this.derivedPoint ("midRight",    Point.xy,          this.p1,            this.center    )
-  this.derivedPoint ("midTop",      Point.yx,          this.p0,            this.center    )
-  this.derivedPoint ("midBottom",   Point.yx,          this.p2,            this.center    )
-  this.derivedProp  ("width",       C.sub0,            this.bottomRight.x, this.topLeft.x )
-  this.derivedProp  ("height",      C.sub0,            this.bottomRight.y, this.topLeft.y )
-  this.derivedProp  ("left",        C.min0,            this.p0.x,          this.p3.x      )
-  this.derivedProp  ("top",         C.min0,            this.p0.y,          this.p3.y      )
-  this.derivedProp  ("right",       C.max0,            this.p0.x,          this.p3.x      )
-  this.derivedProp  ("bottom",      C.max0,            this.p0.y,          this.p3.y      )
+  var r = new Base
+  r.decorate(Shape, x0, y0, x1, y1)
+  return r
 }
 
-Shape.prototype = new Base
+addToProto(Shape,
 
-Shape.prototype.destruct =
-function destruct ()
-{
-  this.p0.cleanup()
-  this.p1.cleanup()
-  this.p2.cleanup()
-  this.p3.cleanup()
-  this.center.cleanup()
-  this.topLeft.cleanup()
-  this.topRight.cleanup()
-  this.bottomLeft.cleanup()
-  this.bottomRight.cleanup()
-  this.midLeft.cleanup()
-  this.midRight.cleanup()
-  this.midTop.cleanup()
-  this.midBottom.cleanup()
+  function constructor (x0, y0, x1, y1)
+  {
+    this.p0 = Point.make(x0, y0)
+    this.p1 = Point.make(x1, y0)
+    this.p2 = Point.make(x0, y1)
+    this.p3 = Point.make(x1, y1)
+    C.eq(this.p0.x, this.p2.x)
+    C.eq(this.p1.x, this.p3.x)
+    C.eq(this.p0.y, this.p1.y)
+    C.eq(this.p2.y, this.p3.y)
 
-  this.unrender()
-  this.cleanup()
-}
+    this.property("center",      Point.make())
+    this.property("topLeft",     Point.make())
+    this.property("topRight",    Point.make())
+    this.property("bottomLeft",  Point.make())
+    this.property("bottomRight", Point.make())
+    this.property("midLeft",     Point.make())
+    this.property("midRight",    Point.make())
+    this.property("midTop",      Point.make())
+    this.property("midBottom",   Point.make())
+    Point.mid         (this.center.get(),      this.p0, this.p3)
+    Point.topLeft     (this.topLeft.get(),     this.p0, this.p3)
+    Point.topRight    (this.topRight.get(),    this.p0, this.p3)
+    Point.bottomLeft  (this.bottomLeft.get(),  this.p0, this.p3)
+    Point.bottomRight (this.bottomRight.get(), this.p0, this.p3)
+    Point.xy          (this.midLeft.get(),     this.p0, this.center.get())
+    Point.xy          (this.midRight.get(),    this.p1, this.center.get())
+    Point.yx          (this.midTop.get(),      this.p0, this.center.get())
+    Point.yx          (this.midBottom.get(),   this.p2, this.center.get())
+
+    this.property("width")
+    this.property("height")
+    this.property("left")
+    this.property("top")
+    this.property("right")
+    this.property("bottom")
+    C.sub0(this.width,  this.bottomRight.get().x, this.topLeft.get().x )
+    C.sub0(this.height, this.bottomRight.get().y, this.topLeft.get().y )
+    C.min0(this.left,   this.p0.x,                this.p3.x            )
+    C.min0(this.top,    this.p0.y,                this.p3.y            )
+    C.max0(this.right,  this.p0.x,                this.p3.x            )
+    C.max0(this.bottom, this.p0.y,                this.p3.y            )
+  },
+
+  function destructor ()
+  {
+    this.p0.destructor()
+    this.p1.destructor()
+    this.p2.destructor()
+    this.p3.destructor()
+    this.center.get().destructor()
+    this.topLeft.get().destructor()
+    this.topRight.get().destructor()
+    this.bottomLeft.get().destructor()
+    this.bottomRight.get().destructor()
+    this.midLeft.get().destructor()
+    this.midRight.get().destructor()
+    this.midTop.get().destructor()
+    this.midBottom.get().destructor()
+  }
+
+)
+
+function DraggableShape () {}
+
+addToProto(DraggableShape,
+
+  function constructor ()
+  {
+    this.dragger = new Draggable(this.canvas, this, this.elem, false, false, 10, 10)
+  }
+
+)
 

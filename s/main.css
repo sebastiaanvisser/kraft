@@ -10,18 +10,18 @@ html, body
 #canvas
 {
   position: absolute;
-  left: 10px;
-  top: 10px;
-  right: 10px;
-  bottom: 10px;
+  left: 4px;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
 
-  -webkit-border-radius: 20px;
+  -webkit-border-radius: 8px;
   -webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: #aaa url("grid.png");
   overflow: hidden;
 }
 
-#canvas .virtual
+#canvas .panel
 {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -31,7 +31,7 @@ html, body
   overflow: hidden;
 }
 
-#canvas .panel
+#canvas .virtual
 {
   -webkit-border-radius: 6px;
   background: rgba(0,0,255, 0.1);

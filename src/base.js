@@ -1,32 +1,45 @@
-function Base () { }
-
-Base.nextId  = 0
-Base.objects = {}
-
-addToProto(Base,
-
-  function baseInit ()
-  {
+function Base ()
+{
     this.$ = { id          : Base.nextId++
              , properties  : {}
              , onchange    : []
+             , destructors : []
              }
-    Base.objects[this.$.id] = this
+    Base.all[this.$.id] = this
+}
+
+Base.nextId = 0
+Base.all    = {}
+
+addToProto(Base,
+
+  function decorate (klass /* constructor arguments */)
+  {
+    for (var m in klass.prototype)
+      if (m != "destructor" && m != "constructor")
+        this[m] = klass.prototype[m]
+
+    if (klass.prototype.destructor)
+      this.registerDestructor(klass.prototype.destructor)
+
+    if (klass.prototype.constructor)
+      klass.prototype.constructor.apply(this, [].slice.call(arguments, 1))
+
+    klass.call(this)
   },
 
-  function countTriggers ()
+  function destructor ()
   {
-    var c = 0
-    for (var p in this.$.properties)
-      for (var t in this.$.properties[p].triggers)
-        c++
-    return c
-  },
+    for (var i = 0; i < this.$.destructors.length; i++)
+      this.$.destructors[i].call(this)
 
-  function cleanup ()
-  {
     for (var p in this.$.properties)
       this.$.properties[p].cleanup()
+  },
+
+  function registerDestructor (dtor)
+  {
+    this.$.destructors.push(dtor)
   },
 
   function onchange (f)
@@ -46,10 +59,20 @@ addToProto(Base,
     this.$.properties[name] = this[name]
   },
 
-  function derivedProp (name, constraint)
+  function derivedProp (name, init, constraint)
   {
-    this.property(name)
-    constraint.apply(null, [this[name]].concat([].slice.call(arguments, 2)))
+    this.property(name, init)
+    constraint.apply(null, [this[name].get()].concat([].slice.call(arguments, 3)))
+  },
+
+  function countTriggers ()
+  {
+    var c = 0
+    for (var p in this.$.properties)
+      for (var t in this.$.properties[p].triggers)
+        c++
+    return c
   }
 
 )
+

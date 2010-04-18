@@ -1,13 +1,22 @@
-Point =
-function Point (x, y)
+function Point () {}
+
+addToProto(Point,
+
+  function constructor (x, y)
+  {
+    this.property("x", x || 0)
+    this.property("y", y || 0)
+  }
+
+)
+
+Point.make =
+function make(x, y)
 {
-  this.baseInit()
-
-  this.property("x", x || 0)
-  this.property("y", y || 0)
+  var p = new Base
+  p.decorate(Point, x, y)
+  return p
 }
-
-Point.prototype = new Base
 
 Point.eq          = function mid         (a, b)    { C.eq(a.x, b.x);       C.eq(a.y, b.y)       }
 Point.xy          = function xy          (a, b, c) { C.eq(a.x, b.x);       C.eq(a.y, c.y)       }
@@ -17,12 +26,4 @@ Point.topLeft     = function topLeft     (a, b, c) { C.min(a.x, b.x, c.x); C.min
 Point.topRight    = function topRight    (a, b, c) { C.max(a.x, b.x, c.x); C.min(a.y, b.y, c.y) }
 Point.bottomLeft  = function bottomLeft  (a, b, c) { C.min(a.x, b.x, c.x); C.max(a.y, b.y, c.y) }
 Point.bottomRight = function bottomRight (a, b, c) { C.max(a.x, b.x, c.x); C.max(a.y, b.y, c.y) }
-
-Base.prototype.derivedPoint =
-function derivedPoint (name, constraint)
-{
-  this[name] = new Point
-  constraint.apply(null, [this[name]].concat([].slice.call(arguments, 2)))
-}
-
 
