@@ -21,21 +21,27 @@ html, body
   overflow: hidden;
 }
 
-#canvas .panel
-{
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 6px;
-  x-webkit-transition-property: left top width height right bottom opacity;
-  x-webkit-transition-duration: 0.1s;
-  overflow: hidden;
-}
-
+/*
 #canvas .virtual
 {
   -webkit-border-radius: 6px;
   background: rgba(0,0,255, 0.1);
   -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,255, 1);
+  overflow: hidden;
+}
+*/
+
+#canvas .rect
+{
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+  overflow: hidden;
+}
+
+#canvas .line
+{
+  background: #555;
   overflow: hidden;
 }
 
@@ -44,8 +50,6 @@ html, body
   background: rgba(0,0,0, 0.8);
   -webkit-border-radius: 10px;
   padding: 0;
-  x-webkit-transition-property: left top width height right bottom opacity;
-  x-webkit-transition-duration: 0.1s;
   overflow: hidden;
 }
 

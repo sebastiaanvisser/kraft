@@ -8,14 +8,23 @@ function mkPanel ()
   r.decorate(DraggableShape)
   r.decorate(SelectableShape, selection)
   r.selectable(r.mkHandles, r.delHandles)
-  r.elem.className += " panel"
   return r
 }
 
 r = mkPanel()
 q = mkPanel()
-s = mkPanel()
-t = mkPanel()
+
+function mkLine ()
+{
+  var l = AdjustableLine.make(canvas, 100, 50, 200, 300, 20)
+  l.decorate(DraggableShape)
+  l.decorate(SelectableShape, selection)
+  l.selectable(l.mkHandles, l.delHandles)
+  return l
+}
+
+s = mkLine()
+t = mkLine()
 
 
 
