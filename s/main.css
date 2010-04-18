@@ -15,19 +15,27 @@ html, body
   right: 10px;
   bottom: 10px;
 
-  x-webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 20px;
+  -webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: #aaa url("grid.png");
+  overflow: hidden;
+}
+
+#canvas .virtual
+{
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+  x-webkit-transition-property: left top width height right bottom opacity;
+  x-webkit-transition-duration: 0.1s;
   overflow: hidden;
 }
 
 #canvas .panel
 {
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 6px;
-  padding: 0;
-  x-webkit-transition-property: left top width height right bottom opacity;
-  x-webkit-transition-duration: 0.1s;
+  background: rgba(0,0,255, 0.1);
+  -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,255, 1);
   overflow: hidden;
 }
 
@@ -40,3 +48,5 @@ html, body
   x-webkit-transition-duration: 0.1s;
   overflow: hidden;
 }
+
+

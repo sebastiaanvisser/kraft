@@ -1,72 +1,4 @@
-Rect =
-function Rect (x0, y0, x1, y1)
-{
-  this.baseInit()
-
-  // Absolute view:
-  this.p0 = new Point(x0, y0)
-  this.p1 = new Point(x1, y0)
-  this.p2 = new Point(x0, y1)
-  this.p3 = new Point(x1, y1)
-  C.eq(this.p0.x, this.p2.x)
-  C.eq(this.p1.x, this.p3.x)
-  C.eq(this.p0.y, this.p1.y)
-  C.eq(this.p2.y, this.p3.y)
-
-  // Normalized view:
-  this.derivedPoint ("center",      Point.mid,         this.p0,            this.p3        )
-  this.derivedPoint ("topLeft",     Point.topLeft,     this.p0,            this.p3        )
-  this.derivedPoint ("topRight",    Point.topRight,    this.p0,            this.p3        )
-  this.derivedPoint ("bottomLeft",  Point.bottomLeft,  this.p0,            this.p3        )
-  this.derivedPoint ("bottomRight", Point.bottomRight, this.p0,            this.p3        )
-  this.derivedPoint ("midLeft",     Point.xy,          this.p0,            this.center    )
-  this.derivedPoint ("midRight",    Point.xy,          this.p1,            this.center    )
-  this.derivedPoint ("midTop",      Point.yx,          this.p0,            this.center    )
-  this.derivedPoint ("midBottom",   Point.yx,          this.p2,            this.center    )
-  this.derivedProp  ("width",       C.sub0,            this.bottomRight.x, this.topLeft.x )
-  this.derivedProp  ("height",      C.sub0,            this.bottomRight.y, this.topLeft.y )
-  this.derivedProp  ("left",        C.min0,            this.p0.x,          this.p3.x      )
-  this.derivedProp  ("top",         C.min0,            this.p0.y,          this.p3.y      )
-  this.derivedProp  ("right",       C.max0,            this.p0.x,          this.p3.x      )
-  this.derivedProp  ("bottom",      C.max0,            this.p0.y,          this.p3.y      )
-}
-
-Rect.prototype = new Base
-
-Rect.prototype.destruct =
-function destruct ()
-{
-  this.unrender()
-  this.cleanup()
-
-  this.p0.cleanup()
-  this.p1.cleanup()
-  this.p2.cleanup()
-  this.p3.cleanup()
-  this.center.cleanup()
-  this.topLeft.cleanup()
-  this.topRight.cleanup()
-  this.bottomLeft.cleanup()
-  this.bottomRight.cleanup()
-  this.midLeft.cleanup()
-  this.midRight.cleanup()
-  this.midTop.cleanup()
-  this.midBottom.cleanup()
-}
-
-// --------------------------
-
-Rect.prototype.renderable =
-function renderable (canvas)
-{
-  this.canvas = canvas
-  this.elem   = this.setupElem()
-  this.render()
-
-  this.onchange(this.render)
-}
-
-Rect.prototype.setupElem =
+Shape.prototype.setupElem =
 function setupElem ()
 {
   var elem = document.createElement("div")
@@ -76,7 +8,25 @@ function setupElem ()
   return elem
 }
 
-Rect.prototype.render =
+
+
+
+
+
+
+
+
+Shape.prototype.renderable =
+function renderable (canvas)
+{
+  this.canvas = canvas
+  this.elem   = this.setupElem()
+  this.render()
+
+  this.onchange(this.render)
+}
+
+Shape.prototype.render =
 function render ()
 {
   this.elem.style.left   = this.left.get()   + "px"
@@ -85,7 +35,7 @@ function render ()
   this.elem.style.height = this.height.get() + "px"
 }
 
-Rect.prototype.unrender =
+Shape.prototype.unrender =
 function unrender ()
 {
   this.canvas.removeChild(this.elem)
@@ -93,16 +43,16 @@ function unrender ()
 
 // --------------------------
 
-Rect.prototype.mkHandles =
+Shape.prototype.mkHandles =
 function mkHandles ()
 {
   var self = this
   function mkHandle ()
   {
-    var h = new Rect(0, 0, 10, 10)
+    var h = new Shape(0, 0, 8, 8)
     h.renderable(self.canvas)
     h.elem.className += " handle"
-    new Draggable(h.canvas, h, h.elem, false, false, 10, 10)
+    new Draggable(h.canvas, h, h.elem, false, false, 5, 5)
     return h
   }
 
@@ -126,7 +76,7 @@ function mkHandles ()
   Point.eq(this.handles.midBottom.center,   this.midBottom)
 }
 
-Rect.prototype.removeHandles =
+Shape.prototype.removeHandles =
 function removeHandles ()
 {
   for (var p in this.handles)
