@@ -21,6 +21,8 @@ Selection:
   - Grouping.
   - Common actions.
 
+States: selected, active, focused ...
+
 Undostack.
 
 Layers.

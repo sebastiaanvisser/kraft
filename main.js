@@ -2,7 +2,7 @@ var canvas = $("#canvas")[0]
 
 selection = new Selection
 
-function mkPanel ()
+function mkRect ()
 {
   var r = AdjustableRect.make(canvas, 100, 50, 200, 300)
   r.decorate(DraggableShape)
@@ -10,9 +10,6 @@ function mkPanel ()
   r.selectable(r.mkHandles, r.delHandles)
   return r
 }
-
-q = mkPanel()
-r = mkPanel()
 
 function mkLine ()
 {
@@ -23,9 +20,6 @@ function mkLine ()
   return l
 }
 
-s = mkLine()
-t = mkLine()
-
 function mkEllipse ()
 {
   var e = AdjustableEllipse.make(canvas, 100, 50, 200, 300)
@@ -35,10 +29,17 @@ function mkEllipse ()
   return e
 }
 
-u = mkEllipse()
-v = mkEllipse()
+$("#toolbar #rect").click(mkRect)
+$("#toolbar #line").click(mkLine)
+$("#toolbar #ellipse").click(mkEllipse)
+$("#toolbar #selectall").click(function () { selection.selectAll() })
+$("#toolbar #deselectall").click(function () { selection.deselectAll() })
 
 
+r = mkRect()
+l = mkLine()
+mkEllipse()
 
-
+C.eq(r.right, l.p0.x)
+C.eq(r.top,   l.p0.y)
 

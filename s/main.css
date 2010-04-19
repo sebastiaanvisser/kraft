@@ -7,11 +7,36 @@ html, body
   overflow: hidden;
 }
 
-#canvas
+#toolbar
 {
   position: absolute;
   left: 4px;
   top: 4px;
+  right: 4px;
+  height: 18px;
+
+  font-family: "myriad pro";
+}
+
+#toolbar span
+{ 
+  color: #555;
+  padding: 0 0 0 0;
+  margin-left: 20px;
+}
+
+#toolbar span:hover
+{
+  color: white;
+  cursor: pointer;
+  background: black;
+}
+
+#canvas
+{
+  position: absolute;
+  left: 4px;
+  top: 26px;
   right: 4px;
   bottom: 4px;
 
@@ -20,16 +45,6 @@ html, body
   background: #aaa url("grid.png");
   overflow: hidden;
 }
-
-/*
-#canvas .virtual
-{
-  -webkit-border-radius: 6px;
-  background: rgba(0,0,255, 0.1);
-  -webkit-box-shadow: inset 0px 0px 4px rgba(0,0,255, 1);
-  overflow: hidden;
-}
-*/
 
 #canvas .rect
 {
