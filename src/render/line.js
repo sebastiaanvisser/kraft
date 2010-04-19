@@ -78,7 +78,7 @@ addToProto(AdjustableLine,
     function mkHandle ()
     {
       var h = RenderableRect.make(this.canvas, 0, 0, 8, 8)
-      h.decorate(DraggableShape)
+      h.decorate(DraggableRect)
       h.elem.className += " handle"
       return h
     }

@@ -1,14 +1,14 @@
-function Shape () {}
+function Rect () {}
 
-Shape.make =
+Rect.make =
 function make (x0, y0, x1, y1)
 {
   var r = new Base
-  r.decorate(Shape, x0, y0, x1, y1)
+  r.decorate(Rect, x0, y0, x1, y1)
   return r
 }
 
-addToProto(Shape,
+addToProto(Rect,
 
   function constructor (x0, y0, x1, y1)
   {
@@ -73,9 +73,9 @@ addToProto(Shape,
 
 )
 
-function DraggableShape () {}
+function DraggableRect () {}
 
-addToProto(DraggableShape,
+addToProto(DraggableRect,
 
   function constructor ()
   {

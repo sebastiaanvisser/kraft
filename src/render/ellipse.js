@@ -3,7 +3,7 @@ function RenderableEllipse () {}
 RenderableEllipse.make =
 function make (canvas, x0, y0, x1, y1)
 {
-  var r = Shape.make(x0, y0, x1, y1)
+  var r = Rect.make(x0, y0, x1, y1)
   r.decorate(RenderableEllipse, canvas)
   return r
 }
@@ -23,7 +23,7 @@ addToProto(RenderableEllipse,
   function setupElem ()
   {
     var elem = document.createElement("div")
-    elem.setAttribute("class", "ellipse shape")
+    elem.setAttribute("class", "ellipse")
     elem.style.position = "absolute"
     this.canvas.appendChild(elem)
     return elem
@@ -75,7 +75,7 @@ addToProto(AdjustableEllipse,
     function mkHandle ()
     {
       var h = RenderableEllipse.make(this.canvas, 0, 0, 8, 8)
-      h.decorate(DraggableShape)
+      h.decorate(DraggableRect)
       h.elem.className += " handle"
       return h
     }

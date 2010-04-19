@@ -3,7 +3,7 @@ function RenderableRect () {}
 RenderableRect.make =
 function make (canvas, x0, y0, x1, y1)
 {
-  var r = Shape.make(x0, y0, x1, y1)
+  var r = Rect.make(x0, y0, x1, y1)
   r.decorate(RenderableRect, canvas)
   return r
 }
@@ -67,7 +67,7 @@ addToProto(AdjustableRect,
     function mkHandle ()
     {
       var h = RenderableRect.make(this.canvas, 0, 0, 8, 8)
-      h.decorate(DraggableShape)
+      h.decorate(DraggableRect)
       h.elem.className += " handle"
       return h
     }

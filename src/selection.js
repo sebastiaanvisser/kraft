@@ -47,9 +47,9 @@ addToProto(Selection,
 
 )
 
-function SelectableShape () {}
+function SelectableRect () {}
 
-addToProto(SelectableShape,
+addToProto(SelectableRect,
 
   function constructor (sel)
   {
