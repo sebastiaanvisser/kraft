@@ -11,12 +11,12 @@ function mkPanel ()
   return r
 }
 
-r = mkPanel()
 q = mkPanel()
+r = mkPanel()
 
 function mkLine ()
 {
-  var l = AdjustableLine.make(canvas, 100, 50, 200, 300, 20)
+  var l = AdjustableLine.make(canvas, 100, 50, 200, 300, 4)
   l.decorate(DraggableShape)
   l.decorate(SelectableShape, selection)
   l.selectable(l.mkHandles, l.delHandles)
@@ -25,6 +25,20 @@ function mkLine ()
 
 s = mkLine()
 t = mkLine()
+
+function mkEllipse ()
+{
+  var e = AdjustableEllipse.make(canvas, 100, 50, 200, 300)
+  e.decorate(DraggableShape)
+  e.decorate(SelectableShape, selection)
+  e.selectable(e.mkHandles, e.delHandles)
+  return e
+}
+
+u = mkEllipse()
+v = mkEllipse()
+
+
 
 
 

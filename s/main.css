@@ -33,7 +33,7 @@ html, body
 
 #canvas .rect
 {
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #ddd), to(#ddd));
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #dde), to(#dde));
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 6px;
   overflow: hidden;
@@ -42,6 +42,14 @@ html, body
 #canvas .line
 {
   background: #555;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#canvas .ellipse
+{
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #edd), to(#edd));
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
