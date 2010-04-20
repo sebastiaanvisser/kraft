@@ -1,4 +1,12 @@
-function RenderableLine () {}
+function RenderableLine (canvas)
+{
+  this.canvas = canvas
+  this.elem   = this.setupElem()
+  this.render()
+
+  this.onchange(this.render)
+  this.render()
+}
 
 RenderableLine.make =
 function make (canvas, x0, y0, x1, y1, w)
@@ -9,16 +17,6 @@ function make (canvas, x0, y0, x1, y1, w)
 }
 
 addToProto(RenderableLine,
-
-  function constructor (canvas)
-  {
-    this.canvas = canvas
-    this.elem   = this.setupElem()
-    this.render()
-
-    this.onchange(this.render)
-    this.render()
-  },
 
   function setupElem ()
   {
@@ -36,19 +34,17 @@ addToProto(RenderableLine,
 
   function render ()
   {
-    var x0 = this.p0.x.get(),
-        y0 = this.p0.y.get(),
-        x1 = this.p1.x.get(),
-        y1 = this.p1.y.get()
-    var len = Math.sqrt( Math.pow(x1 - x0, 2)
-                       + Math.pow(y1 - y0, 2)
-                       )
+    var x0 = this.p0.x,
+        y0 = this.p0.y,
+        x1 = this.p1.x,
+        y1 = this.p1.y,
+        w  = this.width
+    var len = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2))
     var rot = Math.atan((y1 - y0) / (x1 - x0)) * 180 / Math.PI
-
-    this.elem.style.left   = ((x0 + x1 - len)              / 2) + "px"
-    this.elem.style.top    = ((y0 + y1 - this.width.get()) / 2) + "px"
-    this.elem.style.width  = len                                         + "px"
-    this.elem.style.height = this.width.get()                            + "px"
+    this.elem.style.left   = ((x0 + x1 - len) / 2) + "px"
+    this.elem.style.top    = ((y0 + y1 - w)   / 2) + "px"
+    this.elem.style.width  = len                   + "px"
+    this.elem.style.height = w                     + "px"
 
     this.elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
   },
@@ -86,8 +82,10 @@ addToProto(AdjustableLine,
     this.handles = {}
     this.handles.topLeft     = mkHandle()
     this.handles.bottomRight = mkHandle()
-    Point.eq(this.handles.topLeft.center.get(),     this.p0)
-    Point.eq(this.handles.bottomRight.center.get(), this.p1)
+    this.handles.center      = mkHandle()
+    Point.eq(this.handles.topLeft.center,     this.p0)
+    Point.eq(this.handles.bottomRight.center, this.p1)
+    Point.eq(this.handles.center.center,      this.center)
   },
 
   function delHandles ()

@@ -1,4 +1,12 @@
-function RenderableRect () {}
+function RenderableRect ()
+{
+  this.canvas = canvas
+  this.elem   = this.setupElem()
+  this.render()
+
+  this.onchange(this.render)
+  this.render()
+}
 
 RenderableRect.make =
 function make (canvas, x0, y0, x1, y1)
@@ -9,16 +17,6 @@ function make (canvas, x0, y0, x1, y1)
 }
 
 addToProto(RenderableRect,
-
-  function constructor (canvas)
-  {
-    this.canvas = canvas
-    this.elem   = this.setupElem()
-    this.render()
-
-    this.onchange(this.render)
-    this.render()
-  },
 
   function setupElem ()
   {
@@ -36,10 +34,10 @@ addToProto(RenderableRect,
 
   function render ()
   {
-    this.elem.style.left   = this.left.get()   + "px"
-    this.elem.style.top    = this.top.get()    + "px"
-    this.elem.style.width  = this.width.get()  + "px"
-    this.elem.style.height = this.height.get() + "px"
+    this.elem.style.left   = this.left   + "px"
+    this.elem.style.top    = this.top    + "px"
+    this.elem.style.width  = this.width  + "px"
+    this.elem.style.height = this.height + "px"
   },
 
   function unrender ()
@@ -72,24 +70,27 @@ addToProto(AdjustableRect,
       return h
     }
 
-    this.handles = {}
-    this.handles.topLeft     = mkHandle()
-    this.handles.topRight    = mkHandle()
-    this.handles.bottomLeft  = mkHandle()
-    this.handles.bottomRight = mkHandle()
-    this.handles.midLeft     = mkHandle()
-    this.handles.midRight    = mkHandle()
-    this.handles.midTop      = mkHandle()
-    this.handles.midBottom   = mkHandle()
+    this.handles =
+      { topLeft     : mkHandle()
+      , topRight    : mkHandle()
+      , bottomLeft  : mkHandle()
+      , bottomRight : mkHandle()
+      , midLeft     : mkHandle()
+      , midRight    : mkHandle()
+      , midTop      : mkHandle()
+      , midBottom   : mkHandle()
+      , center      : mkHandle()
+      }
 
-    Point.eq(this.handles.topLeft.center.get(),     this.p0)
-    Point.eq(this.handles.topRight.center.get(),    this.p1)
-    Point.eq(this.handles.bottomLeft.center.get(),  this.p2)
-    Point.eq(this.handles.bottomRight.center.get(), this.p3)
-    Point.eq(this.handles.midLeft.center.get(),     this.midLeft.get())
-    Point.eq(this.handles.midRight.center.get(),    this.midRight.get())
-    Point.eq(this.handles.midTop.center.get(),      this.midTop.get())
-    Point.eq(this.handles.midBottom.center.get(),   this.midBottom.get())
+    Point.eq(this.handles.topLeft.center,     this.p0)
+    Point.eq(this.handles.topRight.center,    this.p1)
+    Point.eq(this.handles.bottomLeft.center,  this.p2)
+    Point.eq(this.handles.bottomRight.center, this.p3)
+    Point.eq(this.handles.midLeft.center,     this.midLeft)
+    Point.eq(this.handles.midRight.center,    this.midRight)
+    Point.eq(this.handles.midTop.center,      this.midTop)
+    Point.eq(this.handles.midBottom.center,   this.midBottom)
+    Point.eq(this.handles.center.center,      this.center)
   },
 
   function delHandles ()
@@ -99,4 +100,9 @@ addToProto(AdjustableRect,
   }
 
 )
+
+function DraggableRect ()
+{
+  this.dragger = new Draggable(this.canvas, this, this.elem, false, false, 10, 10)
+}
 

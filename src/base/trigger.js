@@ -1,6 +1,6 @@
 function Trigger (t, f, s)
 {
-  this.id      = Trigger.nextId++
+  this.id      = 't' + Trigger.nextId++
   this.target  = [t, f]
   this.sources = s
 
@@ -12,7 +12,7 @@ Trigger.all    = {}
 
 addToProto(Trigger,
 
-  function cleanup ()
+  function destructor ()
   {
     delete this.target[0].triggers[this.id]
     for (var i = 0; i < this.sources.length; i++)
@@ -31,14 +31,15 @@ addToProto(Trigger,
       for (var i = 0; i < this.sources.length; i++)
         tmp[i] = this.sources[i][1].apply(this, vs)
       for (var i = 0; i < this.sources.length; i++)
-        this.sources[i][0].set(tmp[i])
+        this.sources[i][0].v = tmp[i]
     }
     else
-      this.target[0].set(this.target[1].apply(this, vs))
+      this.target[0].v = this.target[1].apply(this, vs)
   }
 
 )
 
+Trigger.compose =
 function compose (t, f /* ... */)
 {
   // Build up trigger.

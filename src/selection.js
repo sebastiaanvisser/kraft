@@ -13,9 +13,9 @@ addToProto(Selection,
 
   function select (obj)
   {
-    if (this.selected[obj.$.id]) return
+    if (this.selected[obj.id]) return
 
-    this.selected[obj.$.id] = obj
+    this.selected[obj.id] = obj
 
     for (var i = 0; i < obj.onselect.length; i++)
       if (obj.onselect[i])
@@ -24,9 +24,9 @@ addToProto(Selection,
 
   function deselect (obj)
   {
-    if (!this.selected[obj.$.id]) return
+    if (!this.selected[obj.id]) return
 
-    delete this.selected[obj.$.id]
+    delete this.selected[obj.id]
 
     for (var i = 0; i < obj.ondeselect.length; i++)
       if (obj.ondeselect[i])
@@ -47,28 +47,26 @@ addToProto(Selection,
 
 )
 
-function SelectableRect () {}
+function SelectableRect (sel)
+{
+  this.selection  = sel
+  this.onselect   = []
+  this.ondeselect = []
+
+  this.selection.selectable[this.id] = this
+
+  var self = this
+  $(this.canvas).mousedown( function (e) { sel.deselectAll() })
+  $(this.elem).mousedown(
+    function (e)
+    {
+      if (e.altKey) return sel.deselect(self)
+      if (!e.shiftKey) sel.deselectAll()
+      sel.select(self)
+    })
+}
 
 addToProto(SelectableRect,
-
-  function constructor (sel)
-  {
-    this.selection  = sel
-    this.onselect   = []
-    this.ondeselect = []
-
-    this.selection.selectable[this.$.id] = this
-
-    var self = this
-    $(this.canvas).mousedown( function (e) { sel.deselectAll() })
-    $(this.elem).mousedown(
-      function (e)
-      {
-        if (e.altKey) return sel.deselect(self)
-        if (!e.shiftKey) sel.deselectAll()
-        sel.select(self)
-      })
-  },
 
   function selectable (s, d)
   {

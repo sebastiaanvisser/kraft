@@ -1,4 +1,12 @@
-function RenderableEllipse () {}
+function RenderableEllipse (canvas)
+{
+  this.canvas = canvas
+  this.elem   = this.setupElem()
+  this.render()
+
+  this.onchange(this.render)
+  this.render()
+}
 
 RenderableEllipse.make =
 function make (canvas, x0, y0, x1, y1)
@@ -9,16 +17,6 @@ function make (canvas, x0, y0, x1, y1)
 }
 
 addToProto(RenderableEllipse,
-
-  function constructor (canvas)
-  {
-    this.canvas = canvas
-    this.elem   = this.setupElem()
-    this.render()
-
-    this.onchange(this.render)
-    this.render()
-  },
 
   function setupElem ()
   {
@@ -36,11 +34,11 @@ addToProto(RenderableEllipse,
 
   function render ()
   {
-    var w = this.right.get()  - this.left.get();
-    var h = this.bottom.get() - this.top.get();
+    var w = this.right  - this.left;
+    var h = this.bottom - this.top;
 
-    this.elem.style.left   = this.left.get() + "px"
-    this.elem.style.top    = this.top.get()  + "px"
+    this.elem.style.left   = this.left + "px"
+    this.elem.style.top    = this.top  + "px"
     this.elem.style.width  = w         + "px"
     this.elem.style.height = h         + "px"
 
@@ -89,15 +87,17 @@ addToProto(AdjustableEllipse,
     this.handles.midRight    = mkHandle()
     this.handles.midTop      = mkHandle()
     this.handles.midBottom   = mkHandle()
+    this.handles.center      = mkHandle()
 
-    Point.eq(this.handles.topLeft.center.get(),     this.p0)
-    Point.eq(this.handles.topRight.center.get(),    this.p1)
-    Point.eq(this.handles.bottomLeft.center.get(),  this.p2)
-    Point.eq(this.handles.bottomRight.center.get(), this.p3)
-    Point.eq(this.handles.midLeft.center.get(),     this.midLeft.get())
-    Point.eq(this.handles.midRight.center.get(),    this.midRight.get())
-    Point.eq(this.handles.midTop.center.get(),      this.midTop.get())
-    Point.eq(this.handles.midBottom.center.get(),   this.midBottom.get())
+    Point.eq(this.handles.topLeft.center,     this.p0)
+    Point.eq(this.handles.topRight.center,    this.p1)
+    Point.eq(this.handles.bottomLeft.center,  this.p2)
+    Point.eq(this.handles.bottomRight.center, this.p3)
+    Point.eq(this.handles.midLeft.center,     this.midLeft)
+    Point.eq(this.handles.midRight.center,    this.midRight)
+    Point.eq(this.handles.midTop.center,      this.midTop)
+    Point.eq(this.handles.midBottom.center,   this.midBottom)
+    Point.eq(this.handles.center.center,      this.center)
   },
 
   function delHandles ()

@@ -38,8 +38,8 @@ $("#toolbar #deselectall").click(function () { selection.deselectAll() })
 
 r = mkRect()
 l = mkLine()
-mkEllipse()
+e = mkEllipse()
 
-C.eq(r.right, l.p0.x)
-C.eq(r.top,   l.p0.y)
+C.eq(r.$.right, l.p0.$.x)
+C.eq(r.$.top,   l.p0.$.y)
 

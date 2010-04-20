@@ -1,60 +1,64 @@
 var C = {}
 
-C.getter = function getter (p) { return function () { return p.get() } }
-
-C.eq = function eq (a, b) { compose(a, C.getter(b), b, C.getter(a)) }
+C.eq =
+function eq (a, b)
+{
+  Trigger.compose( a, function () { return b.v }
+                 , b, function () { return a.v }
+                 )
+}
 
 C.sub0 =
 function sub0 (a, b, c)
 {
-  compose( a, function () { return b.get() - c.get() }
-         , b, function () { return c.get() + a.get() }
-         , c, function () { return c.get()           }
-         )              
+  Trigger.compose( a, function () { return b.v - c.v }
+                 , b, function () { return c.v + a.v }
+                 , c, function () { return c.v       }
+                 )              
 }
 
 C.mid =
 function mid (a, b, c)
 {
-  compose( a, function () { return (b.get() + c.get()) / 2           }
-         , b, function () { return a.get() - (c.get() - b.get()) / 2 }
-         , c, function () { return a.get() + (c.get() - b.get()) / 2 }
-         )              
+  Trigger.compose( a, function () { return (b.v + c.v) / 2       }
+                 , b, function () { return a.v - (c.v - b.v) / 2 }
+                 , c, function () { return a.v + (c.v - b.v) / 2 }
+                 )              
 }
 
 C.min =
 function min (a, b, c)
 {
-  compose( a, function () { return Math.min(b.get(), c.get())             }
-         , b, function () { return b.get() <= c.get() ? a.get() : b.get() }
-         , c, function () { return c.get() <  b.get() ? a.get() : c.get() }
-         )
+  Trigger.compose( a, function () { return Math.min(b.v, c.v)     }
+                 , b, function () { return b.v <= c.v ? a.v : b.v }
+                 , c, function () { return c.v <  b.v ? a.v : c.v }
+                 )
 }
 
 C.max =
 function max (a, b, c)
 {
-  compose( a, function () { return Math.max(b.get(), c.get())             }
-         , b, function () { return b.get() >= c.get() ? a.get() : b.get() }
-         , c, function () { return c.get() >  b.get() ? a.get() : c.get() }
-         )
+  Trigger.compose( a, function () { return Math.max(b.v, c.v)     }
+                 , b, function () { return b.v >= c.v ? a.v : b.v }
+                 , c, function () { return c.v >  b.v ? a.v : c.v }
+                 )
 }
 
 C.min0 =
 function min0 (a, b, c)
 {
-  compose( a, function () { return Math.min(b.get(), c.get())                             }
-         , b, function () { return a.get() + (b.get() <= c.get() ? 0 : b.get() - c.get()) }
-         , c, function () { return a.get() + (c.get() <  b.get() ? 0 : c.get() - b.get()) }
-         )
+  Trigger.compose( a, function () { return Math.min(b.v, c.v)                 }
+                 , b, function () { return a.v + (b.v <= c.v ? 0 : b.v - c.v) }
+                 , c, function () { return a.v + (c.v <  b.v ? 0 : c.v - b.v) }
+                 )
 }
 
 C.max0 =
 function max0 (a, b, c)
 {
-  compose( a, function () { return Math.max(b.get(), c.get())             }
-         , b, function () { return a.get() - (b.get() >= c.get() ? 0 : c.get() - b.get()) }
-         , c, function () { return a.get() - (c.get() >  b.get() ? 0 : b.get() - c.get()) }
-         )
+  Trigger.compose( a, function () { return Math.max(b.v, c.v)                 }
+                 , b, function () { return a.v - (b.v >= c.v ? 0 : c.v - b.v) }
+                 , c, function () { return a.v - (c.v >  b.v ? 0 : b.v - c.v) }
+                 )
 }
 

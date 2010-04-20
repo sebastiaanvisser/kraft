@@ -41,7 +41,7 @@ html, body
   bottom: 4px;
 
   -webkit-border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  x-webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: #aaa url("grid.png");
   overflow: hidden;
 }

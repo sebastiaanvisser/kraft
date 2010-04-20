@@ -3,38 +3,36 @@ function Property (o, n, v)
   this.obj      = o
   this.name     = n
   this.value    = v
-  this.busy     = false
   this.triggers = {}
-}
+  this.busy     = false
 
-Property.depth = 0
+  var self = this
 
-addToProto(Property,
-
-  function cleanup ()
-  {
-    for (var t in this.triggers)
-      this.triggers[t][1].cleanup()
-  },
-
-  function get () { return this.value },
+  function get () { return self.value }
 
   function set (v)
   {
-    if (this.value == v) return
-    if (this.busy) return
-    this.busy = true
-    Property.depth++
+    if (self.value == v) return
+    if (self.busy) return
+    self.busy = true
+    self.value = v
+    foreach(self.triggers, function (t) { t[1].app(t[0]) })
+    self.obj.appEffects()
+    self.busy = false
+  }
 
-    this.value = v
+  this.obj.__defineGetter__(this.name, get)
+  this.obj.__defineSetter__(this.name, set)
+  this.__defineGetter__("v", get)
+  this.__defineSetter__("v", set)
+}
 
-    for (var t in this.triggers)
-      this.triggers[t][1].app(this.triggers[t][0])
+addToProto(Property,
 
-    this.obj.appEffects()
-
-    Property.depth--
-    this.busy = false
+  function destructor ()
+  {
+    for (var t in this.triggers) this.triggers[t][1].destructor()
+    if (this.value.destructor) this.value.destructor()
   }
 
 )

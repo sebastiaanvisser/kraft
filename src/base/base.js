@@ -1,11 +1,14 @@
 function Base ()
 {
-    this.$ = { id          : Base.nextId++
-             , properties  : {}
-             , onchange    : []
-             , destructors : []
-             }
-    Base.all[this.$.id] = this
+  this.id = 'o' + Base.nextId++
+
+  this.meta = { onchange    : []
+              , destructors : []
+              }
+
+  this.$ = {}
+
+  Base.all[this.id] = this
 }
 
 Base.nextId = 0
@@ -13,65 +16,43 @@ Base.all    = {}
 
 addToProto(Base,
 
-  function decorate (klass /* constructor arguments */)
+  function decorate (c /* constructor arguments */)
   {
-    for (var m in klass.prototype)
-      if (m != "destructor" && m != "constructor")
-        this[m] = klass.prototype[m]
+    for (var m in c.prototype)
+      if (m != "destructor")
+        this[m] = c.prototype[m]
 
-    if (klass.prototype.destructor)
-      this.registerDestructor(klass.prototype.destructor)
+    if (c.prototype.destructor)
+      this.meta.destructors.push(c.prototype.destructor)
 
-    if (klass.prototype.constructor)
-      klass.prototype.constructor.apply(this, [].slice.call(arguments, 1))
-
-    klass.call(this)
+    c.apply(this, [].slice.call(arguments, 1))
   },
 
   function destructor ()
   {
-    for (var i = 0; i < this.$.destructors.length; i++)
-      this.$.destructors[i].call(this)
-
-    for (var p in this.$.properties)
-      this.$.properties[p].cleanup()
+    this.meta.destructors.map(function (d) { d.call(this) }, this)
+    foreach(this.$, function (p) { p.destructor() })
   },
 
-  function registerDestructor (dtor)
+  function def (name, init)
   {
-    this.$.destructors.push(dtor)
-  },
-
-  function onchange (f)
-  {
-    this.$.onchange.push(f)
-  },
-
-  function appEffects (v)
-  {
-    for (var i = 0; i < this.$.onchange.length; i++)
-      this.$.onchange[i].call(this, v)
-  },
-
-  function property (name, init)
-  {
-    this[name] = new Property(this, name, init)
-    this.$.properties[name] = this[name]
+    this.$[name] = new Property(this, name, init)
   },
 
   function derivedProp (name, init, constraint)
   {
-    this.property(name, init)
+    this.def(name, init)
     constraint.apply(null, [this[name].get()].concat([].slice.call(arguments, 3)))
   },
 
-  function countTriggers ()
+  function onchange (f)
   {
-    var c = 0
-    for (var p in this.$.properties)
-      for (var t in this.$.properties[p].triggers)
-        c++
-    return c
+    this.meta.onchange.push(f)
+  },
+
+  function appEffects (v)
+  {
+    this.meta.onchange.map(function (o) { o.call(this, v) }, this)
   }
 
 )
