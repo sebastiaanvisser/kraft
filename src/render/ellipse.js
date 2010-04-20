@@ -34,8 +34,8 @@ addToProto(RenderableEllipse,
 
   function render ()
   {
-    var w = this.right  - this.left;
-    var h = this.bottom - this.top;
+    var w = this.right  - this.left
+    var h = this.bottom - this.top
 
     this.elem.style.left   = this.left + "px"
     this.elem.style.top    = this.top  + "px"

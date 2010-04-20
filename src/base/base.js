@@ -34,16 +34,14 @@ addToProto(Base,
     foreach(this.$, function (p) { p.destructor() })
   },
 
-  function def (name, init)
+  function defineProp (p, name, init, constraint, args)
   {
     this.$[name] = new Property(this, name, init)
+    if (constraint) constraint.apply(null, [p ? this.$[name] : this[name]].concat(args))
   },
 
-  function derivedProp (name, init, constraint)
-  {
-    this.def(name, init)
-    constraint.apply(null, [this[name].get()].concat([].slice.call(arguments, 3)))
-  },
+  function def  (n, i, c) { this.defineProp(true,  n, i, c, slice(arguments, 3)) },
+  function def1 (n, i, c) { this.defineProp(false, n, i, c, slice(arguments, 3)) },
 
   function onchange (f)
   {
