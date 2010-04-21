@@ -1,18 +1,18 @@
-function RenderableLine (canvas)
+function RenderableLine (canvas, renderer)
 {
-  this.canvas = canvas
+  this.canvas   = canvas
+  this.renderer = renderer
   this.elem   = this.setupElem()
-  this.render()
 
-  this.onchange(this.render)
-  this.render()
+  this.onchange(function () { this.renderer.enqueue(this) })
+  this.changed()
 }
 
 RenderableLine.make =
-function make (canvas, x0, y0, x1, y1, w)
+function make (canvas, renderer, x0, y0, x1, y1, w)
 {
   var r = Line.make(x0, y0, x1, y1, w)
-  r.decorate(RenderableLine, canvas)
+  r.decorate(RenderableLine, canvas, renderer)
   return r
 }
 
@@ -59,9 +59,9 @@ addToProto(RenderableLine,
 function AdjustableLine () {}
 
 AdjustableLine.make =
-function make (canvas, x0, y0, x1, y1, w)
+function make (canvas, renderer, x0, y0, x1, y1, w)
 {
-  var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
+  var r = RenderableLine.make(canvas, renderer, x0, y0, x1, y1, w)
   r.decorate(AdjustableLine)
   return r
 }
@@ -70,28 +70,16 @@ addToProto(AdjustableLine,
 
   function mkHandles ()
   {
-    var self = this
-    function mkHandle ()
-    {
-      var h = RenderableRect.make(this.canvas, 0, 0, 8, 8)
-      h.decorate(DraggableRect)
-      h.elem.className += " handle"
-      return h
-    }
-
-    this.handles = {}
-    this.handles.topLeft     = mkHandle()
-    this.handles.bottomRight = mkHandle()
-    this.handles.center      = mkHandle()
-    Point.eq(this.handles.topLeft.center,     this.p0)
-    Point.eq(this.handles.bottomRight.center, this.p1)
-    Point.eq(this.handles.center.center,      this.center)
+    this.handles =
+      { topLeft     : new Handle(this.canvas, this.renderer, this.p0)
+      , bottomRight : new Handle(this.canvas, this.renderer, this.p1)
+      , center      : new Handle(this.canvas, this.renderer, this.center)
+      }
   },
 
   function delHandles ()
   {
-    for (var p in this.handles)
-      this.handles[p].destructor()
+    foreach(this.handles, function (h) { h.destructor() })
   }
 
 )

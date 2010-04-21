@@ -17,7 +17,7 @@ function Property (o, n, v)
     self.busy = true
     self.value = v
     foreach(self.triggers, function (t) { t[1].app(t[0]) })
-    self.obj.appEffects()
+    self.obj.changed()
     self.busy = false
   }
 

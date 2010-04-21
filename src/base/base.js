@@ -48,7 +48,7 @@ addToProto(Base,
     this.meta.onchange.push(f)
   },
 
-  function appEffects (v)
+  function changed (v)
   {
     this.meta.onchange.map(function (o) { o.call(this, v) }, this)
   }

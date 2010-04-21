@@ -46,34 +46,32 @@ html, body
   overflow: hidden;
 }
 
-#canvas .rect
+
+
+#canvas .handle0
 {
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #dde), to(#dde));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 6px;
-  overflow: hidden;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0, 0.8);
 }
 
-#canvas .line
+#canvas .handle1
+{
+  background: white;
+}
+
+
+#canvas .myrect
+{
+  background: #eee;
+}
+
+#canvas .myline
 {
   background: #555;
-  overflow: hidden;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-#canvas .ellipse
+#canvas .myellipse
 {
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #edd), to(#edd));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  background: #ddd;
 }
-
-#canvas .handle
-{
-  background: rgba(0,0,0, 0.8);
-  -webkit-border-radius: 10px;
-  padding: 0;
-  overflow: hidden;
-}
-
 
