@@ -68,22 +68,21 @@ addToProto(AdjustableEllipse,
 
   function mkHandles ()
   {
-    this.handles =
-      { topLeft     : new Handle(this.canvas, this.p0)
-      , topRight    : new Handle(this.canvas, this.p1)
-      , bottomLeft  : new Handle(this.canvas, this.p2)
-      , bottomRight : new Handle(this.canvas, this.p3)
-      , midLeft     : new Handle(this.canvas, this.midLeft)
-      , midRight    : new Handle(this.canvas, this.midRight)
-      , midTop      : new Handle(this.canvas, this.midTop)
-      , midBottom   : new Handle(this.canvas, this.midBottom)
-      , center      : new Handle(this.canvas, this.center)
-      }
+    this.handles = new Base
+    this.handles.def("topLeft",     Handle.make  (this.canvas, this.p0))
+    this.handles.def("topRight",    Handle.make  (this.canvas, this.p1))
+    this.handles.def("bottomLeft",  Handle.make  (this.canvas, this.p2))
+    this.handles.def("bottomRight", Handle.make  (this.canvas, this.p3))
+    this.handles.def("midLeft",     Handle.makeH (this.canvas, this.midLeft))
+    this.handles.def("midRight",    Handle.makeH (this.canvas, this.midRight))
+    this.handles.def("midTop",      Handle.makeV (this.canvas, this.midTop))
+    this.handles.def("midBottom",   Handle.makeV (this.canvas, this.midBottom))
+    this.handles.def("center",      Handle.make  (this.canvas, this.center))
   },
 
   function delHandles ()
   {
-    foreach(this.handles, function (h) { h.destructor() })
+    this.handles.destructor()
   }
 
 )

@@ -69,16 +69,15 @@ addToProto(AdjustableLine,
 
   function mkHandles ()
   {
-    this.handles =
-      { topLeft     : new Handle(this.canvas, this.p0)
-      , bottomRight : new Handle(this.canvas, this.p1)
-      , center      : new Handle(this.canvas, this.center)
-      }
+    this.handles = new Base
+    this.handles.def("topLeft",     Handle.make(this.canvas, this.p0))
+    this.handles.def("bottomRight", Handle.make(this.canvas, this.p1))
+    this.handles.def("center",      Handle.make(this.canvas, this.center))
   },
 
   function delHandles ()
   {
-    foreach(this.handles, function (h) { h.destructor() })
+    this.handles.destructor()
   }
 
 )
