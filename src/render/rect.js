@@ -84,6 +84,6 @@ addToProto(AdjustableRect,
 
 function DraggableRect ()
 {
-  this.dragger = new Draggable(this.canvas, this, this.elem, false, false, 10, 10)
+  this.dragger = new Draggable(this.canvas, this, this.elem, false, false, 5, 5)
 }
 

@@ -41,7 +41,6 @@ html, body
   bottom: 4px;
 
   -webkit-border-radius: 8px;
-  x-webkit-box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   background: #aaa url("grid.png");
   overflow: hidden;
 }
@@ -62,16 +61,20 @@ html, body
 
 #canvas .myrect
 {
-  background: #eee;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+}
+
+#canvas .myellipse
+{
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
 }
 
 #canvas .myline
 {
   background: #555;
-}
-
-#canvas .myellipse
-{
-  background: #ddd;
 }
 
