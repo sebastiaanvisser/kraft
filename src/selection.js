@@ -64,6 +64,11 @@ function SelectableRect ()
       if (!e.shiftKey) sel.deselectAll()
       sel.select(self)
     })
+
+  this.selectable
+    ( function () { $(self.elem).addClass("selected")    }
+    , function () { $(self.elem).removeClass("selected") }
+    )
 }
 
 addToProto(SelectableRect,
@@ -74,8 +79,15 @@ addToProto(SelectableRect,
     this.ondeselect.push(d)
   },
 
-  function select   () { this.canvas.selection.select(this)   },
-  function deselect () { this.canvas.selection.deselect(this) }
+  function select ()
+  {
+    this.canvas.selection.select(this)
+  },
+
+  function deselect ()
+  {
+    this.canvas.selection.deselect(this)
+  }
 
 )
 

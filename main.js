@@ -13,7 +13,7 @@ function mkRect ()
 
 function mkLine ()
 {
-  var l = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 5)
+  var l = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
   l.decorate(DraggableRect)
   l.decorate(SelectableRect)
   l.selectable(l.mkHandles, l.delHandles)
