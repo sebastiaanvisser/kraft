@@ -1,18 +1,17 @@
-function RenderableLine (canvas, renderer)
+function RenderableLine (canvas)
 {
-  this.canvas   = canvas
-  this.renderer = renderer
+  this.canvas = canvas
   this.elem   = this.setupElem()
 
-  this.onchange(function () { this.renderer.enqueue(this) })
+  this.onchange(function () { this.canvas.renderer.enqueue(this) })
   this.changed()
 }
 
 RenderableLine.make =
-function make (canvas, renderer, x0, y0, x1, y1, w)
+function make (canvas, x0, y0, x1, y1, w)
 {
   var r = Line.make(x0, y0, x1, y1, w)
-  r.decorate(RenderableLine, canvas, renderer)
+  r.decorate(RenderableLine, canvas)
   return r
 }
 
@@ -23,7 +22,7 @@ addToProto(RenderableLine,
     var elem = document.createElement("div")
     elem.setAttribute("class", "line shape")
     elem.style.position = "absolute"
-    this.canvas.appendChild(elem)
+    this.canvas.elem.appendChild(elem)
     return elem
   },
 
@@ -51,7 +50,7 @@ addToProto(RenderableLine,
 
   function unrender ()
   {
-    this.canvas.removeChild(this.elem)
+    this.canvas.elem.removeChild(this.elem)
   }
 
 )
@@ -59,9 +58,9 @@ addToProto(RenderableLine,
 function AdjustableLine () {}
 
 AdjustableLine.make =
-function make (canvas, renderer, x0, y0, x1, y1, w)
+function make (canvas, x0, y0, x1, y1, w)
 {
-  var r = RenderableLine.make(canvas, renderer, x0, y0, x1, y1, w)
+  var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
   r.decorate(AdjustableLine)
   return r
 }
@@ -71,9 +70,9 @@ addToProto(AdjustableLine,
   function mkHandles ()
   {
     this.handles =
-      { topLeft     : new Handle(this.canvas, this.renderer, this.p0)
-      , bottomRight : new Handle(this.canvas, this.renderer, this.p1)
-      , center      : new Handle(this.canvas, this.renderer, this.center)
+      { topLeft     : new Handle(this.canvas, this.p0)
+      , bottomRight : new Handle(this.canvas, this.p1)
+      , center      : new Handle(this.canvas, this.center)
       }
   },
 

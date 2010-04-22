@@ -47,16 +47,16 @@ addToProto(Selection,
 
 )
 
-function SelectableRect (sel)
+function SelectableRect ()
 {
-  this.selection  = sel
   this.onselect   = []
   this.ondeselect = []
 
-  this.selection.selectable[this.id] = this
+  var sel = this.canvas.selection
+  sel.selectable[this.id] = this
 
   var self = this
-  $(this.canvas).mousedown( function (e) { sel.deselectAll() })
+  $(this.canvas.elem).mousedown( function (e) { sel.deselectAll() })
   $(this.elem).mousedown(
     function (e)
     {
@@ -74,8 +74,8 @@ addToProto(SelectableRect,
     this.ondeselect.push(d)
   },
 
-  function select   () { this.selection.select(this)   },
-  function deselect () { this.selection.deselect(this) }
+  function select   () { this.canvas.selection.select(this)   },
+  function deselect () { this.canvas.selection.deselect(this) }
 
 )
 

@@ -1,10 +1,10 @@
-function Handle (canvas, renderer, pt)
+function Handle (canvas, pt)
 {
-  this.handle0 = RenderableEllipse.make(canvas, renderer, 0, 0, 11, 11)
+  this.handle0 = RenderableEllipse.make(canvas, 0, 0, 11, 11)
   this.handle0.decorate(DraggableRect)
   this.handle0.elem.className += " handle0"
 
-  this.handle1 = RenderableEllipse.make(canvas, renderer, 0, 0, 7, 7)
+  this.handle1 = RenderableEllipse.make(canvas, 0, 0, 7, 7)
   this.handle1.decorate(DraggableRect)
   this.handle1.elem.className += " handle1"
 

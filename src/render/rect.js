@@ -1,19 +1,18 @@
-function RenderableRect (canvas, renderer)
+function RenderableRect (canvas)
 {
   this.canvas   = canvas
-  this.renderer = renderer
   this.elem     = this.setupElem()
   this.render()
 
-  this.onchange(function () { this.renderer.enqueue(this) })
+  this.onchange(function () { this.canvas.renderer.enqueue(this) })
   this.changed()
 }
 
 RenderableRect.make =
-function make (canvas, renderer, x0, y0, x1, y1)
+function make (canvas, x0, y0, x1, y1)
 {
   var r = Rect.make(x0, y0, x1, y1)
-  r.decorate(RenderableRect, canvas, renderer)
+  r.decorate(RenderableRect, canvas)
   return r
 }
 
@@ -24,7 +23,7 @@ addToProto(RenderableRect,
     var elem = document.createElement("div")
     elem.setAttribute("class", "rect shape")
     elem.style.position = "absolute"
-    this.canvas.appendChild(elem)
+    this.canvas.elem.appendChild(elem)
     return elem
   },
 
@@ -43,7 +42,7 @@ addToProto(RenderableRect,
 
   function unrender ()
   {
-    this.canvas.removeChild(this.elem)
+    this.canvas.elem.removeChild(this.elem)
   }
 
 )
@@ -51,9 +50,9 @@ addToProto(RenderableRect,
 function AdjustableRect () {}
 
 AdjustableRect.make =
-function make (canvas, renderer, x0, y0, x1, y1)
+function make (canvas, x0, y0, x1, y1)
 {
-  var r = RenderableRect.make(canvas, renderer, x0, y0, x1, y1)
+  var r = RenderableRect.make(canvas, x0, y0, x1, y1)
   r.decorate(AdjustableRect)
   return r
 }
@@ -63,15 +62,15 @@ addToProto(AdjustableRect,
   function mkHandles ()
   {
     this.handles =
-      { topLeft     : new Handle(this.canvas, this.renderer, this.p0)
-      , topRight    : new Handle(this.canvas, this.renderer, this.p1)
-      , bottomLeft  : new Handle(this.canvas, this.renderer, this.p2)
-      , bottomRight : new Handle(this.canvas, this.renderer, this.p3)
-      , midLeft     : new Handle(this.canvas, this.renderer, this.midLeft)
-      , midRight    : new Handle(this.canvas, this.renderer, this.midRight)
-      , midTop      : new Handle(this.canvas, this.renderer, this.midTop)
-      , midBottom   : new Handle(this.canvas, this.renderer, this.midBottom)
-      , center      : new Handle(this.canvas, this.renderer, this.center)
+      { topLeft     : new Handle(this.canvas, this.p0)
+      , topRight    : new Handle(this.canvas, this.p1)
+      , bottomLeft  : new Handle(this.canvas, this.p2)
+      , bottomRight : new Handle(this.canvas, this.p3)
+      , midLeft     : new Handle(this.canvas, this.midLeft)
+      , midRight    : new Handle(this.canvas, this.midRight)
+      , midTop      : new Handle(this.canvas, this.midTop)
+      , midBottom   : new Handle(this.canvas, this.midBottom)
+      , center      : new Handle(this.canvas, this.center)
       }
   },
 
@@ -84,6 +83,6 @@ addToProto(AdjustableRect,
 
 function DraggableRect ()
 {
-  this.dragger = new Draggable(this.canvas, this, this.elem, false, false, 5, 5)
+  this.dragger = new Draggable(this.canvas.elem, this, this.elem, false, false, 5, 5)
 }
 

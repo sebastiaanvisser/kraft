@@ -1,18 +1,17 @@
-function RenderableEllipse (canvas, renderer)
+function RenderableEllipse (canvas)
 {
   this.canvas   = canvas
-  this.renderer = renderer
   this.elem     = this.setupElem()
 
-  this.onchange(function () { this.renderer.enqueue(this) })
+  this.onchange(function () { this.canvas.renderer.enqueue(this) })
   this.changed()
 }
 
 RenderableEllipse.make =
-function make (canvas, renderer, x0, y0, x1, y1)
+function make (canvas, x0, y0, x1, y1)
 {
   var r = Rect.make(x0, y0, x1, y1)
-  r.decorate(RenderableEllipse, canvas, renderer)
+  r.decorate(RenderableEllipse, canvas)
   return r
 }
 
@@ -23,7 +22,7 @@ addToProto(RenderableEllipse,
     var elem = document.createElement("div")
     elem.setAttribute("class", "ellipse")
     elem.style.position = "absolute"
-    this.canvas.appendChild(elem)
+    this.canvas.elem.appendChild(elem)
     return elem
   },
 
@@ -50,7 +49,7 @@ addToProto(RenderableEllipse,
 
   function unrender ()
   {
-    this.canvas.removeChild(this.elem)
+    this.canvas.elem.removeChild(this.elem)
   }
 
 )
@@ -58,9 +57,9 @@ addToProto(RenderableEllipse,
 function AdjustableEllipse () {}
 
 AdjustableEllipse.make =
-function make (canvas, renderer, x0, y0, x1, y1)
+function make (canvas, x0, y0, x1, y1)
 {
-  var r = RenderableEllipse.make(canvas, renderer, x0, y0, x1, y1)
+  var r = RenderableEllipse.make(canvas, x0, y0, x1, y1)
   r.decorate(AdjustableEllipse)
   return r
 }
@@ -70,15 +69,15 @@ addToProto(AdjustableEllipse,
   function mkHandles ()
   {
     this.handles =
-      { topLeft     : new Handle(this.canvas, this.renderer, this.p0)
-      , topRight    : new Handle(this.canvas, this.renderer, this.p1)
-      , bottomLeft  : new Handle(this.canvas, this.renderer, this.p2)
-      , bottomRight : new Handle(this.canvas, this.renderer, this.p3)
-      , midLeft     : new Handle(this.canvas, this.renderer, this.midLeft)
-      , midRight    : new Handle(this.canvas, this.renderer, this.midRight)
-      , midTop      : new Handle(this.canvas, this.renderer, this.midTop)
-      , midBottom   : new Handle(this.canvas, this.renderer, this.midBottom)
-      , center      : new Handle(this.canvas, this.renderer, this.center)
+      { topLeft     : new Handle(this.canvas, this.p0)
+      , topRight    : new Handle(this.canvas, this.p1)
+      , bottomLeft  : new Handle(this.canvas, this.p2)
+      , bottomRight : new Handle(this.canvas, this.p3)
+      , midLeft     : new Handle(this.canvas, this.midLeft)
+      , midRight    : new Handle(this.canvas, this.midRight)
+      , midTop      : new Handle(this.canvas, this.midTop)
+      , midBottom   : new Handle(this.canvas, this.midBottom)
+      , center      : new Handle(this.canvas, this.center)
       }
   },
 

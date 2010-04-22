@@ -1,17 +1,23 @@
 html, body
 {
-  background: #ddd;
+  background: #bbb;
   height: 100%;
+}
+
+*
+{
   margin: 0;
   padding: 0;
+  border: none;
+  outline: none;
   overflow: hidden;
 }
 
 #toolbar
 {
   position: absolute;
-  left: 4px;
-  top: 4px;
+  left: 20px;
+  top: 10px;
   right: 4px;
   height: 18px;
 
@@ -20,32 +26,35 @@ html, body
 
 #toolbar span
 { 
-  color: #555;
+  color: #333;
   padding: 0 0 0 0;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 #toolbar span:hover
 {
-  color: white;
+  color: black;
   cursor: pointer;
-  background: black;
+  text-decoration: underline;
 }
 
 #canvas
 {
   position: absolute;
-  left: 4px;
-  top: 26px;
-  right: 4px;
-  bottom: 4px;
+  left: 20px;
+  top: 40px;
+  right: 20px;
+  bottom: 20px;
 
-  -webkit-border-radius: 8px;
-  background: #aaa url("grid.png");
+  outline: solid 2px #999;
+  background: #eee;
   overflow: hidden;
 }
 
-
+#canvas.grid
+{
+  background: #eee url("grid-dark.png");
+}
 
 #canvas .handle0
 {
