@@ -6,7 +6,8 @@ function mkRect ()
   r.decorate(DraggableRect)
   r.decorate(SelectableRect)
   r.selectable(r.mkHandles, r.delHandles)
-  r.elem.className += " myrect"
+  $(r.elem).addClass("myrect")
+  $(r.elem).addClass("shape")
   return r
 }
 
@@ -16,7 +17,7 @@ function mkLine ()
   l.decorate(DraggableRect)
   l.decorate(SelectableRect)
   l.selectable(l.mkHandles, l.delHandles)
-  l.elem.className += " myline"
+  $(l.elem).addClass("myline")
   return l
 }
 
@@ -26,7 +27,8 @@ function mkEllipse ()
   e.decorate(DraggableRect)
   e.decorate(SelectableRect)
   e.selectable(e.mkHandles, e.delHandles)
-  e.elem.className += " myellipse"
+  $(e.elem).addClass("myellipse")
+  $(e.elem).addClass("shape")
   return e
 }
 

@@ -29,6 +29,7 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
       me.dragging = true
       me.dragOrigin   = { x : e.clientX,      y : e.clientY     }
       me.targetOrigin = { x : me.target.left, y : me.target.top }
+      $(me.target.elem).addClass("dragging")
       return false
     }
   )
@@ -38,6 +39,7 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
     {
       if (!me.dragging) return
       me.dragging = false
+      $(me.target.elem).removeClass("dragging")
     }
   )
 

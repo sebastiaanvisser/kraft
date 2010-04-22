@@ -20,7 +20,7 @@ addToProto(RenderableEllipse,
   function setupElem ()
   {
     var elem = document.createElement("div")
-    elem.setAttribute("class", "ellipse")
+    $(elem).addClass("ellipse")
     elem.style.position = "absolute"
     this.canvas.elem.appendChild(elem)
     return elem

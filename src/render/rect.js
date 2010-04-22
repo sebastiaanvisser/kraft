@@ -21,7 +21,7 @@ addToProto(RenderableRect,
   function setupElem ()
   {
     var elem = document.createElement("div")
-    elem.setAttribute("class", "rect shape")
+    $(elem).addClass("rect")
     elem.style.position = "absolute"
     this.canvas.elem.appendChild(elem)
     return elem

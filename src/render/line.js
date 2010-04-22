@@ -20,7 +20,7 @@ addToProto(RenderableLine,
   function setupElem ()
   {
     var elem = document.createElement("div")
-    elem.setAttribute("class", "line shape")
+    $(elem).addClass("line")
     elem.style.position = "absolute"
     this.canvas.elem.appendChild(elem)
     return elem

@@ -87,3 +87,9 @@ html, body
   background: #555;
 }
 
+#canvas .shape.dragging
+{
+  xopacity: 0.6;
+  outline: solid 2px #88f;
+}
+
