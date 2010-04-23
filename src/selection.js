@@ -56,12 +56,13 @@ function SelectableRect ()
   sel.selectable[this.id] = this
 
   var self = this
-  $(this.canvas.elem).mousedown( function (e) { sel.deselectAll() })
-  $(this.elem).mousedown(
+  Events.manager.bind(this.canvas.elem, "mousedown",
+    function (e) { sel.deselectAll() })
+  Events.manager.bind(this.elem, "mousedown",
     function (e)
     {
       if (e.altKey) return sel.deselect(self)
-      if (!e.shiftKey) sel.deselectAll()
+      if (!e.shiftKey) sel.deselectAll() // TODO: don't select when is equal to new selection
       sel.select(self)
     })
 

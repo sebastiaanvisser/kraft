@@ -32,12 +32,12 @@ function mkEllipse ()
   return e
 }
 
-$("#toolbar #rect").click(mkRect)
-$("#toolbar #line").click(mkLine)
-$("#toolbar #ellipse").click(mkEllipse)
-$("#toolbar #selectall").click(function () { myCanvas.selection.selectAll() })
-$("#toolbar #deselectall").click(function () { myCanvas.selection.deselectAll() })
-$("#toolbar #togglegrid").click(function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
+Events.manager.bind("#toolbar #rect",        "click", mkRect)
+Events.manager.bind("#toolbar #line",        "click", mkLine)
+Events.manager.bind("#toolbar #ellipse",     "click", mkEllipse)
+Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.selection.selectAll() })
+Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
+Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
 
 
 r = mkRect()

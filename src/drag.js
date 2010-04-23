@@ -23,28 +23,26 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
 
   var me = this
 
-  $(pivot).mousedown
-  ( function start (e)
+  Events.manager.bind(pivot, "mousedown",
+    function start (e)
     {
       me.dragging = true
       me.dragOrigin   = { x : e.clientX,      y : e.clientY     }
       me.targetOrigin = { x : me.target.left, y : me.target.top }
       $(me.target.elem).addClass("dragging")
       return false
-    }
-  )
+    })
 
-  $(container).mouseup
-  ( function stop (e)
+  Events.manager.bind(container, "mouseup",
+    function stop (e)
     {
       if (!me.dragging) return
       me.dragging = false
       $(me.target.elem).removeClass("dragging")
-    }
-  )
+    })
 
-  $(container).mousemove
-  ( function drag (e)
+  Events.manager.bind(container, "mousemove",
+    function drag (e)
     {
       if (!me.dragging) return true
 
@@ -55,7 +53,6 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
 
       if (!me.lockX) me.target.left = x
       if (!me.lockY) me.target.top  = y
-    }
-  )
+    })
 
 }
