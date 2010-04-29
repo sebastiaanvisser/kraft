@@ -2,6 +2,7 @@ function Renderer ()
 {
   this.queue     = {}
   this.timeoutId = 0
+  this.requireRender()
 }
 
 addToProto(Renderer,
@@ -9,12 +10,13 @@ addToProto(Renderer,
   function enqueue (o)
   {
     this.queue[o.id] = o
+    this.requireRender()
+  },
 
+  function requireRender ()
+  {
     var self = this
     Events.manager.onThreadEndOnce("R", function () { self.renderQueue() })
-
-    // var self = this
-    // if (!this.timeoutId) this.timeoutId = setTimeout(function () { self.renderQueue() })
   },
 
   function renderQueue ()
