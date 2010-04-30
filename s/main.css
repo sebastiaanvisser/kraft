@@ -87,6 +87,14 @@ html, body
   background: #555;
 }
 
+#canvas .mytext
+{
+  font-size: 40px;
+  font-family: "Alte Haas Grotesk";
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), color-stop(0.5, #000), to(#000));
+  color: white;
+}
+
 #canvas .shape.selected
 {
   outline: solid 2px #88f;

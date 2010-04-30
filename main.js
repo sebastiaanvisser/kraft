@@ -32,6 +32,17 @@ function mkEllipse ()
   return e
 }
 
+function mkText (text)
+{
+  var l = AdjustableText.make(myCanvas, 150, 200, 250, 200, text)
+  l.decorate(DraggableRect)
+  l.decorate(SelectableRect)
+  l.selectable(l.mkHandles, l.delHandles)
+  $(l.elem).addClass("mytext")
+  $(l.elem).attr("contentEditable", true)
+  return l
+}
+
 Events.manager.bind("#toolbar #rect",        "click", mkRect)
 Events.manager.bind("#toolbar #line",        "click", mkLine)
 Events.manager.bind("#toolbar #ellipse",     "click", mkEllipse)
@@ -39,11 +50,11 @@ Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.sel
 Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
 Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
 
-
 r = mkRect()
 e = mkEllipse()
 l = mkLine()
+t = mkText("grotesk")
 
-// Point.eq(r.center, l.p0)
-// Point.eq(e.center, l.p1)
+Point.eq(r.center, t.p0)
+Point.eq(e.center, t.p1)
 
