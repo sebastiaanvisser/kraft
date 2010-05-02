@@ -1,73 +1,44 @@
-var myCanvas = new Canvas($("#canvas")[0])
+q0 = mkTriangle()
+q1 = mkTriangle()
+q2 = mkTriangle()
+q3 = mkTriangle()
 
-function mkRect ()
-{
-  var r = AdjustableRect.make(myCanvas, 100, 100, 200, 300)
-  r.decorate(DraggableRect)
-  r.decorate(SelectableRect)
-  r.selectable(r.mkHandles, r.delHandles)
-  $(r.elem).addClass("myrect")
-  $(r.elem).addClass("shape")
-  return r
-}
+q1.p0.x = 300
+q2.p0.y = 300
+q3.p0.x = 300
+q3.p0.y = 300
 
-function mkTriangle ()
-{
-  var r = AdjustableTriangle.make(myCanvas, 100, 100, 200, 200)
-  r.decorate(DraggableRect)
-  r.decorate(SelectableRect)
-  r.selectable(r.mkHandles, r.delHandles)
-  $(r.elem).addClass("mytriangle")
-  $(r.elem).addClass("shape")
-  return r
-}
+Point.eq(q0.p1, q1.p1)
+Point.eq(q0.p2, q2.p2)
+Point.eq(q1.p3, q3.p3)
+Point.eq(q1.p2, q3.p2)
+Point.eq(q2.p1, q3.p1)
 
-function mkLine ()
-{
-  var l = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
-  l.decorate(DraggableRect)
-  l.decorate(SelectableRect)
-  l.selectable(l.mkHandles, l.delHandles)
-  $(l.elem).addClass("myline")
-  return l
-}
+l0 = mkLine(); Point.eq(l0.p0, q0.p1); Point.eq(l0.p1, q0.p2)
+l1 = mkLine(); Point.eq(l1.p0, q1.p1); Point.eq(l1.p1, q1.p2)
+l2 = mkLine(); Point.eq(l2.p0, q2.p1); Point.eq(l2.p1, q2.p2)
+l3 = mkLine(); Point.eq(l3.p0, q3.p1); Point.eq(l3.p1, q3.p2)
 
-function mkEllipse ()
-{
-  var e = AdjustableEllipse.make(myCanvas, 200, 100, 300, 300)
-  e.decorate(DraggableRect)
-  e.decorate(SelectableRect)
-  e.selectable(e.mkHandles, e.delHandles)
-  $(e.elem).addClass("myellipse")
-  $(e.elem).addClass("shape")
-  return e
-}
+l4 = mkLine(); Point.eq(l4.p0, q0.center); Point.eq(l4.p1, q3.center)
+l5 = mkLine(); Point.eq(l5.p0, q1.center); Point.eq(l5.p1, q2.center)
 
-function mkText (text)
-{
-  var l = AdjustableText.make(myCanvas, 150, 200, 250, 200, text)
-  l.decorate(DraggableRect)
-  l.decorate(SelectableRect)
-  l.selectable(l.mkHandles, l.delHandles)
-  $(l.elem).addClass("mytext")
-  $(l.elem).attr("contentEditable", true)
-  return l
-}
+t0 = mkText("&nbsp;test&nbsp;")
+t1 = mkText("&nbsp;test&nbsp;")
+t2 = mkText("&nbsp;test&nbsp;")
+t3 = mkText("&nbsp;test&nbsp;")
+t4 = mkText("&nbsp;test&nbsp;")
+t5 = mkText("&nbsp;test&nbsp;")
 
-Events.manager.bind("#toolbar #rect",        "click", mkRect)
-Events.manager.bind("#toolbar #line",        "click", mkLine)
-Events.manager.bind("#toolbar #triangle",    "click", mkTriangle)
-Events.manager.bind("#toolbar #ellipse",     "click", mkEllipse)
-Events.manager.bind("#toolbar #text",        "click", function () { mkText(prompt()) })
-Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.selection.selectAll() })
-Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
-Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
-
-r = mkRect()
-e = mkEllipse()
-l = mkLine()
-t = mkText("grotesk")
-
-Point.eq(r.center, t.p0)
-Point.eq(e.center, t.p1)
+Point.eq(t0.p0, q2.center)
+Point.eq(t0.p1, q1.center)
+Point.eq(t1.p0, q0.center)
+Point.eq(t1.p1, q3.center)
+Point.eq(t2.p0, q1.p1)
+Point.eq(t2.p1, q1.p2)
+Point.eq(t3.p0, q2.p1)
+Point.eq(t3.p1, q2.p2)
+Point.eq(t4.p0, q0.p1)
+Point.eq(t4.p1, q0.p2)
+Point.eq(t5.p0, q3.p1)
+Point.eq(t5.p1, q3.p2)
 

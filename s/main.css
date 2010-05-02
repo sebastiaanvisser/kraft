@@ -58,7 +58,7 @@ html, body
 
 #canvas .handle0
 {
-  x-webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
   background: rgba(0,0,0, 0.8);
 }
 
@@ -89,7 +89,7 @@ html, body
 
 #canvas .myline
 {
-  background: #555;
+  background: #444;
 }
 
 #canvas .mytext
