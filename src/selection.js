@@ -2,6 +2,17 @@ function Selection ()
 {
   this.selectable = {}
   this.selected   = {}
+
+  var me = this
+  Events.manager.bind(document, "keypress",
+    function (e)
+    {
+      if (e.charCode == 100) // d
+        for (var s in me.selected)
+          me.selected[s].destructor()
+        me.deselectAll()
+    })
+
 }
 
 addToProto(Selection,
