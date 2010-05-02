@@ -67,6 +67,11 @@ html, body
   background: white;
 }
 
+#canvas .inner-triangle
+{
+  background: #888;
+}
+
 
 #canvas .myrect
 {

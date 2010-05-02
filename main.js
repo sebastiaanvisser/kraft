@@ -11,6 +11,17 @@ function mkRect ()
   return r
 }
 
+function mkTriangle ()
+{
+  var r = AdjustableTriangle.make(myCanvas, 100, 100, 200, 200)
+  r.decorate(DraggableRect)
+  r.decorate(SelectableRect)
+  r.selectable(r.mkHandles, r.delHandles)
+  $(r.elem).addClass("mytriangle")
+  $(r.elem).addClass("shape")
+  return r
+}
+
 function mkLine ()
 {
   var l = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
@@ -45,6 +56,7 @@ function mkText (text)
 
 Events.manager.bind("#toolbar #rect",        "click", mkRect)
 Events.manager.bind("#toolbar #line",        "click", mkLine)
+Events.manager.bind("#toolbar #triangle",    "click", mkTriangle)
 Events.manager.bind("#toolbar #ellipse",     "click", mkEllipse)
 Events.manager.bind("#toolbar #text",        "click", function () { mkText(prompt()) })
 Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.selection.selectAll() })
