@@ -9,8 +9,12 @@ function Selection ()
     {
       if (e.charCode == 100) // d
         for (var s in me.selected)
+        {
           me.selected[s].destructor()
+          delete me.selectable[s]
+        }
         me.deselectAll()
+
     })
 
 }
