@@ -49,7 +49,6 @@ addToProto(RenderableTriangle,
         y1 = this.p3.y
     var len = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2))
     var rot = Math.atan((y1 - y0) / (x1 - x0)) * 180 / Math.PI
-    document.title = rot + " " + (x1 > x0)
 
     var left = (x1 > x0 ? 1 : -1) * (this.center.x - this.left)
 
