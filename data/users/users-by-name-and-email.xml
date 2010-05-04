@@ -1,0 +1,20 @@
+<users>
+<by-name>
+  <name uuid="255BFD8D-392B-476F-B00B-172B9EBCA42E">sebas</name>
+  <name uuid="287E7CC3-964C-4950-9311-8C72217B6BDA">bar</name>
+  <name uuid="2EFB61C9-0441-4292-8426-29BC9A22702C">foo</name>
+  <name uuid="3CD7297B-594D-4197-9D45-0F1FEEEB3693">john</name>
+</by-name>
+<by-email>
+  <email uuid="255BFD8D-392B-476F-B00B-172B9EBCA42E">sebas@fvisser.nl</email>
+  <email uuid="287E7CC3-964C-4950-9311-8C72217B6BDA">test+bar@fvisser.nl</email>
+  <email uuid="2EFB61C9-0441-4292-8426-29BC9A22702C">test+foo@fvisser.nl</email>
+  <email uuid="3CD7297B-594D-4197-9D45-0F1FEEEB3693">test+john@fvisser.nl</email>
+</by-email>
+<user uuid="255BFD8D-392B-476F-B00B-172B9EBCA42E">
+  <name>Sebastiaan Visser</name>
+  <email>s@fvisser.nl</email>
+  <password>geheim</password>
+  <image>http://en.gravatar.com/userimage/8014444/5c3a58dbcab671e93997b08a45c4a057.jpeg</image>
+</user>
+</users>

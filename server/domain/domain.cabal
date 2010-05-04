@@ -1,0 +1,22 @@
+Name:               domain
+Version:            0.0.0
+Description:        Domain model.
+Synopsis:           Domain model.
+Cabal-version:      >= 1.6
+Category:           Data, Web
+License-file:       LICENSE
+Author:             Sebastiaan Visser
+Maintainer:         s@fvisser.nl
+Build-Type:         Simple
+
+Library
+  GHC-Options:      -Wall
+  HS-Source-Dirs:   src
+
+  Build-Depends:    base ==4.*, 
+                    hxt ==8.5.*,
+                    regular ==0.2.*,
+                    regular-xmlpickler ==0.1.*
+
+  Exposed-modules:  Canvas.User
+
