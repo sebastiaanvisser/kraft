@@ -41,6 +41,9 @@ instance Monad ((:=>) a) where
   return = pure
   L a >>= b = L (\x -> a x >>= (\z -> run (b z) x))
 
+runSingle :: (a :=> b) -> a -> Maybe b
+runSingle a i = let b = run a i in if null b then Nothing else Just (head b)
+
 concatA :: ArrowPlus (~>) => [a ~> b] -> a ~> b
 concatA = foldl (<+>) zeroArrow
 
