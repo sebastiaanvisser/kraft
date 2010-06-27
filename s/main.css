@@ -1,110 +1,43 @@
 html, body
 {
-  background: #bbb;
   height: 100%;
 }
 
 *
 {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: none;
   outline: none;
   overflow: hidden;
+  -webkit-transition: color 0.2s;
 }
 
-#toolbar
+#canvas,
+#grid
 {
   position: absolute;
-  left: 20px;
-  top: 10px;
-  right: 4px;
-  height: 18px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
-  font-family: "myriad pro";
-}
-
-#toolbar span
-{ 
-  color: #333;
-  padding: 0 0 0 0;
-  margin-right: 20px;
-}
-
-#toolbar span:hover
-{
-  color: black;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-#canvas
-{
-  position: absolute;
-  left: 20px;
-  top: 40px;
-  right: 20px;
-  bottom: 20px;
-
-  outline: solid 2px #999;
   background: #eee;
   overflow: hidden;
 }
 
-#canvas.grid
+#grid
 {
-  background: #eee url("grid-dark.png");
+  -webkit-mask-image: url(grid-dark.png);
+  -webkit-mask-repeat: repeat;
+
+  -webkit-transition: background 0.4s;
+  background: rgba(0,0,0, 0.0);
 }
 
-#canvas .handle0
+#grid.grid
 {
-  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
-  background: rgba(0,0,0, 0.8);
-}
-
-#canvas .handle1
-{
-  background: white;
-}
-
-#canvas .inner-triangle
-{
-  background: #888;
-  opacity: 0.4;
-}
-
-#canvas .myrect
-{
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 6px;
-}
-
-#canvas .myellipse
-{
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), color-stop(0.4, #eee), to(#eee));
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  -webkit-border-radius: 6px;
-}
-
-#canvas .myline
-{
-  background: #444;
-}
-
-#canvas .mytext
-{
-  font-size: 40px;
-  font-family: "Alte Haas Grotesk";
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#555), color-stop(0.5, #000), to(#000));
-  padding: 0 20px;
-  -webkit-border-radius: 40px;
-  -webkit-border-top-left-radius: 0px;
-  color: white;
-}
-
-#canvas .shape.selected
-{
-  outline: solid 2px #88f;
+  background: rgba(0,0,0, 0.1);
 }
 

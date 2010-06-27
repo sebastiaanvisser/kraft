@@ -16,13 +16,13 @@ addToProto(Canvas,
   function showGrid ()
   {
     this.gridShow = true
-    $(this.elem).addClass("grid")
+    $("#grid", this.elem).addClass("grid")
   },
 
   function hideGrid ()
   {
     this.gridShow = false
-    $(this.elem).removeClass("grid")
+    $("#grid", this.elem).removeClass("grid")
   }
 
 )

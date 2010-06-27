@@ -1,0 +1,25 @@
+#toolbar
+{
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  font-size: 20px;
+  font-family: "alte haas grotesk";
+  padding: 10px;
+}
+
+#toolbar span
+{ 
+  color: #777;
+  display: block;
+  padding: 0 0 0 0;
+  margin-right: 20px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+}
+
+#toolbar span:hover
+{
+  color: black;
+  cursor: pointer;
+}
