@@ -1,0 +1,40 @@
+body
+{
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 800, from(#ffaa00), to(#ff6600));
+}
+
+*
+{
+  outline: none;
+}
+
+h1
+{
+  font-family: "Alte Haas Grotesk";
+  font-weight: normal;
+  font-size: 200px;
+  margin: 0;
+
+  text-align: center;
+  text-shadow: 0 0 250px #FF8, 0 0 40px #FF0, 0 0 10px #FFf;
+  color: #520;
+
+  -webkit-text-stroke: 1px rgba(0,0,0, 1);
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.6)))
+}
+
+h1 span
+{
+  color: black;
+}
+
+#xxx_canvas
+{
+  background: rgba(0,0,0, 0.2) url("../../s/grid-dark.png");
+  -webkit-mask-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 400, from(black), to(rgba(0,0,0,0)));
+
+  margin: 0 auto 0 auto;
+  width:  800px;
+  height: 800px;
+}
+
