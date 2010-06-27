@@ -70,8 +70,8 @@ html, body
 #canvas .inner-triangle
 {
   background: #888;
+  opacity: 0.4;
 }
-
 
 #canvas .myrect
 {
