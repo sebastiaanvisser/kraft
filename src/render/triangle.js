@@ -16,7 +16,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(RenderableTriangle,
+Class(RenderableTriangle,
 
   function setupElem ()
   {
@@ -77,7 +77,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(AdjustableTriangle,
+Class(AdjustableTriangle,
 
   function mkHandles ()
   {

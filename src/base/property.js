@@ -27,7 +27,7 @@ function Property (o, n, v)
   this.__defineSetter__("v", set)
 }
 
-addToProto(Property,
+Class(Property,
 
   function destructor ()
   {

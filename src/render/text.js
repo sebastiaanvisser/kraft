@@ -15,7 +15,7 @@ function make (canvas, x0, y0, x1, y1, text)
   return r
 }
 
-addToProto(RenderableText,
+Class(RenderableText,
 
   function setupElem ()
   {
@@ -69,7 +69,7 @@ function make (canvas, x0, y0, x1, y1, text)
   return r
 }
 
-addToProto(AdjustableText,
+Class(AdjustableText,
 
   function mkHandles ()
   {

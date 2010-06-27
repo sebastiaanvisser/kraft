@@ -19,7 +19,7 @@ function Selection ()
 
 }
 
-addToProto(Selection,
+Class(Selection,
 
   function mkSelectable (obj)
   {
@@ -87,7 +87,7 @@ function SelectableRect ()
     )
 }
 
-addToProto(SelectableRect,
+Class(SelectableRect,
 
   function selectable (s, d)
   {

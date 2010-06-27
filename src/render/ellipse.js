@@ -15,7 +15,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(RenderableEllipse,
+Class(RenderableEllipse,
 
   function setupElem ()
   {
@@ -64,7 +64,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(AdjustableEllipse,
+Class(AdjustableEllipse,
 
   function mkHandles ()
   {

@@ -16,7 +16,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(RenderableRect,
+Class(RenderableRect,
 
   function setupElem ()
   {
@@ -57,7 +57,7 @@ function make (canvas, x0, y0, x1, y1)
   return r
 }
 
-addToProto(AdjustableRect,
+Class(AdjustableRect,
 
   function mkHandles ()
   {

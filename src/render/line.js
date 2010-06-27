@@ -15,7 +15,7 @@ function make (canvas, x0, y0, x1, y1, w)
   return r
 }
 
-addToProto(RenderableLine,
+Class(RenderableLine,
 
   function setupElem ()
   {
@@ -65,7 +65,7 @@ function make (canvas, x0, y0, x1, y1, w)
   return r
 }
 
-addToProto(AdjustableLine,
+Class(AdjustableLine,
 
   function mkHandles ()
   {

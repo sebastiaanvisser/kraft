@@ -1,7 +1,13 @@
-function addToProto (ctor /* functions */)
+function Class (ctor /* functions */)
 {
   for (var i = 1; i < arguments.length; i++)
     ctor.prototype[arguments[i].name] = arguments[i];
+}
+
+function Static (ctor /* functions */)
+{
+  for (var i = 1; i < arguments.length; i++)
+    ctor[arguments[i].name] = arguments[i];
 }
 
 function foreach (o, f)

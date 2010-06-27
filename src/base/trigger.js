@@ -10,7 +10,7 @@ function Trigger (t, f, s)
 Trigger.nextId = 0
 Trigger.all    = {}
 
-addToProto(Trigger,
+Class(Trigger,
 
   function destructor ()
   {

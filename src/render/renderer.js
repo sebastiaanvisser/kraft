@@ -5,7 +5,7 @@ function Renderer ()
   this.requireRender()
 }
 
-addToProto(Renderer,
+Class(Renderer,
 
   function enqueue (o)
   {

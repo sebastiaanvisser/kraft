@@ -11,7 +11,7 @@ function Canvas (elem)
   this.layers    = {}
 }
 
-addToProto(Canvas,
+Class(Canvas,
 
   function showGrid ()
   {

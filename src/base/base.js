@@ -14,7 +14,7 @@ function Base ()
 Base.nextId = 0
 Base.all    = {}
 
-addToProto(Base,
+Class(Base,
 
   function decorate (c /* constructor arguments */)
   {

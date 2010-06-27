@@ -8,7 +8,7 @@ function Events ()
 
 Events.manager = new Events
 
-addToProto(Events,
+Class(Events,
 
   function bind (elem, name, fn)
   {
