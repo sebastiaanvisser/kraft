@@ -8,39 +8,50 @@ module Canvas.User where
 
 import Control.Applicative
 import Control.Arrow
-import Control.Arrow.List
 import Control.Category
+import Data.Record.Label
 import Generics.Regular
 import Prelude hiding (elem, (.), id)
-import Text.XML.Light
 import Text.XML.Light.Convert
 import Text.XML.Light.Trans
 
+type Email = String
+
 data User = User
-  { name     :: String
-  , email    :: String
-  , password :: String
-  , image    :: String
+  { _uuid     :: String
+  , _name     :: String
+  , _email    :: Email
+  , _password :: String
+  , _image    :: String
   } deriving (Show, Eq, Ord)
 
 $(deriveAll ''User "PFUser")
 type instance PF User = PFUser
 
+$(mkLabels [''User])
+
 instance Xml User where
-  from = User
-    <$> text . child "name"
+  fromXml = User
+    <$> text . child "uuid"
+    <*> text . child "name"
     <*> text . child "email"
     <*> text . child "password"
     <*> text . child "image"
-  to = mkElem "user"
-    [ mkTextElem "name"     (arr name)
-    , mkTextElem "email"    (arr email)
-    , mkTextElem "password" (arr password)
-    , mkTextElem "image"    (arr image)
+  toXml = mkElem "user"
+    [ mkTextElem "uuid"     (arr (getL uuid))
+    , mkTextElem "name"     (arr (getL name))
+    , mkTextElem "email"    (arr (getL email))
+    , mkTextElem "password" (arr (getL password))
+    , mkTextElem "image"    (arr (getL image))
     ]
+
+
+{-
 
 uuidByName :: String -> Content :=> String
 uuidByName n = attr "uuid" . isA (is n . text) . child "name" . elem "uuid-by-name"
+
+-}
 
 -- userByName :: String -> Content :=> User
 -- userByName n = 

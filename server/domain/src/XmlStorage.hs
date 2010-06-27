@@ -1,62 +1,61 @@
 {-# LANGUAGE TypeOperators #-}
 module XmlStorage where
 
+import Control.Applicative
+import Control.DeepSeq
 import Control.Arrow
 import Control.Arrow.List
 import Data.List
-import System.Lock.FLock
 import Text.XML.Light
 import Text.XML.Light.Convert
+import Data.FileStore
 
-readXmlIO :: FilePath -> ([Content] -> IO a) -> IO a
-readXmlIO f act =
-  withLock f Shared Block $
-    do xml <- readFile f
-       act (parseXML xml)
+type Message = (Description, Author)
 
-writeXmlIO :: FilePath -> IO [Content] -> IO ()
-writeXmlIO f act =
-  withLock f Exclusive Block $
-    do xml <- act
-       writeFile f (intercalate "\n" (map ppContent xml))
+readXmlIO :: FileStore -> FilePath -> ([Content] -> IO a) -> IO a
+readXmlIO fs f act =
+  do xml <- retrieve fs f Nothing
+     act (parseXML xml)
 
-withXmlIO :: FilePath -> ([Content] -> IO [Content]) -> IO ()
-withXmlIO f act =
-  withLock f Exclusive Block $
-    do xml <- readFile f
-       out <- act (parseXML xml)
-       writeFile f (intercalate "\n" (map ppContent out))
+writeXmlIO :: FileStore -> FilePath -> Message -> IO [Content] -> IO ()
+writeXmlIO fs f (d, a) act =
+  do xml <- intercalate "\n" . map ppContent <$> act
+     save fs f a d xml
 
--- pure variants
+withXmlIO :: FileStore -> FilePath -> Message -> ([Content] -> IO [Content]) -> IO ()
+withXmlIO fs f (d, a) act =
+  do xml <- retrieve fs f Nothing
+     out <- act (parseXML xml)
+     case deepseq xml () of
+       () -> save fs f a d (intercalate "\n" (map ppContent out))
 
-readXml :: FilePath -> ([Content] -> a) -> IO a
-readXml f g = readXmlIO f (return . g)
+readXml :: FileStore -> FilePath -> ([Content] -> a) -> IO a
+readXml fs f g = readXmlIO fs f (return . g)
 
-writeXml :: FilePath -> [Content] -> IO ()
-writeXml f g = writeXmlIO f (return g)
+writeXml :: FileStore -> FilePath -> Message -> [Content] -> IO ()
+writeXml fs f d g = writeXmlIO fs f d (return g)
 
-withXml :: FilePath -> ([Content] -> [Content]) -> IO ()
-withXml f g = withXmlIO f (return . g)
+withXml :: FileStore -> FilePath -> Message -> ([Content] -> [Content]) -> IO ()
+withXml fs f d g = withXmlIO fs f d (return . g)
 
--- arrow variants
+readXmlA :: FileStore -> FilePath -> ([Content] :=> b) -> IO [b]
+readXmlA fs f g = readXml fs f (run g)
 
-readXmlA :: FilePath -> ([Content] :=> b) -> IO [b]
-readXmlA f g = readXml f (run g)
+readXmlA1 :: FileStore -> FilePath -> (Content :=> b) -> IO (Maybe b)
+readXmlA1 fs f g = readXml fs f (runSingle (g <<< unlistL))
 
-readXmlA1 :: FilePath -> (Content :=> b) -> IO (Maybe b)
-readXmlA1 f g = readXml f (runSingle (g <<< unlistL))
+writeXmlA :: FileStore -> FilePath -> Message -> (() :=> Content) -> IO ()
+writeXmlA fs f d g = writeXml fs f d (run g ())
 
-withXmlA :: FilePath -> ([Content] :=> Content) -> IO ()
-withXmlA f g = withXml f (run g)
+withXmlA :: FileStore -> FilePath -> Message -> ([Content] :=> Content) -> IO ()
+withXmlA fs f d g = withXml fs f d (run g)
 
--- threat as true values
+readValue :: Xml a => FileStore -> FilePath -> IO (Maybe a)
+readValue fs f = readXmlA1 fs f fromXml
 
-readValue :: Xml a => FilePath -> IO (Maybe a)
-readValue f = readXmlA1 f from
+writeValue :: Xml a => FileStore -> FilePath -> Message -> a -> IO ()
+writeValue fs f d v = writeXml fs f d (run toXml v)
 
-writeValue :: Xml a => FilePath -> a -> IO ()
-writeValue f v = writeXml f (run to v)
-
-withValue :: Xml a => FilePath -> (a -> a) -> IO ()
-withValue f g = withXmlA f (to <<< arr g <<< from <<< unlistL)
+withValue :: Xml a => FileStore -> FilePath -> Message -> (a -> a) -> IO ()
+withValue fs f d g = withXmlA fs f d (toXml <<< arr g <<< fromXml <<< unlistL)
 

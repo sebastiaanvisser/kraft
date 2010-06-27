@@ -41,6 +41,9 @@ instance Monad ((:=>) a) where
   return = pure
   L a >>= b = L (\x -> a x >>= (\z -> run (b z) x))
 
+constA :: Arrow (~>) => b -> a ~> b
+constA = arr . const
+
 runSingle :: (a :=> b) -> a -> Maybe b
 runSingle a i = let b = run a i in if null b then Nothing else Just (head b)
 
@@ -50,19 +53,22 @@ concatA = foldl (<+>) zeroArrow
 mapL :: ([b] -> [c]) -> (a :=> b) -> a :=> c
 mapL f a = L (f . run a)
 
-constL :: ArrowList (~>) => [b] -> a ~> b
+collectL :: ([b] -> c) -> (a :=> b) -> a :=> c
+collectL f = mapL (pure . f)
+
+constL :: [b] -> a :=> b
 constL = arrL . const 
 
-unlistL :: ArrowList (~>) => [b] ~> b
+unlistL :: [b] :=> b
 unlistL = arrL id
 
 cond :: ArrowList (~>) => (a -> Bool) -> a ~> a
 cond f = arrL (\c -> if f c then pure c else mempty)
 
-is :: (Eq a, ArrowList (~>)) => a -> a ~> a
+is :: Eq a => a -> a :=> a
 is s = cond (==s)
 
-might :: ArrowList (~>) => (a -> Maybe b) -> a ~> b
+might :: (a -> Maybe b) -> a :=> b
 might f = arrL (maybe mempty pure . f)
 
 isA :: (a :=> b) -> a :=> a
@@ -73,4 +79,7 @@ nullL = mapL (pure . null)
 
 notA :: (a :=> b) -> a :=> a
 notA a = const <$> id <*> cond id . nullL a
+
+tuple :: [a] :=> (a, a)
+tuple = might (\xs -> case xs of [a,b] -> Just (a,b); _ -> Nothing)
 

@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeOperators, Arrows #-}
+{-# LANGUAGE TypeOperators #-}
 module Test where
 
 -- import Control.Arrow.List
@@ -12,9 +12,10 @@ import Canvas.Model
 
 main :: IO ()
 main =
-  do let mdl = makeModel "../../../data"
-     uuid <- userUuidByName mdl "sebas"
-     case uuid of
-       Nothing -> putStrLn "error: no such user in index"
-       Just u  -> userByUuid mdl u >>= print
+  do let mdl = makeModel "../../_data"
+     buildModel mdl
+     createUser mdl "Sebastiaan Visser" "s@fvisser.nl" "geheim" "none"
+     createUser mdl "Nog iemand anders" "t@fvisser.nl" "geheim" "none"
+     createUser mdl "Tja, wat wil je r" "v@fvisser.nl" "geheim" "none"
+     createUser mdl "Kippensoep en sne" "h@fvisser.nl" "geheim" "none"
 

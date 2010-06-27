@@ -5,6 +5,6 @@ import Control.Arrow.List
 import Text.XML.Light
 
 class Xml a where
-  from :: Content :=> a
-  to   :: a :=> Content
+  fromXml :: Content :=> a
+  toXml   :: a :=> Content
 
