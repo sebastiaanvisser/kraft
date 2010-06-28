@@ -1,6 +1,6 @@
 function Model ()
 {
-  this.def("shapes", []);
+  this.def("shapes", {});
 }
 
 Model.make =
@@ -15,7 +15,7 @@ Class(Model,
 
   function addShape (shape)
   {
-    this.shapes.push(shape);
+    this.shapes[shape.id] = shape;
   }
 
 )

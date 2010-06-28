@@ -1,7 +1,8 @@
-function Property (o, n, v)
+function Prop (o, n, v, c)
 {
   this.obj      = o
   this.name     = n
+  this.soft     = c
   this.value    = v
   this.triggers = {}
   this.busy     = false
@@ -27,7 +28,7 @@ function Property (o, n, v)
   this.__defineSetter__("v", set)
 }
 
-Class(Property,
+Class(Prop,
 
   function destructor ()
   {

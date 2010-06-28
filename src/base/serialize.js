@@ -3,35 +3,36 @@ function Serializer () {}
 Static
 ( Serializer,
 
-  function serializeToXml (obj)
+  function toXml (o)
   {
-    if (obj.constructor.name == "Array")  return obj.map(Serializer.serializeToXml).join("\n")
-    if (obj.constructor.name == "Number") return obj.toString()
-    if (obj.constructor.name == "String") return obj
-
-    if (obj.constructor != Base) return Serializer.toElem("unrecognized", Serializer.toElem(obj.constructor.name))
-
-    // var ctors = Serializer.toElem
-      // ( "constructors"
-      // , obj.meta.constructors
-           // .map(function (x) { return Serializer.toElem(x.name) })
-           // .join("\n")
-      // )
-    
-    var as = { id : obj.id }
-    var cs = []
-
-    foreach(obj.$,
-      function (k, v)
-      {
-        if (v.value.constructor.name == "Number") // || v.value.constructor.name == "String")
-          as[k] = v.value
-        else
-          cs.push(Serializer.toElem(k, serializeToXml(v.value)))
-      })
-
-    return Serializer.toElem(obj.meta.constructors[0].name, cs.join("\n"), as)
+    switch (o.constructor.name)
+    {
+      case "Array"  : return Serializer.arrayToXml   (o) 
+      case "Object" : return Serializer.objectToXml  (o) 
+      case "Number" : return Serializer.numberToXml  (o) 
+      case "String" : return Serializer.strintToXml  (o) 
+      case "Prop"   : return Serializer.propToXml    (o)
+      case "Base"   : return Serializer.baseToXml    (o)
+      default       : return Serializer.unknownToXml (o)
+    }
   },
+
+  function arrayToXml   (o) { return o.map(Serializer.toXml).join("\n") },
+  function objectToXml  (o) { return values(o).map(Serializer.toXml).join("\n") },
+  function numberToXml  (o) { return o.toString() }, 
+  function strintToXml  (o) { return o },
+  function unknownToXml (o) { return Serializer.toElem("unknown", o.constructor.name) },
+  function propToXml    (o) { return Serializer.toXml(o.value) },
+
+  function baseToXml (o)
+  {
+    var as = { id : o.id }
+    var cs = []
+    foreach(o.$, function (k, v) { if (!v.soft) cs.push(Serializer.toElem(k, Serializer.toXml(v))) })
+    return Serializer.toElem(o.meta.constructors[0].name, cs.join("\n"), as)
+  },
+
+// Helpers.
 
   function indent (x)
   {

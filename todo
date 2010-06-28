@@ -33,3 +33,9 @@ Dragging:
   - fixed angle
   - radial
 
+Saving:
+  - serialize
+  - deserialize
+  - meta hash for migrations?
+  
+

@@ -39,7 +39,7 @@ Class(Base,
 
   function defineProp (p, name, init, constraint, args)
   {
-    this.$[name] = new Property(this, name, init)
+    this.$[name] = new Prop(this, name, init, !!constraint)
     if (constraint) constraint.apply(null, [p ? this.$[name] : this[name]].concat(args))
   },
 
