@@ -16,7 +16,7 @@ function Property (o, n, v)
     if (self.busy) return
     self.busy = true
     self.value = v
-    foreach(self.triggers, function (t) { t[1].app(t[0]) })
+    foreach(self.triggers, function (_, t) { t[1].app(t[0]) })
     self.obj.changed()
     self.busy = false
   }

@@ -31,7 +31,7 @@ Class(Base,
   function destructor ()
   {
     this.meta.destructors.map(function (d) { d.call(this) }, this)
-    foreach(this.$, function (p) { p.destructor() })
+    foreach(this.$, function (_, p) { p.destructor() })
   },
 
   function defineProp (p, name, init, constraint, args)

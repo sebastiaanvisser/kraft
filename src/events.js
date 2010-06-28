@@ -16,14 +16,14 @@ Class(Events,
     $(elem).bind(name,
       function (e)
       {
-        foreach(self.preHooks,  function (h) { h() })
-        foreach(self.preHooks1, function (h) { h() })
+        foreach(self.preHooks,  function (_, h) { h() })
+        foreach(self.preHooks1, function (_, h) { h() })
         self.preHooks1 = {}
 
         var x = fn.apply(this, arguments) 
 
-        foreach(self.postHooks,  function (h) { h() })
-        foreach(self.postHooks1, function (h) { h() })
+        foreach(self.postHooks,  function (_, h) { h() })
+        foreach(self.postHooks1, function (_, h) { h() })
         self.postHooks1 = {}
 
         return x

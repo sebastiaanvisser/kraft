@@ -23,7 +23,7 @@ Class(Renderer,
   {
     this.timeoutId = 0
     var self = this
-    foreach(this.queue, function (o) { self.render(o) })
+    foreach(this.queue, function (_, o) { self.render(o) })
     this.queue = {}
   },
 
