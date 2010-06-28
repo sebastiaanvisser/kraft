@@ -1,57 +1,63 @@
 var myCanvas = new Canvas($("#canvas")[0])
+var myModel  = Model.make();
 
 function mkRect ()
 {
-  var r = AdjustableRect.make(myCanvas, 100, 100, 200, 300)
-  r.decorate(DraggableRect)
-  r.decorate(SelectableRect)
-  r.selectable(r.mkHandles, r.delHandles)
-  $(r.elem).addClass("myrect")
-  $(r.elem).addClass("shape")
-  return r
+  var shp = AdjustableRect.make(myCanvas, 100, 100, 200, 300)
+  myModel.addShape(shp);
+  shp.decorate(DraggableRect)
+  shp.decorate(SelectableRect)
+  shp.selectable(shp.mkHandles, shp.delHandles)
+  $(shp.elem).addClass("myrect")
+  $(shp.elem).addClass("shape")
+  return shp
 }
 
 function mkTriangle ()
 {
-  var r = AdjustableTriangle.make(myCanvas, 100, 100, 200, 200)
-  r.decorate(DraggableRect)
-  r.decorate(SelectableRect)
-  r.selectable(r.mkHandles, r.delHandles)
-  $(r.elem).addClass("mytriangle")
-  $(r.elem).addClass("shape")
-  return r
+  var shp = AdjustableTriangle.make(myCanvas, 100, 100, 200, 200)
+  myModel.addShape(shp);
+  shp.decorate(DraggableRect)
+  shp.decorate(SelectableRect)
+  shp.selectable(shp.mkHandles, shp.delHandles)
+  $(shp.elem).addClass("mytriangle")
+  $(shp.elem).addClass("shape")
+  return shp
 }
 
 function mkLine ()
 {
-  var l = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
-  l.decorate(DraggableRect)
-  l.decorate(SelectableRect)
-  l.selectable(l.mkHandles, l.delHandles)
-  $(l.elem).addClass("myline")
-  return l
+  var shp = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
+  myModel.addShape(shp);
+  shp.decorate(DraggableRect)
+  shp.decorate(SelectableRect)
+  shp.selectable(shp.mkHandles, shp.delHandles)
+  $(shp.elem).addClass("myline")
+  return shp
 }
 
 function mkEllipse ()
 {
-  var e = AdjustableEllipse.make(myCanvas, 200, 100, 300, 300)
-  e.decorate(DraggableRect)
-  e.decorate(SelectableRect)
-  e.selectable(e.mkHandles, e.delHandles)
-  $(e.elem).addClass("myellipse")
-  $(e.elem).addClass("shape")
-  return e
+  var shp = AdjustableEllipse.make(myCanvas, 200, 100, 300, 300)
+  myModel.addShape(shp);
+  shp.decorate(DraggableRect)
+  shp.decorate(SelectableRect)
+  shp.selectable(shp.mkHandles, shp.delHandles)
+  $(shp.elem).addClass("myellipse")
+  $(shp.elem).addClass("shape")
+  return shp
 }
 
 function mkText (text)
 {
-  var l = AdjustableText.make(myCanvas, 150, 200, 250, 200, text)
-  l.decorate(DraggableRect)
-  l.decorate(SelectableRect)
-  l.selectable(l.mkHandles, l.delHandles)
-  $(l.elem).addClass("mytext")
-  $(l.elem).attr("contentEditable", true)
-  return l
+  var shp = AdjustableText.make(myCanvas, 150, 200, 250, 200, text)
+  myModel.addShape(shp);
+  shp.decorate(DraggableRect)
+  shp.decorate(SelectableRect)
+  shp.selectable(shp.mkHandles, shp.delHandles)
+  $(shp.elem).addClass("mytext")
+  $(shp.elem).attr("contentEditable", true)
+  return shp
 }
 
 Events.manager.bind("#toolbar #rect",        "click", mkRect)
