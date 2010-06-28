@@ -2,8 +2,9 @@ function Base ()
 {
   this.id = 'o' + Base.nextId++
 
-  this.meta = { onchange    : []
-              , destructors : []
+  this.meta = { onchange     : []
+              , constructors : []
+              , destructors  : []
               }
 
   this.$ = {}
@@ -22,6 +23,8 @@ Class(Base,
       if (m != "destructor")
         this[m] = c.prototype[m]
 
+    // Store the contructor and destructor.
+    this.meta.constructors.push(c);
     if (c.prototype.destructor)
       this.meta.destructors.push(c.prototype.destructor)
 
