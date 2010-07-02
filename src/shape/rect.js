@@ -27,6 +27,8 @@ function Rect (x0, y0, x1, y1)
   this.def("bottom",  0, C.max0, this.p0.$.y,          this.p3.$.y      )
 }
 
+Base.register(Rect)
+
 Rect.make =
 function make (x0, y0, x1, y1)
 {

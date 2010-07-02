@@ -7,6 +7,8 @@ function RenderableLine (canvas)
   this.changed()
 }
 
+Base.register(RenderableLine)
+
 RenderableLine.make =
 function make (canvas, x0, y0, x1, y1, w)
 {
@@ -56,6 +58,8 @@ Class(RenderableLine,
 )
 
 function AdjustableLine () {}
+
+Base.register(AdjustableLine)
 
 AdjustableLine.make =
 function make (canvas, x0, y0, x1, y1, w)

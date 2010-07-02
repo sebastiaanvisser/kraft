@@ -14,6 +14,8 @@ function Text (x0, y0, x1, y1, text)
   this.def("bottom", 0, C.max0, this.p0.$.y, this.p1.$.y)
 }
 
+Base.register(Text)
+
 Text.make =
 function make (x0, y0, x1, y1, text)
 {

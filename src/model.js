@@ -3,6 +3,8 @@ function Model ()
   this.def("shapes", {});
 }
 
+Base.register(Model)
+
 Model.make =
 function make ()
 {

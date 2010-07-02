@@ -7,6 +7,8 @@ function RenderableEllipse (canvas)
   this.changed()
 }
 
+Base.register(RenderableEllipse)
+
 RenderableEllipse.make =
 function make (canvas, x0, y0, x1, y1)
 {
@@ -55,6 +57,8 @@ Class(RenderableEllipse,
 )
 
 function AdjustableEllipse () {}
+
+Base.register(AdjustableEllipse)
 
 AdjustableEllipse.make =
 function make (canvas, x0, y0, x1, y1)

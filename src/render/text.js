@@ -7,6 +7,8 @@ function RenderableText (canvas)
   this.changed()
 }
 
+Base.register(RenderableText)
+
 RenderableText.make =
 function make (canvas, x0, y0, x1, y1, text)
 {
@@ -60,6 +62,8 @@ Class(RenderableText,
 )
 
 function AdjustableText () {}
+
+Base.register(AdjustableText)
 
 AdjustableText.make =
 function make (canvas, x0, y0, x1, y1, text)

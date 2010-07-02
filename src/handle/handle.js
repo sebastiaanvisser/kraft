@@ -14,6 +14,8 @@ function Handle (canvas, pt)
   Point.eq(this.handle1.center, this.pt)
 }
 
+Base.register(Handle)
+
 Handle.make =
 function make (canvas, pt)
 {

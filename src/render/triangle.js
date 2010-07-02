@@ -8,6 +8,8 @@ function RenderableTriangle (canvas)
   this.changed()
 }
 
+Base.register(RenderableTriangle)
+
 RenderableTriangle.make =
 function make (canvas, x0, y0, x1, y1)
 {
@@ -68,6 +70,8 @@ Class(RenderableTriangle,
 )
 
 function AdjustableTriangle () {}
+
+Base.register(AdjustableTriangle)
 
 AdjustableTriangle.make =
 function make (canvas, x0, y0, x1, y1)

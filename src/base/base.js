@@ -7,13 +7,25 @@ function Base ()
               , destructors  : []
               }
 
+  this.classes = {}
+
   this.$ = {}
 
   Base.all[this.id] = this
 }
 
-Base.nextId = 0
-Base.all    = {}
+Base.classes = {}
+Base.nextId  = 0
+Base.all     = {}
+
+Static(Base,
+
+  function register (ctor)
+  {
+    this.classes[ctor.name] = ctor
+  }
+
+)
 
 Class(Base,
 

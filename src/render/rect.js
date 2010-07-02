@@ -8,6 +8,8 @@ function RenderableRect (canvas)
   this.changed()
 }
 
+Base.register(RenderableRect)
+
 RenderableRect.make =
 function make (canvas, x0, y0, x1, y1)
 {
@@ -48,6 +50,8 @@ Class(RenderableRect,
 )
 
 function AdjustableRect () {}
+
+Base.register(AdjustableRect)
 
 AdjustableRect.make =
 function make (canvas, x0, y0, x1, y1)
