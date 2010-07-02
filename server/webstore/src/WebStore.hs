@@ -21,7 +21,9 @@ main =
              start defaultConfig { listenOn = [SockAddrInet 8000 addr] } (hDefaultEnv handler) ()
           where
           handler =
-             do hCrossDomainFrom "http://localhost" (hFileStore store author ".")
+             do hCrossDomain (=="http://localhost") methods 60
+                  (hError Forbidden)
+                  (hFileStore store author ".")
                 hColorLog stdout
 
        _ -> hPutStrLn stderr
