@@ -1,0 +1,27 @@
+Name:               webstore
+Version:            0.0.1
+Description:        Use filestore to read/write expose a dir to the web.
+Synopsis:           Use filestore to read/write expose a dir to the web.
+Cabal-version:      >= 1.6
+Category:           Network, Web
+Author:             Sebastiaan Visser
+Maintainer:         haskell@fvisser.nl
+Build-Type:         Simple
+
+Library
+  GHC-Options:      -Wall -fno-warn-orphans
+  HS-Source-Dirs:   src
+
+  Build-Depends:    base == 4.*
+                  , directory == 1.0.*
+                  , network == 2.2.*
+                  , filestore == 0.3.*
+                  , salvia == 1.2.*
+                  , salvia-extras == 1.2.*
+
+Executable          webstore
+  Executable:       webstore
+  Main-is:          WebStore.hs
+  GHC-Options:      -threaded -Wall
+  HS-Source-Dirs:   src
+
