@@ -10,7 +10,16 @@ Static(IO,
        , data    : data
        , success : function () {}
        , error   : function () {}
-       , async   : false
+       })
+  },
+
+  function load (name, cb)
+  {
+    $.ajax
+      ({ type    : 'GET'
+       , url     : 'http://localhost:8000/' + name
+       , success : cb
+       , error   : function () {}
        })
   }
 
