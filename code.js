@@ -22,6 +22,8 @@
 <!--#include virtual=src/render/triangle.js       -->
 <!--#include virtual=src/render/text.js           -->
 <!--#include virtual=src/model.js                 -->
+<!--#include virtual=src/io.js                    -->
+
 <!--#include virtual=src/setup.js                 -->
 <!--#include virtual=src/main.js                  -->
 

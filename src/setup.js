@@ -68,4 +68,5 @@ Events.manager.bind("#toolbar #text",        "click", function () { mkText(promp
 Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.selection.selectAll() })
 Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
 Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
+Events.manager.bind("#toolbar #save",        "click", function () { IO.save("mymodel", Serializer.toXml(myModel)) })
 
