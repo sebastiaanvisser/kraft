@@ -29,17 +29,22 @@ Static(Base,
 
 Class(Base,
 
-  function decorate (c /* constructor arguments */)
+  function decorateOnly (c /* constructor arguments */)
   {
     for (var m in c.prototype)
       if (m != "destructor")
         this[m] = c.prototype[m]
 
     // Store the contructor and destructor.
-    this.meta.constructors.push(c);
+    this.meta.constructors.push(c)
     if (c.prototype.destructor)
       this.meta.destructors.push(c.prototype.destructor)
 
+  },
+
+  function decorate (c /* constructors arguments */)
+  {
+    this.decorateOnly(c)
     c.apply(this, [].slice.call(arguments, 1))
   },
 

@@ -62,6 +62,8 @@ Class(Selection,
 
 )
 
+// ----------------------------------------------------------------------------
+
 function SelectableRect ()
 {
   this.onselect   = []
@@ -86,6 +88,8 @@ function SelectableRect ()
     , function () { $(self.elem).removeClass("selected") }
     )
 }
+
+Base.register(SelectableRect)
 
 Class(SelectableRect,
 

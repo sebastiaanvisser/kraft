@@ -69,5 +69,5 @@ Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.sel
 Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
 Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
 Events.manager.bind("#toolbar #save",        "click", function () { IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(myModel)) })
-Events.manager.bind("#toolbar #load",        "click", function () { IO.load("mymodel.xml", function (x) { console.log(x) }) })
+Events.manager.bind("#toolbar #load",        "click", function () { IO.load("mymodel.xml", function (x) { console.log(Deserializer.baseFromXml(x.documentElement)) }) })
 
