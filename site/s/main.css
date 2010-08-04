@@ -1,40 +1,66 @@
-body
+html
 {
-  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 800, from(#ffaa00), to(#ff6600));
+  background:
+    -webkit-gradient( radial
+                    , 50% 400, 0
+                    , 50% 400, 650
+                    , from(#ffffff)
+                    , to(#e9e3d3)
+                    );
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  text-shadow: 2px 2px 20px rgba(132,66,164, 0.5);
 }
 
-*
+body
 {
-  outline: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: url("grain.png");
+}
+
+header
+{
+  -webkit-transform: rotate(-5deg);
+  padding-top: 200px;
 }
 
 h1
 {
-  font-family: "Alte Haas Grotesk";
-  font-weight: normal;
-  font-size: 200px;
-  margin: 0;
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  font-size: 100px;
+  margin: auto;
 
   text-align: center;
-  text-shadow: 0 0 250px #FF8, 0 0 40px #FF0, 0 0 10px #FFf;
-  color: #520;
+  text-shadow: 2px 2px 15px rgba(132,66,164, 0.7);
+  color: #7b42a4;
 
-  -webkit-text-stroke: 1px rgba(0,0,0, 1);
-  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.6)))
+  x-webkit-text-stroke: 1px rgba(0,0,0, 1);
+  -webkit-mask-image:
+    -webkit-gradient( linear
+                    , left top, left bottom
+                    , color-stop(0.0, rgba(0,0,0, 0.3))
+                    , color-stop(0.6, rgba(0,0,0, 0.8))
+                    , color-stop(1.0, rgba(0,0,0, 1.0))
+                    );
 }
 
-h1 span
+h2
 {
-  color: black;
-}
+  font-family: "Myriad Pro";
+  font-weight: bold;
+  font-size: 25px;
+  margin: -20px auto 0px auto;
+  padding-left: 240px;
 
-#xxx_canvas
-{
-  background: rgba(0,0,0, 0.2) url("../../s/grid-dark.png");
-  -webkit-mask-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 400, from(black), to(rgba(0,0,0,0)));
-
-  margin: 0 auto 0 auto;
-  width:  800px;
-  height: 800px;
+  text-align: center;
+  text-shadow: 2px 2px 15px rgba(132,66,164, 0.7);
+  color: #413c2d;
+  -webkit-transform: rotate(2deg);
 }
 
