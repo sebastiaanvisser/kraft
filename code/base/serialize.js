@@ -33,8 +33,8 @@ Static
   {
     var ctors = values(o.meta.constructors).map(function (k) { return k.name }).join(" ")
     var xs = []
-    foreach(o.$, function (k, v) { if (!v.soft) xs.push(Serializer.elem(k, Serializer.toXml(v))) })
-    return Serializer.elem("Base", xs.join("\n"), as)
+    foreach(o.$, function (k, v) { if (!v.soft) xs.push(Serializer.elem(k, Serializer.toXml(v) , v.type ? {type:v.type} : undefined)) })
+    return Serializer.elem("Base", xs.join("\n"), { id : o.id, type : ctors })
   },
 
 // Helpers.
@@ -98,19 +98,23 @@ Static
 
   function baseFromXml (x)
   {
+    var ctx = { canvas : myCanvas }
+
     var base = new Base
-    $(x).attr("types").split(/\s+/).map(
+
+    $(x).children().each(function (_, nd)
+      {
+        base.$[nd.nodeName] =
+          new Prop(base, nd.nodeName, Deserializer.propFromXml(nd), false)
+      })
+
+    $(x).attr("type").split(/\s+/).map(
       function (c, i)
       {
         var ctor = Base.classes[c]
         if (!ctor) throw ("Deserializer.baseFromXml: unregistered class '" + c + "'")
-        base.decorateOnly(ctor)
+        base.decorate(ctor, true, ctx)
       })
-
-    var props = {}
-    $(x).children().each(function (_, nd) { props[nd.nodeName] = Deserializer.propFromXml(nd) })
-
-    base.props = props
 
     return base
   }

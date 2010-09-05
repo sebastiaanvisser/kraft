@@ -1,6 +1,6 @@
-function RenderableText (canvas)
+function RenderableText (revive, ctx)
 {
-  this.canvas = canvas
+  this.canvas = ctx
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })

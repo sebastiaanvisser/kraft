@@ -1,4 +1,4 @@
-function Rect (x0, y0, x1, y1)
+function Rect (revive, ctx, x0, y0, x1, y1)
 {
   this.def("p0", Point.make(x0, y0))
   this.def("p1", Point.make(x1, y0))
@@ -33,7 +33,7 @@ Rect.make =
 function make (x0, y0, x1, y1)
 {
   var r = new Base
-  r.decorate(Rect, x0, y0, x1, y1)
+  r.decorate(Rect, null, x0, y0, x1, y1)
   return r
 }
 

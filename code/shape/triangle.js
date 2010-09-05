@@ -1,4 +1,4 @@
-function Triangle (x0, y0, x1, y1)
+function Triangle (revive, ctx, x0, y0, x1, y1)
 {
   this.def("p0", Point.make(x0, y0))
   this.def("p1", Point.make(x1, y0))
@@ -33,7 +33,7 @@ Triangle.make =
 function make (x0, y0, x1, y1)
 {
   var r = new Base
-  r.decorate(Triangle, x0, y0, x1, y1)
+  r.decorate(Triangle, null, x0, y0, x1, y1)
   return r
 }
 

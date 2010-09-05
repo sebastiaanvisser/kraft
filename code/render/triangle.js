@@ -1,6 +1,6 @@
-function RenderableTriangle (canvas)
+function RenderableTriangle (revive, ctx)
 {
-  this.canvas = canvas
+  this.canvas = ctx
   this.setupElem()
   this.render()
 

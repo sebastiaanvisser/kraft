@@ -42,10 +42,16 @@ Class(Base,
 
   },
 
-  function decorate (c /* constructors arguments */)
+  function decorate (c, ctx /* constructors arguments */)
   {
     this.decorateOnly(c)
-    c.apply(this, [].slice.call(arguments, 1))
+    c.apply(this, [false, ctx].concat([].slice.call(arguments, 2)))
+  },
+
+  function revive (c, ctx)
+  {
+    this.decorateOnly(c)
+    c.apply(this, [true, ctx])
   },
 
   function destructor ()

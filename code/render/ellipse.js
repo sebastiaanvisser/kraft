@@ -1,7 +1,7 @@
-function RenderableEllipse (canvas)
+function RenderableEllipse (revive, ctx)
 {
-  this.canvas   = canvas
-  this.elem     = this.setupElem()
+  this.canvas = ctx
+  this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
   this.changed()

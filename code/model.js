@@ -1,4 +1,4 @@
-function Model ()
+function Model (revive, ctx)
 {
   this.def("shapes", {});
 }

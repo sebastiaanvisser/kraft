@@ -1,4 +1,4 @@
-function Text (x0, y0, x1, y1, text)
+function Text (revive, ctx, x0, y0, x1, y1, text)
 {
   this.def("p0", Point.make(x0, y0))
   this.def("p1", Point.make(x1, y1))
@@ -20,7 +20,7 @@ Text.make =
 function make (x0, y0, x1, y1, text)
 {
   var r = new Base
-  r.decorate(Text, x0, y0, x1, y1, text)
+  r.decorate(Text, null, x0, y0, x1, y1, text)
   return r
 }
 

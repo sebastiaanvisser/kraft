@@ -1,4 +1,4 @@
-function Line (x0, y0, x1, y1, w)
+function Line (revive, _, x0, y0, x1, y1, w)
 {
   this.def("p0", Point.make(x0, y0))
   this.def("p1", Point.make(x1, y1))
@@ -20,7 +20,7 @@ Line.make =
 function make (x0, y0, x1, y1, w)
 {
   var r = new Base
-  r.decorate(Line, x0, y0, x1, y1, w)
+  r.decorate(Line, null, x0, y0, x1, y1, w)
   return r
 }
 

@@ -1,6 +1,6 @@
-function Handle (canvas, pt)
+function Handle (revive, ctx, pt)
 {
-  this.canvas = canvas
+  this.canvas = ctx
   this.pt     = pt
 
   this.def("handle0", RenderableEllipse.make(this.canvas, 0, 0, 10, 10))

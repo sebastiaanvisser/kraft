@@ -1,6 +1,6 @@
-function RenderableLine (canvas)
+function RenderableLine (revive, ctx)
 {
-  this.canvas = canvas
+  this.canvas = ctx
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })

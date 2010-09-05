@@ -1,6 +1,6 @@
-function RenderableRect (canvas)
+function RenderableRect (revive, ctx)
 {
-  this.canvas   = canvas
+  this.canvas   = ctx
   this.elem     = this.setupElem()
   this.render()
 
