@@ -14,6 +14,19 @@ html, body
   -webkit-transition: color 0.2s;
 }
 
+h1
+{
+  font-family: "Sketchy";
+  font-weight: normal;
+  font-size: 40px;
+  color: rgba(40,0,60, 0.4);
+  text-shadow: 0px 0px 10px rgba(128,0,255, 0.2);
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  width: 200px;
+}
+
 #canvas,
 #grid
 {
