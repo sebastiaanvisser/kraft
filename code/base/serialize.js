@@ -98,14 +98,17 @@ Static
 
   function baseFromXml (x)
   {
-    var ctx = { canvas : myCanvas }
-
     var base = new Base
 
     $(x).children().each(function (_, nd)
       {
         base.$[nd.nodeName] =
-          new Prop(base, nd.nodeName, Deserializer.propFromXml(nd), false)
+          new Prop( base
+                  , nd.nodeName
+                  , Deserializer.propFromXml(nd)
+                  , false
+                  , $(nd).attr("type")
+                  )
       })
 
     $(x).attr("type").split(/\s+/).map(
@@ -113,7 +116,7 @@ Static
       {
         var ctor = Base.classes[c]
         if (!ctor) throw ("Deserializer.baseFromXml: unregistered class '" + c + "'")
-        base.decorate(ctor, true, ctx)
+        base.revive(ctor, myCanvas)
       })
 
     return base

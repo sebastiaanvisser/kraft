@@ -3,8 +3,8 @@ function Prop (o, n, v, c, t)
   this.obj      = o
   this.name     = n
   this.soft     = c
-  this.value    = v
   this.type     = t || v.constructor.name
+  this.value    = this.type == "Number" ? 1 * v : v
   this.triggers = {}
   this.busy     = false
 
@@ -14,7 +14,7 @@ function Prop (o, n, v, c, t)
 
   function set (v)
   {
-    v = this.t == "Number" ? 1 * v : v
+    v = this.type == "Number" ? 1 * v : v
     if (self.value == v) return
     if (self.busy) return
     self.busy = true
