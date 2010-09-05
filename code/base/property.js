@@ -1,9 +1,10 @@
-function Prop (o, n, v, c)
+function Prop (o, n, v, c, t)
 {
   this.obj      = o
   this.name     = n
   this.soft     = c
   this.value    = v
+  this.type     = t
   this.triggers = {}
   this.busy     = false
 
@@ -13,6 +14,7 @@ function Prop (o, n, v, c)
 
   function set (v)
   {
+    v = this.t == "number" ? 1 * v : v
     if (self.value == v) return
     if (self.busy) return
     self.busy = true
