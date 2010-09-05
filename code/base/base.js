@@ -54,15 +54,14 @@ Class(Base,
     foreach(this.$, function (_, p) { p.destructor() })
   },
 
-  function defineProp (p, name, type, init, constraint, args)
+  function defineProp (p, name, init, constraint, args)
   {
-    this.$[name] = new Prop(this, name, init, !!constraint, type)
+    this.$[name] = new Prop(this, name, init, !!constraint)
     if (constraint) constraint.apply(null, [p ? this.$[name] : this[name]].concat(args))
   },
 
-  function def  (n, i, c) { this.defineProp(true,  n, null, i, c, slice(arguments, 3)) },
-  function def1 (n, i, c) { this.defineProp(false, n, null, i, c, slice(arguments, 3)) },
-  function num  (n, i, c) { this.defineProp(true,  n, "number", i, c, slice(arguments, 3)) },
+  function def  (n, i, c) { this.defineProp(true,  n, i, c, slice(arguments, 3)) },
+  function def1 (n, i, c) { this.defineProp(false, n, i, c, slice(arguments, 3)) },
 
   function onchange (f)
   {

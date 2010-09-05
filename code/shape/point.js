@@ -1,7 +1,7 @@
 function Point (x, y)
 {
-  this.num("x", x || 0)
-  this.num("y", y || 0)
+  this.def("x", x || 0)
+  this.def("y", y || 0)
 }
 
 Base.register(Point)
