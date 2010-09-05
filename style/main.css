@@ -29,7 +29,7 @@ html, body
 
 #grid
 {
-  -webkit-mask-image: url(grid-dark.png);
+  -webkit-mask-image: url(../images/grid-dark.png);
   -webkit-mask-repeat: repeat;
 
   -webkit-transition: background 0.4s;
