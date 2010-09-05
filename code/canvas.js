@@ -16,13 +16,13 @@ Class(Canvas,
   function showGrid ()
   {
     this.gridShow = true
-    $("#grid", this.elem).addClass("grid")
+    $("#grid").addClass("grid")
   },
 
   function hideGrid ()
   {
     this.gridShow = false
-    $("#grid", this.elem).removeClass("grid")
+    $("#grid").removeClass("grid")
   }
 
 )
