@@ -1,13 +1,13 @@
 function Triangle (revive, ctx, x0, y0, x1, y1)
 {
-  this.def("p0", Point.make(x0, y0))
-  this.def("p1", Point.make(x1, y0))
-  this.def("p2", Point.make(x0, y1))
-  this.def("p3", Point.make(x1, y1))
-  C.eq(this.p0.$.x, this.p2.$.x)
-  C.eq(this.p1.$.x, this.p3.$.x)
-  C.eq(this.p0.$.y, this.p1.$.y)
-  C.eq(this.p2.$.y, this.p3.$.y)
+  if (!revive)
+  {
+    this.def("p0", Point.make(x0, y0))
+    this.def("p3", Point.make(x1, y1))
+  }
+
+  this.def1("p1", Point.make(), Point.yx, this.p0, this.p3)
+  this.def1("p2", Point.make(), Point.xy, this.p0, this.p3)
 
   this.def1("center",      Point.make(), Point.mid,         this.p0, this.p3     )
   this.def1("topLeft",     Point.make(), Point.topLeft,     this.p0, this.p3     )

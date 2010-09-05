@@ -69,7 +69,10 @@ Class(RenderableTriangle,
 
 )
 
-function AdjustableTriangle () {}
+function AdjustableTriangle ()
+{
+  this.selectable(this.mkHandles, this.delHandles)
+}
 
 Base.register(AdjustableTriangle)
 
@@ -77,6 +80,7 @@ AdjustableTriangle.make =
 function make (canvas, x0, y0, x1, y1)
 {
   var r = RenderableTriangle.make(canvas, x0, y0, x1, y1)
+  r.decorate(SelectableRect)
   r.decorate(AdjustableTriangle)
   return r
 }

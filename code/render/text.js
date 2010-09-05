@@ -61,7 +61,10 @@ Class(RenderableText,
 
 )
 
-function AdjustableText () {}
+function AdjustableText ()
+{
+  this.selectable(this.mkHandles, this.delHandles)
+}
 
 Base.register(AdjustableText)
 
@@ -69,6 +72,7 @@ AdjustableText.make =
 function make (canvas, x0, y0, x1, y1, text)
 {
   var r = RenderableText.make(canvas, x0, y0, x1, y1, text)
+  r.decorate(SelectableRect)
   r.decorate(AdjustableText)
   return r
 }

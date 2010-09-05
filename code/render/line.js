@@ -57,7 +57,10 @@ Class(RenderableLine,
 
 )
 
-function AdjustableLine () {}
+function AdjustableLine ()
+{
+  this.selectable(this.mkHandles, this.delHandles)
+}
 
 Base.register(AdjustableLine)
 
@@ -65,6 +68,7 @@ AdjustableLine.make =
 function make (canvas, x0, y0, x1, y1, w)
 {
   var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
+  r.decorate(SelectableRect)
   r.decorate(AdjustableLine)
   return r
 }

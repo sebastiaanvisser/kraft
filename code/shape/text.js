@@ -1,8 +1,11 @@
 function Text (revive, ctx, x0, y0, x1, y1, text)
 {
-  this.def("p0", Point.make(x0, y0))
-  this.def("p1", Point.make(x1, y1))
-  this.def("text", text)
+  if (!revive)
+  {
+    this.def("p0", Point.make(x0, y0))
+    this.def("p1", Point.make(x1, y1))
+    this.def("text", text)
+  }
 
   this.def1("center",      Point.make(), Point.mid,         this.p0, this.p1)
   this.def1("topLeft",     Point.make(), Point.topLeft,     this.p0, this.p1)
