@@ -16,7 +16,7 @@ Class(Renderer,
   function requireRender ()
   {
     var self = this
-    Events.manager.onThreadEndOnce("R", function () { self.renderQueue() })
+    Events.manager.onThreadEndOnce("Renderer", function () { self.renderQueue() })
   },
 
   function renderQueue ()
@@ -30,3 +30,4 @@ Class(Renderer,
   function render (obj) { obj.render() }
 
 )
+

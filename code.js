@@ -1,29 +1,35 @@
 <!--#include virtual=code/base/meta.js             -->
-<!--#include virtual=code/events.js                -->
 <!--#include virtual=code/base/base.js             -->
 <!--#include virtual=code/base/property.js         -->
 <!--#include virtual=code/base/trigger.js          -->
 <!--#include virtual=code/base/serialize.js        -->
+
+<!--#include virtual=code/events.js                -->
 <!--#include virtual=code/drag.js                  -->
 <!--#include virtual=code/selection.js             -->
 <!--#include virtual=code/constraint/constraint.js -->
+<!--#include virtual=code/render/renderer.js       -->
+<!--#include virtual=code/canvas.js                -->
+<!--#include virtual=code/handle/handle.js         -->
+
 <!--#include virtual=code/shape/point.js           -->
-<!--#include virtual=code/constraint/point.js      -->
 <!--#include virtual=code/shape/line.js            -->
 <!--#include virtual=code/shape/rect.js            -->
 <!--#include virtual=code/shape/triangle.js        -->
 <!--#include virtual=code/shape/text.js            -->
-<!--#include virtual=code/render/renderer.js       -->
-<!--#include virtual=code/canvas.js                -->
-<!--#include virtual=code/handle/handle.js         -->
+
 <!--#include virtual=code/render/ellipse.js        -->
 <!--#include virtual=code/render/line.js           -->
 <!--#include virtual=code/render/rect.js           -->
 <!--#include virtual=code/render/triangle.js       -->
 <!--#include virtual=code/render/text.js           -->
+
+<!--#include virtual=code/constraint/point.js      -->
+
 <!--#include virtual=code/model.js                 -->
 <!--#include virtual=code/io.js                    -->
 
-<!--#include virtual=code/setup.js                 -->
-<!--#include virtual=code/main.js                  -->
+<!--#include virtual=code/ui/setup.js              -->
+
+<!--#include virtual=mytest.js                     -->
 

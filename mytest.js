@@ -1,4 +1,3 @@
-/*
 q0 = mkTriangle()
 q1 = mkTriangle()
 q2 = mkTriangle()
@@ -42,5 +41,4 @@ Point.eq(t4.p0, q0.p1)
 Point.eq(t4.p1, q0.p2)
 Point.eq(t5.p0, q3.p1)
 Point.eq(t5.p1, q3.p2)
-*/
 

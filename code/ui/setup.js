@@ -23,7 +23,7 @@ function mkTriangle ()
 
 function mkLine ()
 {
-  var shp = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 4)
+  var shp = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 20)
   shp.decorate(DraggableRect)
   myModel.addShape(shp);
   $(shp.elem).addClass("myline")
