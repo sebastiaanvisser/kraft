@@ -56,6 +56,8 @@ Class(RenderableEllipse,
 
 )
 
+// ----------------------------------------------------------------------------
+
 function AdjustableEllipse ()
 {
   this.selectable(this.mkHandles, this.delHandles)
