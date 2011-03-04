@@ -9,14 +9,6 @@ function RenderableEllipse (revive, ctx)
 
 Base.register(RenderableEllipse)
 
-RenderableEllipse.make =
-function make (canvas, x0, y0, x1, y1)
-{
-  var r = Rect.make(x0, y0, x1, y1)
-  r.decorate(RenderableEllipse, canvas)
-  return r
-}
-
 Class(RenderableEllipse,
 
   function setupElem ()
@@ -52,47 +44,6 @@ Class(RenderableEllipse,
   function unrender ()
   {
     this.canvas.elem.removeChild(this.elem)
-  }
-
-)
-
-// ----------------------------------------------------------------------------
-
-function AdjustableEllipse ()
-{
-  this.selectable(this.mkHandles, this.delHandles)
-}
-
-Base.register(AdjustableEllipse)
-
-AdjustableEllipse.make =
-function make (canvas, x0, y0, x1, y1)
-{
-  var r = RenderableEllipse.make(canvas, x0, y0, x1, y1)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableEllipse)
-  return r
-}
-
-Class(AdjustableEllipse,
-
-  function mkHandles ()
-  {
-    this.handles = new Base
-    this.handles.def("topLeft",     Handle.make  (this.canvas, this.p0))
-    this.handles.def("topRight",    Handle.make  (this.canvas, this.p1))
-    this.handles.def("bottomLeft",  Handle.make  (this.canvas, this.p2))
-    this.handles.def("bottomRight", Handle.make  (this.canvas, this.p3))
-    this.handles.def("midLeft",     Handle.makeH (this.canvas, this.midLeft))
-    this.handles.def("midRight",    Handle.makeH (this.canvas, this.midRight))
-    this.handles.def("midTop",      Handle.makeV (this.canvas, this.midTop))
-    this.handles.def("midBottom",   Handle.makeV (this.canvas, this.midBottom))
-    this.handles.def("center",      Handle.make  (this.canvas, this.center))
-  },
-
-  function delHandles ()
-  {
-    this.handles.destructor()
   }
 
 )

@@ -27,12 +27,19 @@
 #canvas .ellipse.selected,
 #canvas .triangle.selected
 {
-  outline: solid 2px #88f;
+  outline: dashed 2px #88f;
+  outline-offset: -1px;
 }
 
 #canvas .handle0
 {
   background: rgba(0,0,0, 0.8);
+}
+
+#canvas .handleH,
+#canvas .handleV
+{
+  background: rgba(0,0,0, 0.4);
 }
 
 #canvas .handle1

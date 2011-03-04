@@ -51,14 +51,6 @@ function RenderableRect (revive, ctx)
 
 Base.register(RenderableRect)
 
-RenderableRect.make =
-function make (canvas, x0, y0, x1, y1)
-{
-  var r = Rect.make(x0, y0, x1, y1)
-  r.decorate(RenderableRect, canvas)
-  return r
-}
-
 Class(RenderableRect,
 
   function setupElem ()
@@ -98,15 +90,6 @@ function AdjustableRect ()
 }
 
 Base.register(AdjustableRect)
-
-AdjustableRect.make =
-function make (canvas, x0, y0, x1, y1)
-{
-  var r = RenderableRect.make(canvas, x0, y0, x1, y1)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableRect)
-  return r
-}
 
 Class(AdjustableRect,
 

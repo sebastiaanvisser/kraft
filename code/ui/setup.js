@@ -3,12 +3,28 @@ var myModel  = Model.make();
 
 function mkRect ()
 {
-  var shp = AdjustableRect.make(myCanvas, 100, 100, 200, 300)
-  shp.decorate(DraggableShape)
-  myModel.addShape(shp);
-  $(shp.elem).addClass("myrect")
-  $(shp.elem).addClass("shape")
-  return shp
+  var r = Rect.make(300, 100, 200, 300)
+  r.decorate(RenderableRect, myCanvas)
+  r.decorate(SelectableShape)
+  r.decorate(AdjustableRect)
+  r.decorate(DraggableShape)
+  myModel.addShape(r);
+  $(r.elem).addClass("myrect")
+  $(r.elem).addClass("shape")
+  return r
+}
+
+function mkEllipse ()
+{
+  var r = Rect.make(300, 100, 200, 300)
+  r.decorate(RenderableEllipse, myCanvas)
+  r.decorate(SelectableShape)
+  r.decorate(AdjustableRect)
+  r.decorate(DraggableShape)
+  myModel.addShape(r);
+  $(r.elem).addClass("myellipse")
+  $(r.elem).addClass("shape")
+  return r
 }
 
 function mkTriangle ()
@@ -27,16 +43,6 @@ function mkLine ()
   shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("myline")
-  return shp
-}
-
-function mkEllipse ()
-{
-  var shp = AdjustableEllipse.make(myCanvas, 200, 100, 300, 300)
-  shp.decorate(DraggableShape)
-  myModel.addShape(shp);
-  $(shp.elem).addClass("myellipse")
-  $(shp.elem).addClass("shape")
   return shp
 }
 
