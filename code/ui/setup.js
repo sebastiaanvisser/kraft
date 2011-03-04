@@ -4,7 +4,7 @@ var myModel  = Model.make();
 function mkRect ()
 {
   var shp = AdjustableRect.make(myCanvas, 100, 100, 200, 300)
-  shp.decorate(DraggableRect)
+  shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("myrect")
   $(shp.elem).addClass("shape")
@@ -14,7 +14,7 @@ function mkRect ()
 function mkTriangle ()
 {
   var shp = AdjustableTriangle.make(myCanvas, 100, 100, 200, 200)
-  shp.decorate(DraggableRect)
+  shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("mytriangle")
   $(shp.elem).addClass("shape")
@@ -24,7 +24,7 @@ function mkTriangle ()
 function mkLine ()
 {
   var shp = AdjustableLine.make(myCanvas, 150, 200, 250, 200, 20)
-  shp.decorate(DraggableRect)
+  shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("myline")
   return shp
@@ -33,7 +33,7 @@ function mkLine ()
 function mkEllipse ()
 {
   var shp = AdjustableEllipse.make(myCanvas, 200, 100, 300, 300)
-  shp.decorate(DraggableRect)
+  shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("myellipse")
   $(shp.elem).addClass("shape")
@@ -43,7 +43,7 @@ function mkEllipse ()
 function mkText (text)
 {
   var shp = AdjustableText.make(myCanvas, 150, 200, 250, 200, text)
-  shp.decorate(DraggableRect)
+  shp.decorate(DraggableShape)
   myModel.addShape(shp);
   $(shp.elem).addClass("mytext")
   $(shp.elem).attr("contentEditable", true)

@@ -12,6 +12,7 @@
 <!--#include virtual=code/io.js                    -->
 <!--#include virtual=code/model.js                 -->
 
+<!--#include virtual=code/shape/shape.js           -->
 <!--#include virtual=code/shape/point.js           -->
 <!--#include virtual=code/shape/line.js            -->
 <!--#include virtual=code/shape/rect.js            -->
@@ -25,5 +26,5 @@
 
 <!--#include virtual=code/ui/setup.js              -->
 
-<!--#include virtual=mytest.js                     -->
+<!-- include virtual=mytest.js                     -->
 

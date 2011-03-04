@@ -4,12 +4,12 @@ function Handle (revive, ctx, pt)
   this.pt     = pt
 
   this.def("handle0", RenderableEllipse.make(this.canvas, 0, 0, 10, 10))
-  this.handle0.decorate(DraggableRect)
+  this.handle0.decorate(DraggableShape)
   $(this.handle0.elem).addClass("handle0")
   Point.eq(this.handle0.center, this.pt)
 
   this.def("handle1", RenderableEllipse.make(this.canvas, 0, 0, 6, 6))
-  this.handle1.decorate(DraggableRect)
+  this.handle1.decorate(DraggableShape)
   $(this.handle1.elem).addClass("handle1")
   Point.eq(this.handle1.center, this.pt)
 }
@@ -34,8 +34,8 @@ function makeV (canvas, pt)
 
 function VeriticalHandle ()
 {
-  this.def("handleV", RenderableRect.make(this.canvas, 0, 0, 2, 14))
-  this.handleV.decorate(DraggableRect)
+  this.def("handleV", RenderableRect.make(this.canvas, 0, 0, 2, 10))
+  this.handleV.decorate(DraggableShape)
   $(this.handleV.elem).addClass("handle0")
   Point.eq(this.handleV.center, this.pt)
 
@@ -54,8 +54,8 @@ function makeH (canvas, pt)
 
 function HorizontalHandle ()
 {
-  this.def("handleH", RenderableRect.make(this.canvas, 0, 0, 14, 2))
-  this.handleH.decorate(DraggableRect)
+  this.def("handleH", RenderableRect.make(this.canvas, 0, 0, 10, 2))
+  this.handleH.decorate(DraggableShape)
   $(this.handleH.elem).addClass("handle0")
   Point.eq(this.handleH.center, this.pt)
 

@@ -180,12 +180,3 @@ Class(AdjustableRect,
 
 )
 
-// ----------------------------------------------------------------------------
-
-function DraggableRect ()
-{
-  this.dragger = new Draggable(this.canvas.elem, this, this.elem, false, false, 5, 5)
-}
-
-Base.register(DraggableRect)
-
