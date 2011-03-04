@@ -105,7 +105,7 @@ AdjustableText.make =
 function make (canvas, x0, y0, x1, y1, text)
 {
   var r = RenderableText.make(canvas, x0, y0, x1, y1, text)
-  r.decorate(SelectableRect)
+  r.decorate(SelectableShape)
   r.decorate(AdjustableText)
   return r
 }

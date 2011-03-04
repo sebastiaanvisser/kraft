@@ -69,7 +69,7 @@ AdjustableEllipse.make =
 function make (canvas, x0, y0, x1, y1)
 {
   var r = RenderableEllipse.make(canvas, x0, y0, x1, y1)
-  r.decorate(SelectableRect)
+  r.decorate(SelectableShape)
   r.decorate(AdjustableEllipse)
   return r
 }

@@ -123,7 +123,7 @@ AdjustableTriangle.make =
 function make (canvas, x0, y0, x1, y1)
 {
   var r = RenderableTriangle.make(canvas, x0, y0, x1, y1)
-  r.decorate(SelectableRect)
+  r.decorate(SelectableShape)
   r.decorate(AdjustableTriangle)
   return r
 }

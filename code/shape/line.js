@@ -101,7 +101,7 @@ AdjustableLine.make =
 function make (canvas, x0, y0, x1, y1, w)
 {
   var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
-  r.decorate(SelectableRect)
+  r.decorate(SelectableShape)
   r.decorate(AdjustableLine)
   return r
 }
