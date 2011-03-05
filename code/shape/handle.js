@@ -4,7 +4,7 @@ function Handle (revive, ctx, pt)
   this.pt     = pt
 
   this.defHandlePoint("handle0", 0, 0, 10, 10)
-  this.defHandlePoint("handle1", 0, 0,  6,  6)
+  // this.defHandlePoint("handle1", 0, 0,  6,  6)
 }
 
 Base.register(Handle)
@@ -36,7 +36,7 @@ function VeriticalHandle ()
 {
   this.defHandlePoint("handleV", 0, 0, 2, 10)
   this.handle0.dragger.lockX = true
-  this.handle1.dragger.lockX = true
+  // this.handle1.dragger.lockX = true
   this.handleV.dragger.lockX = true
 }
 
@@ -54,7 +54,7 @@ function HorizontalHandle ()
 {
   this.defHandlePoint("handleH", 0, 0, 10, 2)
   this.handle0.dragger.lockY = true
-  this.handle1.dragger.lockY = true
+  // this.handle1.dragger.lockY = true
   this.handleH.dragger.lockY = true
 }
 
