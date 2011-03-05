@@ -25,6 +25,18 @@ function Rect (revive, ctx, x0, y0, x1, y1)
   this.def("top",     0, C.min0, this.p0.$.y,          this.p3.$.y      )
   this.def("right",   0, C.max0, this.p0.$.x,          this.p3.$.x      )
   this.def("bottom",  0, C.max0, this.p0.$.y,          this.p3.$.y      )
+
+  this.def("br_x", 0)
+  this.def("br_y", 10)
+  this.def("br", Point.make(20, 400))
+  C.add0(this.br.$.y, this.topLeft.$.y, this.$.br_y)
+  C.add0(this.br.$.x, this.$.br_x, this.topLeft.$.x)
+
+  this.def("bd_x", 0)
+  this.def("bd_y", 10)
+  this.def("bd", Point.make(20, 400))
+  C.add0(this.bd.$.y, this.midLeft.$.y, this.$.bd_y)
+  C.add0(this.bd.$.x, this.$.bd_x, this.topLeft.$.x)
 }
 
 Base.register(Rect)
@@ -73,6 +85,13 @@ Class(RenderableRect,
     this.elem.style.top    = this.top    + "px"
     this.elem.style.width  = this.width  + "px"
     this.elem.style.height = this.height + "px"
+
+    this.elem.style.borderTopLeftRadius     =
+    this.elem.style.borderTopRightRadius    =
+    this.elem.style.borderBottomLeftRadius  =
+    this.elem.style.borderBottomRightRadius = (this.br_x >= 0 ? this.br_x : Math.round(-this.br_x / 5)) + "px"
+
+    this.elem.style.borderWidth = (this.bd_x >= 0 ? this.bd_x : Math.round(-this.bd_x / 5)) + "px"
   },
 
   function unrender ()
@@ -86,6 +105,7 @@ Class(RenderableRect,
 
 function AdjustableRect ()
 {
+  this.adjusting = false
   this.selectable(this.mkHandles, this.delHandles)
 }
 
@@ -95,6 +115,7 @@ Class(AdjustableRect,
 
   function mkHandles ()
   {
+    // if (keys(this.canvas.selection.selected).length > 1) return
     this.handles = new Base
     this.handles.def("topLeft",     Handle.make  (this.canvas, this.p0))
     this.handles.def("topRight",    Handle.make  (this.canvas, this.p1))
@@ -105,6 +126,9 @@ Class(AdjustableRect,
     this.handles.def("midTop",      Handle.makeV (this.canvas, this.midTop))
     this.handles.def("midBottom",   Handle.makeV (this.canvas, this.midBottom))
     this.handles.def("center",      Handle.make  (this.canvas, this.center))
+
+    this.handles.def("br",          Handle.makeH (this.canvas, this.br))
+    this.handles.def("bd",          Handle.makeH (this.canvas, this.bd))
   },
 
   function delHandles ()
