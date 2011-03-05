@@ -1,12 +1,14 @@
 #toolbar
 {
   position: absolute;
-  left: 0;
-  top: 0;
-
-  font-size: 20px;
-  font-family: "alte haas grotesk";
+  right: 10px;
+  top: 10px;
   padding: 10px;
+
+  background: rgba(220,220,220, 0.6);
+
+  font-size: 15px;
+  font-family: "alte haas grotesk";
 }
 
 #toolbar span
@@ -14,8 +16,6 @@
   color: #777;
   display: block;
   padding: 0 0 0 0;
-  margin-right: 20px;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
 }
 
 #toolbar span:hover

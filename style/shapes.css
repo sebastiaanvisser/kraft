@@ -2,6 +2,7 @@
 {
   -webkit-box-sizing: border-box;
   background: #dde;
+  border: solid 5px #ccd;
 }
 
 #canvas .ellipse
@@ -18,7 +19,7 @@
 {
   font-size: 40px;
   font-family: "Alte Haas Grotesk";
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#555), color-stop(0.5, #000), to(#000));
+  background: #555;
   padding: 0 20px;
   color: white;
 }
@@ -31,9 +32,17 @@
   outline-offset: -1px;
 }
 
+#canvas .inner-triangle
+{
+  background: #888;
+  opacity: 0.4;
+}
+
 #canvas .handle0
 {
-  background: rgba(0,0,0, 0.8);
+  background: white;
+  border: solid 2px black;
+  -webkit-box-sizing: border-box;
 }
 
 #canvas .handleH,
@@ -45,11 +54,5 @@
 #canvas .handle1
 {
   background: white;
-}
-
-#canvas .inner-triangle
-{
-  background: #888;
-  opacity: 0.4;
 }
 
