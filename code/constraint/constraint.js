@@ -8,13 +8,22 @@ function eq (a, b)
                  )
 }
 
+C.add0 =
+function add0 (a, b, c)
+{
+  Trigger.compose( a, function () { return b.v + c.v }
+                 , b, function () { return a.v - c.v }
+                 , c, function () { return c.v       }
+                 )
+}
+
 C.sub0 =
 function sub0 (a, b, c)
 {
   Trigger.compose( a, function () { return b.v - c.v }
                  , b, function () { return c.v + a.v }
                  , c, function () { return c.v       }
-                 )              
+                 )
 }
 
 C.mid =
@@ -23,7 +32,7 @@ function mid (a, b, c)
   Trigger.compose( a, function () { return (b.v + c.v) / 2       }
                  , b, function () { return a.v - (c.v - b.v) / 2 }
                  , c, function () { return a.v + (c.v - b.v) / 2 }
-                 )              
+                 )
 }
 
 C.min =
