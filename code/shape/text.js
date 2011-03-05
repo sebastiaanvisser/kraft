@@ -19,13 +19,16 @@ function Text (revive, ctx, x0, y0, x1, y1, text)
 
 Base.register(Text)
 
-Text.make =
-function make (x0, y0, x1, y1, text)
-{
-  var r = new Base
-  r.decorate(Text, null, x0, y0, x1, y1, text)
-  return r
-}
+Static(Text,
+
+  function make (x0, y0, x1, y1, text)
+  {
+    var r = new Base
+    r.decorate(Text, null, x0, y0, x1, y1, text)
+    return r
+  }
+
+)
 
 // ----------------------------------------------------------------------------
 
@@ -40,13 +43,16 @@ function RenderableText (revive, ctx)
 
 Base.register(RenderableText)
 
-RenderableText.make =
-function make (canvas, x0, y0, x1, y1, text)
-{
-  var r = Text.make(x0, y0, x1, y1, text)
-  r.decorate(RenderableText, canvas)
-  return r
-}
+Static(RenderableText,
+
+  function make (canvas, x0, y0, x1, y1, text)
+  {
+    var r = Text.make(x0, y0, x1, y1, text)
+    r.decorate(RenderableText, canvas)
+    return r
+  }
+
+)
 
 Class(RenderableText,
 
@@ -101,14 +107,17 @@ function AdjustableText ()
 
 Base.register(AdjustableText)
 
-AdjustableText.make =
-function make (canvas, x0, y0, x1, y1, text)
-{
-  var r = RenderableText.make(canvas, x0, y0, x1, y1, text)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableText)
-  return r
-}
+Static(AdjustableText,
+
+  function make (canvas, x0, y0, x1, y1, text)
+  {
+    var r = RenderableText.make(canvas, x0, y0, x1, y1, text)
+    r.decorate(SelectableShape)
+    r.decorate(AdjustableText)
+    return r
+  }
+
+)
 
 Class(AdjustableText,
 

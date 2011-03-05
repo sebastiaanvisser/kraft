@@ -31,20 +31,23 @@ function make (canvas, pt)
 
 // ----------------------------------------------------------------------------
 
-function VeriticalHandle ()
+function VerticalHandle ()
 {
   this.defHandlePoint("handleV", 0, 0, 2, 16)
   this.handle.dragger.lockX  = true
   this.handleV.dragger.lockX = true
 }
 
-Handle.makeV =
-function makeV (canvas, pt)
-{
-  var h = Handle.make(canvas, pt)
-  h.decorate(VeriticalHandle)
-  return h
-}
+Static(VerticalHandle,
+
+  function make (canvas, pt)
+  {
+    var h = Handle.make(canvas, pt)
+    h.decorate(VerticalHandle)
+    return h
+  }
+
+)
 
 // ----------------------------------------------------------------------------
 
@@ -55,11 +58,14 @@ function HorizontalHandle ()
   this.handleH.dragger.lockY = true
 }
 
-Handle.makeH =
-function makeH (canvas, pt)
-{
-  var h = Handle.make(canvas, pt)
-  h.decorate(HorizontalHandle)
-  return h
-}
+Static(HorizontalHandle, 
+
+  function make (canvas, pt)
+  {
+    var h = Handle.make(canvas, pt)
+    h.decorate(HorizontalHandle)
+    return h
+  }
+
+)
 

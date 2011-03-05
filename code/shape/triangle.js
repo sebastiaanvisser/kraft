@@ -119,34 +119,37 @@ function AdjustableTriangle ()
 
 Base.register(AdjustableTriangle)
 
-AdjustableTriangle.make =
-function make (canvas, x0, y0, x1, y1)
-{
-  var r = RenderableTriangle.make(canvas, x0, y0, x1, y1)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableTriangle)
-  return r
-}
-
 Class(AdjustableTriangle,
 
   function mkHandles ()
   {
     this.handles = new Base
-    this.handles.def("topLeft",     Handle.make  (this.canvas, this.p0))
-    this.handles.def("topRight",    Handle.make  (this.canvas, this.p1))
-    this.handles.def("bottomLeft",  Handle.make  (this.canvas, this.p2))
-    this.handles.def("bottomRight", Handle.make  (this.canvas, this.p3))
-    this.handles.def("midLeft",     Handle.makeH (this.canvas, this.midLeft))
-    this.handles.def("midRight",    Handle.makeH (this.canvas, this.midRight))
-    this.handles.def("midTop",      Handle.makeV (this.canvas, this.midTop))
-    this.handles.def("midBottom",   Handle.makeV (this.canvas, this.midBottom))
-    this.handles.def("center",      Handle.make  (this.canvas, this.center))
+    this.handles.def("topLeft",     Handle.make           (this.canvas, this.p0))
+    this.handles.def("topRight",    Handle.make           (this.canvas, this.p1))
+    this.handles.def("bottomLeft",  Handle.make           (this.canvas, this.p2))
+    this.handles.def("bottomRight", Handle.make           (this.canvas, this.p3))
+    this.handles.def("midLeft",     HorizontalHandle.make (this.canvas, this.midLeft))
+    this.handles.def("midRight",    HorizontalHandle.make (this.canvas, this.midRight))
+    this.handles.def("midTop",      VerticalHandle.make   (this.canvas, this.midTop))
+    this.handles.def("midBottom",   VerticalHandle.make   (this.canvas, this.midBottom))
+    this.handles.def("center",      Handle.make           (this.canvas, this.center))
   },
 
   function delHandles ()
   {
     this.handles.destructor()
+  }
+
+)
+
+Static(AdjustableTriangle,
+
+  function make (canvas, x0, y0, x1, y1)
+  {
+    var r = RenderableTriangle.make(canvas, x0, y0, x1, y1)
+    r.decorate(SelectableShape)
+    r.decorate(AdjustableTriangle)
+    return r
   }
 
 )
