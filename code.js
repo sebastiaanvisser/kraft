@@ -1,15 +1,17 @@
-<!--#include virtual=code/base/meta.js             -->
+<!--#include virtual=code/prelude.js               -->
+
 <!--#include virtual=code/base/base.js             -->
 <!--#include virtual=code/base/property.js         -->
 <!--#include virtual=code/base/trigger.js          -->
-<!--#include virtual=code/base/serialize.js        -->
+
+<!--#include virtual=code/io/io.js                 -->
+<!--#include virtual=code/io/serialize.js          -->
 
 <!--#include virtual=code/events.js                -->
 <!--#include virtual=code/drag.js                  -->
 <!--#include virtual=code/selection.js             -->
 <!--#include virtual=code/canvas.js                -->
 <!--#include virtual=code/renderer.js              -->
-<!--#include virtual=code/io.js                    -->
 <!--#include virtual=code/model.js                 -->
 
 <!--#include virtual=code/shape/shape.js           -->
