@@ -3,7 +3,7 @@ var myModel  = Model.make();
 
 function mkRect ()
 {
-  var r = Rect.make(300, 100, 200, 300)
+  r = Rect.make(300, 100, 200, 300)
   r.decorate(RenderableRect, myCanvas)
   r.decorate(SelectableShape)
   r.decorate(AdjustableRect)
@@ -16,15 +16,15 @@ function mkRect ()
 
 function mkEllipse ()
 {
-  var r = Rect.make(300, 100, 200, 300)
-  r.decorate(RenderableEllipse, myCanvas)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableRect)
-  r.decorate(DraggableShape)
-  myModel.addShape(r);
-  $(r.elem).addClass("myellipse")
-  $(r.elem).addClass("shape")
-  return r
+  e = Rect.make(300, 100, 200, 300)
+  e.decorate(RenderableEllipse, myCanvas)
+  e.decorate(SelectableShape)
+  e.decorate(AdjustableRect)
+  e.decorate(DraggableShape)
+  myModel.addShape(e);
+  $(e.elem).addClass("myellipse")
+  $(e.elem).addClass("shape")
+  return e
 }
 
 function mkTriangle ()

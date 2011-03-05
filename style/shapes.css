@@ -38,7 +38,7 @@
   opacity: 0.4;
 }
 
-#canvas .handle0
+#canvas .handle
 {
   background: white;
   border: solid 2px black;
@@ -48,7 +48,13 @@
 #canvas .handleH,
 #canvas .handleV
 {
-  background: rgba(0,0,0, 0.4);
+  background: rgba(0,0,0, 0.3);
+}
+
+#canvas .handle:hover,
+#canvas .handle.dragging
+{
+  border-color: #4444cc;
 }
 
 #canvas .handle1
