@@ -12,9 +12,9 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
   this.snapY = snapY || 1
 
   // Set target cursor based on drag direction.
-  this.pivot.style.cursor = "move"
-  if (this.lockX) this.pivot.style.cursor = "ns-resize"
-  if (this.lockY) this.pivot.style.cursor = "ew-resize"
+  // this.pivot.style.cursor = "move"
+  // if (this.lockX) this.pivot.style.cursor = "ns-resize"
+  // if (this.lockY) this.pivot.style.cursor = "ew-resize"
 
   // State, private.
   this.dragging     = false
