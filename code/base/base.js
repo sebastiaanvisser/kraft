@@ -64,6 +64,10 @@ Class(Base,
   {
     this.$[name] = new Prop(this, name, init, !!constraint)
     if (constraint) constraint.apply(null, [p ? this.$[name] : this[name]].concat(args))
+
+    var me = this
+    if (this[name].onchange)
+      this[name].onchange(function () { me.changed() })
   },
 
   function def  (n, i, c) { this.defineProp(true,  n, i, c, slice(arguments, 3)) },
