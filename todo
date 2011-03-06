@@ -1,42 +1,53 @@
-Grouping:
-  - cropping
-  - intersect
-  - union
-  - subtract
+Quick todo:
 
-Rendering:
-  - points
-  - lines
-  - rectangles
-  - circles/ellipses
-  - triangles
+  - restore serialization
+  - ellipse without radius handles
 
-Grid:
-  - snapping
-  - guides
-  - ruler
-  - customizable
+Functionality:
 
-Selection:
-  - Grouping.
-  - Common actions.
+  Grouping:
+    - cropping
+    - intersect
+    - union
+    - subtract
 
-States: selected, active, focused ...
+  Rendering:
+    - points
+    - lines
+    - rectangles
+    - circles/ellipses
+    - triangles
 
-Undostack.
+  Grid:
+    - zoom (just use css zoom, seems to work pretty well)
+    - snapping
+    - guides
+    - ruler
+    - customizable
 
-Layers.
+  Selection:
+    - Grouping.
+    - Common actions.
 
-Dragging:
-  - horizontally
-  - vertically
-  - fixed angle
-  - radial
+  States: selected, the-only-selected, active, focused ...
 
-Saving:
-  - serialize
-  - deserialize
-  - meta hash for migrations?
+  Undostack.
 
-Interesting icons:
-  http://www.thenounproject.com/
+  Layers: grid, guides, shapes, handles, overlay ...
+
+  Dragging:
+    - horizontally
+    - vertically
+    - fixed angle (nice!)
+    - radial
+
+  Saving:
+    - serialize
+    - deserialize
+    - meta hash for migrations?
+
+Might be of interest:
+
+  Interesting icons:
+    http://www.thenounproject.com/
+

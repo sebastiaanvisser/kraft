@@ -12,7 +12,7 @@ Class(Handle,
 
   function defHandlePoint (prop, x, y, w, h)
   {
-    this.def(prop, Rect.make(x, y, w, h))
+    this.define(prop, Rect.make(x, y, w, h))
     this[prop].decorate(RenderableEllipse, this.canvas)
     this[prop].decorate(DraggableShape)
     $(this[prop].elem).addClass(prop)

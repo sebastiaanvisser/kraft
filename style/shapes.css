@@ -1,21 +1,24 @@
-#canvas .rect
+#canvas .myrect
 {
   -webkit-box-sizing: border-box;
   background: #ddd;
   border: solid 5px #666;
 }
 
-#canvas .ellipse
+#canvas .myellipse
 {
-  background: #edd;
+  -webkit-box-sizing: border-box;
+  background: #ddd;
+  border: solid 5px #666;
 }
 
-#canvas .line
+#canvas .myline
 {
+  -webkit-box-sizing: border-box;
   background: #444;
 }
 
-#canvas .text
+#canvas .mytext
 {
   font-size: 40px;
   font-family: "Alte Haas Grotesk";

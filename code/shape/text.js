@@ -2,19 +2,19 @@ function Text (revive, ctx, x0, y0, x1, y1, text)
 {
   if (!revive)
   {
-    this.def("p0", Point.make(x0, y0))
-    this.def("p1", Point.make(x1, y1))
-    this.def("text", text)
+    this.define("p0", Point.make(x0, y0))
+    this.define("p1", Point.make(x1, y1))
+    this.define("text", text)
   }
 
-  this.def1("center",      Point.make(), Point.mid,         this.p0, this.p1)
-  this.def1("topLeft",     Point.make(), Point.topLeft,     this.p0, this.p1)
-  this.def1("bottomRight", Point.make(), Point.bottomRight, this.p0, this.p1)
+  Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p1)
+  Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p1)
+  Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p1)
   
-  this.def("left",   0, C.min0, this.p0.$.x, this.p1.$.x)
-  this.def("top",    0, C.min0, this.p0.$.y, this.p1.$.y)
-  this.def("right",  0, C.max0, this.p0.$.x, this.p1.$.x)
-  this.def("bottom", 0, C.max0, this.p0.$.y, this.p1.$.y)
+  C.min0(this.derive("left",   0), this.p0.$.x, this.p1.$.x)
+  C.min0(this.derive("top",    0), this.p0.$.y, this.p1.$.y)
+  C.max0(this.derive("right",  0), this.p0.$.x, this.p1.$.x)
+  C.max0(this.derive("bottom", 0), this.p0.$.y, this.p1.$.y)
 }
 
 Obj.register(Text)
@@ -124,9 +124,9 @@ Class(AdjustableText,
   function mkHandles ()
   {
     this.handles = new Obj
-    this.handles.def("topLeft",     Handle.make(this.canvas, this.p0))
-    this.handles.def("bottomRight", Handle.make(this.canvas, this.p1))
-    this.handles.def("center",      Handle.make(this.canvas, this.center))
+    this.handles.define("topLeft",     Handle.make(this.canvas, this.p0))
+    this.handles.define("bottomRight", Handle.make(this.canvas, this.p1))
+    this.handles.define("center",      Handle.make(this.canvas, this.center))
   },
 
   function delHandles ()

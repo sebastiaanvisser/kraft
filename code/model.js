@@ -1,6 +1,6 @@
 function Model (revive, ctx)
 {
-  this.def("shapes", {});
+  this.define("shapes", {});
 }
 
 Obj.register(Model)

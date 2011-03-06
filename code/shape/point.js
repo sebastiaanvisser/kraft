@@ -2,8 +2,8 @@ function Point (revive, ctx, x, y)
 {
   if (!revive)
   {
-    this.def("x", x || 0)
-    this.def("y", y || 0)
+    this.define("x", x || 0)
+    this.define("y", y || 0)
   }
 }
 

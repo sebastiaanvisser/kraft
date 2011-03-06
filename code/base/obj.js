@@ -71,10 +71,12 @@ Class(Obj,
     // Propagate changes.
     var me = this
     if (this[name].onchange) this[name].onchange(function (v) { v.push(me[name]); me.changed(v) })
+
+    return this.$[name]
   },
 
-  function def  (n, i, c) { this.defineProp(true,  n, i, c, slice(arguments, 3)) },
-  function def1 (n, i, c) { this.defineProp(false, n, i, c, slice(arguments, 3)) },
+  function define (n, i, c) { return this.defineProp(true,  n, i, c, slice(arguments, 3)) },
+  function derive (n, i, c) { return this.defineProp(false, n, i, c, slice(arguments, 3)) },
 
   function onchange (f)
   {
