@@ -16,7 +16,7 @@ Class(RenderableEllipse,
     var elem = document.createElement("div")
     $(elem).addClass("ellipse")
     elem.style.position = "absolute"
-    this.canvas.elem.appendChild(elem)
+    this.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -43,7 +43,7 @@ Class(RenderableEllipse,
 
   function unrender ()
   {
-    this.canvas.elem.removeChild(this.elem)
+    this.canvas.canvasElem.removeChild(this.elem)
   }
 
 )

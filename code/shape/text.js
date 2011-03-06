@@ -61,7 +61,7 @@ Class(RenderableText,
     var elem = document.createElement("div")
     $(elem).addClass("text")
     elem.style.position = "absolute"
-    this.canvas.elem.appendChild(elem)
+    this.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -93,7 +93,7 @@ Class(RenderableText,
 
   function unrender ()
   {
-    this.canvas.elem.removeChild(this.elem)
+    this.canvas.canvasElem.removeChild(this.elem)
   }
 
 )

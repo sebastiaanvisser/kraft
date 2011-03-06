@@ -62,7 +62,7 @@ Class(RenderableRect,
     var elem = document.createElement("div")
     $(elem).addClass("rect")
     elem.style.position = "absolute"
-    this.canvas.elem.appendChild(elem)
+    this.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -90,7 +90,7 @@ Class(RenderableRect,
 
   function unrender ()
   {
-    this.canvas.elem.removeChild(this.elem)
+    this.canvas.canvasElem.removeChild(this.elem)
   }
 
 )

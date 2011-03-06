@@ -65,7 +65,7 @@ Class(RenderableTriangle,
     var elem = this.elem = document.createElement("div")
     $(elem).addClass("triangle")
     elem.style.position = "absolute"
-    this.canvas.elem.appendChild(elem)
+    this.canvas.canvasElem.appendChild(elem)
 
     var elem1 = this.elem1 = document.createElement("div")
     $(elem1).addClass("inner-triangle")
@@ -104,7 +104,7 @@ Class(RenderableTriangle,
 
   function unrender ()
   {
-    this.canvas.elem.removeChild(this.elem)
+    this.canvas.canvasElem.removeChild(this.elem)
   }
 
 )

@@ -28,8 +28,7 @@ h1
   width: 200px;
 }
 
-#canvas,
-#grid
+#mycanvas
 {
   position: absolute;
   left: 0;
@@ -37,10 +36,20 @@ h1
   right: 0;
   bottom: 0;
 
+  overflow: auto;
+}
+
+.canvas,
+.grid
+{
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+
   overflow: hidden;
 }
 
-#grid
+.grid
 {
   background: #eee;
   -webkit-mask-image: url(../images/grid-dark.png);
@@ -50,7 +59,7 @@ h1
   background: rgba(0,0,0, 0.0);
 }
 
-#grid.grid
+.grid.grid
 {
   background: rgba(0,0,0, 0.1);
 }

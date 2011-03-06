@@ -1,9 +1,11 @@
-function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
+function Draggable (container, target, pivot, lockX, lockY, snapX, snapY, zoom)
 {
   // Dragging elements.
   this.container = container
   this.target    = target
   this.pivot     = pivot
+  this.zoom      = zoom
+
 
   // Locking and snappig constraints.
   this.lockX = lockX || false
@@ -11,10 +13,8 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
   this.snapX = snapX || 1
   this.snapY = snapY || 1
 
-  // Set target cursor based on drag direction.
-  // this.pivot.style.cursor = "move"
-  // if (this.lockX) this.pivot.style.cursor = "ns-resize"
-  // if (this.lockY) this.pivot.style.cursor = "ew-resize"
+  // Add a class indicating this element is draggable.
+  $(this.target.elem).addClass("draggable")
 
   // State, private.
   this.dragging     = false
@@ -46,8 +46,11 @@ function Draggable (container, target, pivot, lockX, lockY, snapX, snapY)
     {
       if (!me.dragging) return true
 
-      var dx = Math.round((e.clientX - me.dragOrigin.x) / me.snapX) * me.snapX
-      var dy = Math.round((e.clientY - me.dragOrigin.y) / me.snapX) * me.snapY
+      var snX = me.snapX * me.zoom.v
+      var snY = me.snapY * me.zoom.v
+
+      var dx = (Math.round((e.clientX - me.dragOrigin.x) / snX) * snX) / me.zoom.v
+      var dy = (Math.round((e.clientY - me.dragOrigin.y) / snY) * snY) / me.zoom.v
       var x  = me.targetOrigin.x + dx
       var y  = me.targetOrigin.y + dy
 

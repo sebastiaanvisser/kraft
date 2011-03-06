@@ -8,7 +8,7 @@ function SelectableShape ()
 
   var self = this
 
-  Events.manager.bind(this.canvas.elem, "mousedown",
+  Events.manager.bind(this.canvas.canvasElem, "mousedown",
     function (e) { sel.deselectAll() })
 
   Events.manager.bind(this.elem, "mousedown",
@@ -51,7 +51,7 @@ Class(SelectableShape,
 
 function DraggableShape ()
 {
-  this.dragger = new Draggable(this.canvas.elem, this, this.elem, false, false, 5, 5)
+  this.dragger = new Draggable(this.canvas.canvasElem, this, this.elem, false, false, 5, 5, this.canvas.$.zoom)
 }
 
 Obj.register(DraggableShape)

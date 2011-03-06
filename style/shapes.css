@@ -1,24 +1,24 @@
-#canvas .myrect
+.canvas .myrect
 {
   -webkit-box-sizing: border-box;
   background: #ddd;
   border: solid 5px #666;
 }
 
-#canvas .myellipse
+.canvas .myellipse
 {
   -webkit-box-sizing: border-box;
   background: #ddd;
   border: solid 5px #666;
 }
 
-#canvas .myline
+.canvas .myline
 {
   -webkit-box-sizing: border-box;
   background: #444;
 }
 
-#canvas .mytext
+.canvas .mytext
 {
   font-size: 40px;
   font-family: "Alte Haas Grotesk";
@@ -27,44 +27,44 @@
   color: white;
 }
 
-#canvas .rect.selected,
-#canvas .ellipse.selected,
-#canvas .triangle.selected
+.canvas .rect.selected,
+.canvas .ellipse.selected,
+.canvas .triangle.selected
 {
   outline: dashed 2px #88f;
   outline-offset: -1px;
 }
 
-#canvas .inner-triangle
+.canvas .inner-triangle
 {
   background: #888;
   opacity: 0.4;
 }
 
-#canvas .handle
+.canvas .handle
 {
   background: white;
   border: solid 2px black;
   -webkit-box-sizing: border-box;
 }
 
-#canvas .handleH,
-#canvas .handleV
+.canvas .handleH,
+.canvas .handleV
 {
   background: rgba(0,0,0, 0.3);
 }
 
-#canvas .handle:hover
+.canvas .handle:hover
 {
   border-color: #4444cc;
 }
 
-#canvas .handle.dragging
+.canvas .handle.dragging
 {
   border-color: #44cc44;
 }
 
-#canvas .handle1
+.canvas .handle1
 {
   background: white;
 }

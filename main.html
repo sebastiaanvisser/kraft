@@ -5,8 +5,13 @@
 <link rel=stylesheet href=style/toolbar.css type=text/css media=screen>
 <link rel=stylesheet href=style/shapes.css type=text/css media=screen>
 
-<div id=grid class=grid></div>
-<div id=canvas></div>
+<div id=mycanvas>
+  <div class=zoombox>
+    <div class=grid class=grid></div>
+    <div class=canvas></div>
+  </div>
+</div>
+
 <!-- <h1>In-browser design with Penkraft</h1> -->
 <div id=toolbar>
   <span id=rect>Rect</span>
@@ -19,6 +24,9 @@
   <span id=deselectall>Deselect All</span>
   <hr>
   <span id=togglegrid>Toggle Grid</span>
+  <span id=zoomin>Zoom In</span>
+  <span id=zoomout>Zoom Out</span>
+  <span id=zoomreset>Zoom Reset</span>
   <hr>
   <span id=load>Load Project</span>
   <span id=save>Save Project</span>

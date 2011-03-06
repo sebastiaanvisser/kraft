@@ -1,4 +1,4 @@
-var myCanvas = new Canvas($("#canvas")[0])
+var myCanvas = Canvas.make($("#mycanvas")[0])
 var myModel  = Model.make();
 
 function mkRect ()
@@ -64,6 +64,9 @@ Events.manager.bind("#toolbar #text",        "click", function () { mkText(promp
 Events.manager.bind("#toolbar #selectall",   "click", function () { myCanvas.selection.selectAll() })
 Events.manager.bind("#toolbar #deselectall", "click", function () { myCanvas.selection.deselectAll() })
 Events.manager.bind("#toolbar #togglegrid",  "click", function () { myCanvas.gridShow ? myCanvas.hideGrid() : myCanvas.showGrid() })
+Events.manager.bind("#toolbar #zoomin",      "click", function () { myCanvas.zoomIn() })
+Events.manager.bind("#toolbar #zoomout",     "click", function () { myCanvas.zoomOut() })
+Events.manager.bind("#toolbar #zoomreset",   "click", function () { myCanvas.zoomReset() })
 Events.manager.bind("#toolbar #save",        "click", function () { IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(myModel)) })
 Events.manager.bind("#toolbar #load",        "click", function () { IO.load("mymodel.xml", function (x) { Deserializer.baseFromXml(x.documentElement) }) })
 

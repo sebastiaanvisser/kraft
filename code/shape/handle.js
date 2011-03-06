@@ -3,17 +3,17 @@ function Handle (revive, ctx, pt)
   this.canvas = ctx
   this.pt     = pt
 
-  this.defHandlePoint("handle", 0, 0, 10, 10)
+  this.defHandlePoint("handle", RenderableEllipse, 0, 0, 10, 10)
 }
 
 Obj.register(Handle)
 
 Class(Handle,
 
-  function defHandlePoint (prop, x, y, w, h)
+  function defHandlePoint (prop, type, x, y, w, h)
   {
     this.define(prop, Rect.make(x, y, w, h))
-    this[prop].decorate(RenderableEllipse, this.canvas)
+    this[prop].decorate(type, this.canvas)
     this[prop].decorate(DraggableShape)
     $(this[prop].elem).addClass(prop)
     Point.eq(this[prop].center, this.pt)
@@ -33,7 +33,7 @@ function make (canvas, pt)
 
 function VerticalHandle ()
 {
-  this.defHandlePoint("handleV", 0, 0, 2, 16)
+  this.defHandlePoint("handleV", RenderableRect, 0, 0, 2, 16)
   this.handle.dragger.lockX  = true
   this.handleV.dragger.lockX = true
 }
@@ -53,7 +53,7 @@ Static(VerticalHandle,
 
 function HorizontalHandle ()
 {
-  this.defHandlePoint("handleH", 0, 0, 16, 2)
+  this.defHandlePoint("handleH", RenderableRect, 0, 0, 16, 2)
   this.handle.dragger.lockY  = true
   this.handleH.dragger.lockY = true
 }
