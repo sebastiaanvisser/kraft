@@ -2,6 +2,7 @@ Quick todo:
 
   - restore serialization
   - ellipse without radius handles
+  - zoom!
 
 Functionality:
 
@@ -46,8 +47,13 @@ Functionality:
     - deserialize
     - meta hash for migrations?
 
+  Translation to css:
+    - First idea:
+      1) Snapshot the project entirely to css.
+      2) Prune the object graph by removing fixed values.
+      3) Profit ...
+
 Might be of interest:
 
-  Interesting icons:
-    http://www.thenounproject.com/
+  Interesting icons: http://www.thenounproject.com/
 
