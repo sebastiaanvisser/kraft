@@ -1,9 +1,9 @@
 #toolbar
 {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 10px;
+  right: 0px;
+  top: 0px;
+  padding: 5px;
 
   background: rgba(0,0,0, 0.8);
 
@@ -21,5 +21,13 @@
 #toolbar span:hover
 {
   color: #fff;
+  background: black;
   cursor: pointer;
 }
+
+#toolbar hr
+{
+  border: solid 1px #666;
+  margin: 5px;
+}
+

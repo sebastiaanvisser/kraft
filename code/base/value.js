@@ -1,8 +1,8 @@
-function Prop (o, n, v, c, t)
+function Value (v, parent, name, soft, t)
 {
-  this.obj      = o
-  this.name     = n
-  this.soft     = c
+  this.parent   = parent
+  this.name     = name
+  this.soft     = soft // Soft properties will not be serialized.
   this.type     = t || v.constructor.name
   this.value    = this.type == "Number" ? 1 * v : v
   this.triggers = {}
@@ -20,17 +20,26 @@ function Prop (o, n, v, c, t)
     self.busy = true
     self.value = v
     foreach(self.triggers, function (_, t) { t[1].app(t[0]) })
-    self.obj.changed()
+    if (self.parent) self.parent.changed([this])
     self.busy = false
   }
 
-  this.obj.__defineGetter__(this.name, get)
-  this.obj.__defineSetter__(this.name, set)
+  if (this.parent)
+  {
+    this.parent.__defineGetter__(this.name, get)
+    this.parent.__defineSetter__(this.name, set)
+  }
+
   this.__defineGetter__("v", get)
   this.__defineSetter__("v", set)
 }
 
-Class(Prop,
+function val (v)
+{
+  return (v && v.triggers) ? v : new Value(v);
+}
+
+Class(Value,
 
   function destructor ()
   {

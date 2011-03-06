@@ -11,8 +11,8 @@ Static
       case "Object" : return Serializer.objectToXml  (o)
       case "Number" : return Serializer.numberToXml  (o)
       case "String" : return Serializer.strintToXml  (o)
-      case "Prop"   : return Serializer.propToXml    (o)
-      case "Base"   : return Serializer.baseToXml    (o)
+      case "Value"  : return Serializer.propToXml    (o)
+      case "Obj"    : return Serializer.baseToXml    (o)
       default       : return Serializer.unknownToXml (o)
     }
   },
@@ -34,7 +34,7 @@ Static
     var ctors = values(o.meta.constructors).map(function (k) { return k.name }).join(" ")
     var xs = []
     foreach(o.$, function (k, v) { if (!v.soft) xs.push(Serializer.elem(k, Serializer.toXml(v) , v.type ? {type:v.type} : undefined)) })
-    return Serializer.elem("Base", xs.join("\n"), { id : o.id, type : ctors })
+    return Serializer.elem("Obj", xs.join("\n"), { id : o.id, type : ctors })
   },
 
 // Helpers.
@@ -68,8 +68,8 @@ Static
       case "Object" : return Deserializer.objectFromXml  (x) 
       case "Number" : return Deserializer.numberFromXml  (x) 
       case "String" : return Deserializer.strintFromXml  (x) 
-      case "Prop"   : return Deserializer.propFromXml    (x)
-      case "Base"   : return Deserializer.baseFromXml    (x)
+      case "Value"  : return Deserializer.propFromXml    (x)
+      case "Obj"    : return Deserializer.baseFromXml    (x)
       default       : return Deserializer.unknownFromXml (x)
     }
   },
@@ -98,23 +98,23 @@ Static
 
   function baseFromXml (x)
   {
-    var base = new Base
+    var base = new Obj
 
     $(x).children().each(function (_, nd)
       {
         base.$[nd.nodeName] =
-          new Prop( base
-                  , nd.nodeName
-                  , Deserializer.propFromXml(nd)
-                  , false
-                  , $(nd).attr("type")
-                  )
+          new Value( Deserializer.propFromXml(nd)
+                   , base
+                   , nd.nodeName
+                   , false
+                   , $(nd).attr("type")
+                   )
       })
 
     $(x).attr("type").split(/\s+/).map(
       function (c, i)
       {
-        var ctor = Base.classes[c]
+        var ctor = Obj.classes[c]
         if (!ctor) throw ("Deserializer.baseFromXml: unregistered class '" + c + "'")
         base.revive(ctor, myCanvas)
       })

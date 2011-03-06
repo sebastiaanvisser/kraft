@@ -27,12 +27,12 @@ function Triangle (revive, ctx, x0, y0, x1, y1)
   this.def("bottom",  0, C.max0, this.p0.$.y,          this.p3.$.y      )
 }
 
-Base.register(Triangle)
+Obj.register(Triangle)
 
 Triangle.make =
 function make (x0, y0, x1, y1)
 {
-  var r = new Base
+  var r = new Obj
   r.decorate(Triangle, null, x0, y0, x1, y1)
   return r
 }
@@ -43,13 +43,12 @@ function RenderableTriangle (revive, ctx)
 {
   this.canvas = ctx
   this.setupElem()
-  this.render()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.changed()
+  this.render()
 }
 
-Base.register(RenderableTriangle)
+Obj.register(RenderableTriangle)
 
 RenderableTriangle.make =
 function make (canvas, x0, y0, x1, y1)
@@ -117,13 +116,13 @@ function AdjustableTriangle ()
   this.selectable(this.mkHandles, this.delHandles)
 }
 
-Base.register(AdjustableTriangle)
+Obj.register(AdjustableTriangle)
 
 Class(AdjustableTriangle,
 
   function mkHandles ()
   {
-    this.handles = new Base
+    this.handles = new Obj
     this.handles.def("topLeft",     Handle.make           (this.canvas, this.p0))
     this.handles.def("topRight",    Handle.make           (this.canvas, this.p1))
     this.handles.def("bottomLeft",  Handle.make           (this.canvas, this.p2))

@@ -1,6 +1,6 @@
-function Base ()
+function Obj ()
 {
-  this.id = 'o' + Base.nextId++
+  this.id = 'o' + Obj.nextId++
 
   this.meta = { onchange     : []
               , constructors : []
@@ -11,14 +11,14 @@ function Base ()
 
   this.$ = {}
 
-  Base.all[this.id] = this
+  Obj.all[this.id] = this
 }
 
-Base.classes = {}
-Base.nextId  = 0
-Base.all     = {}
+Obj.classes = {}
+Obj.nextId  = 0
+Obj.all     = {}
 
-Static(Base,
+Static(Obj,
 
   function register (ctor)
   {
@@ -27,7 +27,7 @@ Static(Base,
 
 )
 
-Class(Base,
+Class(Obj,
 
   function decorateOnly (c /* constructor arguments */)
   {
@@ -62,12 +62,15 @@ Class(Base,
 
   function defineProp (p, name, init, constraint, args)
   {
-    this.$[name] = new Prop(this, name, init, !!constraint)
+    // Setup property.
+    this.$[name] = new Value(init, this, name, !!constraint)
+
+    // Install constraint when given any.
     if (constraint) constraint.apply(null, [p ? this.$[name] : this[name]].concat(args))
 
+    // Propagate changes.
     var me = this
-    if (this[name].onchange)
-      this[name].onchange(function () { me.changed() })
+    if (this[name].onchange) this[name].onchange(function (v) { v.push(me[name]); me.changed(v) })
   },
 
   function def  (n, i, c) { this.defineProp(true,  n, i, c, slice(arguments, 3)) },

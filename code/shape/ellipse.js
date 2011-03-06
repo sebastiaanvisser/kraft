@@ -4,10 +4,10 @@ function RenderableEllipse (revive, ctx)
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.changed()
+  this.render()
 }
 
-Base.register(RenderableEllipse)
+Obj.register(RenderableEllipse)
 
 Class(RenderableEllipse,
 

@@ -25,7 +25,7 @@ function SelectableShape ()
     )
 }
 
-Base.register(SelectableShape)
+Obj.register(SelectableShape)
 
 Class(SelectableShape,
 
@@ -54,5 +54,5 @@ function DraggableShape ()
   this.dragger = new Draggable(this.canvas.elem, this, this.elem, false, false, 5, 5)
 }
 
-Base.register(DraggableShape)
+Obj.register(DraggableShape)
 

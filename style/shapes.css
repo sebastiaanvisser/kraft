@@ -1,8 +1,8 @@
 #canvas .rect
 {
   -webkit-box-sizing: border-box;
-  background: #dde;
-  border: solid 5px #ccd;
+  background: #ddd;
+  border: solid 5px #666;
 }
 
 #canvas .ellipse
@@ -51,10 +51,14 @@
   background: rgba(0,0,0, 0.3);
 }
 
-#canvas .handle:hover,
-#canvas .handle.dragging
+#canvas .handle:hover
 {
   border-color: #4444cc;
+}
+
+#canvas .handle.dragging
+{
+  border-color: #44cc44;
 }
 
 #canvas .handle1

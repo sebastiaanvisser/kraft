@@ -3,12 +3,12 @@ function Model (revive, ctx)
   this.def("shapes", {});
 }
 
-Base.register(Model)
+Obj.register(Model)
 
 Model.make =
 function make ()
 {
-  var m = new Base
+  var m = new Obj
   m.decorate(Model)
   return m
 }

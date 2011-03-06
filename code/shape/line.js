@@ -17,15 +17,18 @@ function Line (revive, _, x0, y0, x1, y1, w)
   this.def("bottom", 0, C.max0, this.p0.$.y, this.p1.$.y)
 }
 
-Base.register(Line)
+Obj.register(Line)
 
-Line.make =
-function make (x0, y0, x1, y1, w)
-{
-  var r = new Base
-  r.decorate(Line, null, x0, y0, x1, y1, w)
-  return r
-}
+Static(Line,
+
+  function make (x0, y0, x1, y1, w)
+  {
+    var r = new Obj
+    r.decorate(Line, null, x0, y0, x1, y1, w)
+    return r
+  }
+
+)
 
 // ----------------------------------------------------------------------------
 
@@ -35,18 +38,21 @@ function RenderableLine (revive, ctx)
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.changed()
+  this.render()
 }
 
-Base.register(RenderableLine)
+Obj.register(RenderableLine)
 
-RenderableLine.make =
-function make (canvas, x0, y0, x1, y1, w)
-{
-  var r = Line.make(x0, y0, x1, y1, w)
-  r.decorate(RenderableLine, canvas)
-  return r
-}
+Static(RenderableLine,
+
+  function make (canvas, x0, y0, x1, y1, w)
+  {
+    var r = Line.make(x0, y0, x1, y1, w)
+    r.decorate(RenderableLine, canvas)
+    return r
+  }
+
+)
 
 Class(RenderableLine,
 
@@ -95,22 +101,25 @@ function AdjustableLine ()
   this.selectable(this.mkHandles, this.delHandles)
 }
 
-Base.register(AdjustableLine)
+Obj.register(AdjustableLine)
 
-AdjustableLine.make =
-function make (canvas, x0, y0, x1, y1, w)
-{
-  var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
-  r.decorate(SelectableShape)
-  r.decorate(AdjustableLine)
-  return r
-}
+Static(AdjustableLine,
+
+  function make (canvas, x0, y0, x1, y1, w)
+  {
+    var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
+    r.decorate(SelectableShape)
+    r.decorate(AdjustableLine)
+    return r
+  }
+
+)
 
 Class(AdjustableLine,
 
   function mkHandles ()
   {
-    this.handles = new Base
+    this.handles = new Obj
     this.handles.def("topLeft",     Handle.make(this.canvas, this.p0))
     this.handles.def("bottomRight", Handle.make(this.canvas, this.p1))
     this.handles.def("center",      Handle.make(this.canvas, this.center))

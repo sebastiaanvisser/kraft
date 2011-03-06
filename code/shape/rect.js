@@ -2,8 +2,10 @@ function Rect (revive, ctx, x0, y0, x1, y1)
 {
   if (!revive)
   {
-    this.def("p0", Point.make(x0, y0))
-    this.def("p3", Point.make(x1, y1))
+    this.def("p0",     Point.make(x0, y0))
+    this.def("p3",     Point.make(x1, y1))
+    this.def("radius", 0)
+    this.def("border", 5)
   }
 
   this.def1("p1", Point.make(), Point.yx, this.p0, this.p3)
@@ -25,27 +27,15 @@ function Rect (revive, ctx, x0, y0, x1, y1)
   this.def("top",     0, C.min0, this.p0.$.y,          this.p3.$.y      )
   this.def("right",   0, C.max0, this.p0.$.x,          this.p3.$.x      )
   this.def("bottom",  0, C.max0, this.p0.$.y,          this.p3.$.y      )
-
-  this.def("br_x", 0)
-  this.def("br_y", 10)
-  this.def("br", Point.make(20, 400))
-  C.add0(this.br.$.y, this.topLeft.$.y, this.$.br_y)
-  C.add0(this.br.$.x, this.$.br_x, this.topLeft.$.x)
-
-  this.def("bd_x", 0)
-  this.def("bd_y", 10)
-  this.def("bd", Point.make(20, 400))
-  C.add0(this.bd.$.y, this.midLeft.$.y, this.$.bd_y)
-  C.add0(this.bd.$.x, this.$.bd_x, this.topLeft.$.x)
 }
 
-Base.register(Rect)
+Obj.register(Rect)
 
 Static(Rect,
 
   function make (x0, y0, x1, y1)
   {
-    var r = new Base
+    var r = new Obj
     r.decorate(Rect, null, x0, y0, x1, y1)
     return r
   }
@@ -58,13 +48,12 @@ function RenderableRect (revive, ctx)
 {
   this.canvas   = ctx
   this.elem     = this.setupElem()
-  this.render()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.changed()
+  this.render()
 }
 
-Base.register(RenderableRect)
+Obj.register(RenderableRect)
 
 Class(RenderableRect,
 
@@ -89,12 +78,14 @@ Class(RenderableRect,
     this.elem.style.width  = this.width  + "px"
     this.elem.style.height = this.height + "px"
 
+    var r = (this.radius >= 0 ? this.radius : Math.round(-this.radius / 5)) + "px"
     this.elem.style.borderTopLeftRadius     =
     this.elem.style.borderTopRightRadius    =
     this.elem.style.borderBottomLeftRadius  =
-    this.elem.style.borderBottomRightRadius = (this.br_x >= 0 ? this.br_x : Math.round(-this.br_x / 5)) + "px"
+    this.elem.style.borderBottomRightRadius = r
 
-    this.elem.style.borderWidth = (this.bd_x >= 0 ? this.bd_x : Math.round(-this.bd_x / 5)) + "px"
+    var b = (this.border >= 0 ? this.border : Math.round(-this.border / 5)) + "px"
+    this.elem.style.borderWidth = b
   },
 
   function unrender ()
@@ -112,14 +103,14 @@ function AdjustableRect ()
   this.selectable(this.mkHandles, this.delHandles)
 }
 
-Base.register(AdjustableRect)
+Obj.register(AdjustableRect)
 
 Class(AdjustableRect,
 
   function mkHandles ()
   {
     // if (keys(this.canvas.selection.selected).length > 1) return
-    this.handles = new Base
+    this.handles = new Obj
     this.handles.def("topLeft",     Handle.make           (this.canvas, this.p0))
     this.handles.def("topRight",    Handle.make           (this.canvas, this.p1))
     this.handles.def("bottomLeft",  Handle.make           (this.canvas, this.p2))
@@ -130,8 +121,15 @@ Class(AdjustableRect,
     this.handles.def("midBottom",   VerticalHandle.make   (this.canvas, this.midBottom))
     this.handles.def("center",      Handle.make           (this.canvas, this.center))
 
-    this.handles.def("br",          HorizontalHandle.make (this.canvas, this.br))
-    this.handles.def("bd",          HorizontalHandle.make (this.canvas, this.bd))
+    var radiusH = Point.make()
+    C.add0(radiusH.$.y, this.topLeft.$.y, val(10))
+    C.add0(radiusH.$.x, this.$.radius, this.topLeft.$.x)
+    this.handles.def("radiusH", HorizontalHandle.make (this.canvas, radiusH))
+
+    var borderH = Point.make()
+    C.add0(borderH.$.x, this.$.border, this.topLeft.$.x)
+    C.add0(borderH.$.y, this.midLeft.$.y, val(10))
+    this.handles.def("borderH", HorizontalHandle.make (this.canvas, borderH))
   },
 
   function delHandles ()

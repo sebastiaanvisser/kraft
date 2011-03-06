@@ -6,7 +6,7 @@ function Handle (revive, ctx, pt)
   this.defHandlePoint("handle", 0, 0, 10, 10)
 }
 
-Base.register(Handle)
+Obj.register(Handle)
 
 Class(Handle,
 
@@ -24,7 +24,7 @@ Class(Handle,
 Handle.make =
 function make (canvas, pt)
 {
-  var h = new Base
+  var h = new Obj
   h.decorate(Handle, canvas, pt)
   return h
 }

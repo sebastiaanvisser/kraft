@@ -1,4 +1,4 @@
-Point.eq          = function mid         (a, b)    { C.eq(a.$.x, b.$.x);         C.eq(a.$.y, b.$.y)         }
+Point.eq          = function eq          (a, b)    { C.eq(a.$.x, b.$.x);         C.eq(a.$.y, b.$.y)         }
 Point.xy          = function xy          (a, b, c) { C.eq(a.$.x, b.$.x);         C.eq(a.$.y, c.$.y)         }
 Point.yx          = function yx          (a, b, c) { C.eq(a.$.x, c.$.x);         C.eq(a.$.y, b.$.y)         }
 Point.mid         = function mid         (a, b, c) { C.mid(a.$.x, b.$.x, c.$.x); C.mid(a.$.y, b.$.y, c.$.y) }

@@ -17,13 +17,13 @@ function Text (revive, ctx, x0, y0, x1, y1, text)
   this.def("bottom", 0, C.max0, this.p0.$.y, this.p1.$.y)
 }
 
-Base.register(Text)
+Obj.register(Text)
 
 Static(Text,
 
   function make (x0, y0, x1, y1, text)
   {
-    var r = new Base
+    var r = new Obj
     r.decorate(Text, null, x0, y0, x1, y1, text)
     return r
   }
@@ -38,10 +38,10 @@ function RenderableText (revive, ctx)
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.changed()
+  this.render()
 }
 
-Base.register(RenderableText)
+Obj.register(RenderableText)
 
 Static(RenderableText,
 
@@ -105,7 +105,7 @@ function AdjustableText ()
   this.selectable(this.mkHandles, this.delHandles)
 }
 
-Base.register(AdjustableText)
+Obj.register(AdjustableText)
 
 Static(AdjustableText,
 
@@ -123,7 +123,7 @@ Class(AdjustableText,
 
   function mkHandles ()
   {
-    this.handles = new Base
+    this.handles = new Obj
     this.handles.def("topLeft",     Handle.make(this.canvas, this.p0))
     this.handles.def("bottomRight", Handle.make(this.canvas, this.p1))
     this.handles.def("center",      Handle.make(this.canvas, this.center))

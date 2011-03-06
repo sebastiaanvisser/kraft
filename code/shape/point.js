@@ -7,12 +7,12 @@ function Point (revive, ctx, x, y)
   }
 }
 
-Base.register(Point)
+Obj.register(Point)
 
 Point.make =
 function make (x, y)
 {
-  var p = new Base
+  var p = new Obj
   p.decorate(Point, null, x, y)
   return p
 }

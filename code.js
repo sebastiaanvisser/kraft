@@ -1,8 +1,8 @@
 <!--#include virtual=code/prelude.js               -->
 
-<!--#include virtual=code/base/base.js             -->
-<!--#include virtual=code/base/property.js         -->
 <!--#include virtual=code/base/trigger.js          -->
+<!--#include virtual=code/base/value.js            -->
+<!--#include virtual=code/base/obj.js              -->
 
 <!--#include virtual=code/io/io.js                 -->
 <!--#include virtual=code/io/serialize.js          -->
