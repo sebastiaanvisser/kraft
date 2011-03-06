@@ -32,12 +32,12 @@ Static(Text,
 
 // ----------------------------------------------------------------------------
 
-function RenderableText (revive, ctx)
+function RenderableText (revive, model)
 {
-  this.canvas = ctx
+  this.model  = model
   this.elem   = this.setupElem()
 
-  this.onchange(function () { this.canvas.renderer.enqueue(this) })
+  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
   this.render()
 }
 
@@ -45,10 +45,10 @@ Obj.register(RenderableText)
 
 Static(RenderableText,
 
-  function make (canvas, x0, y0, x1, y1, text)
+  function make (model, x0, y0, x1, y1, text)
   {
     var r = Text.make(x0, y0, x1, y1, text)
-    r.decorate(RenderableText, canvas)
+    r.decorate(RenderableText, model)
     return r
   }
 
@@ -61,7 +61,7 @@ Class(RenderableText,
     var elem = document.createElement("div")
     $(elem).addClass("text")
     elem.style.position = "absolute"
-    this.canvas.canvasElem.appendChild(elem)
+    this.model.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -93,7 +93,7 @@ Class(RenderableText,
 
   function unrender ()
   {
-    this.canvas.canvasElem.removeChild(this.elem)
+    this.model.canvas.canvasElem.removeChild(this.elem)
   }
 
 )
@@ -109,9 +109,9 @@ Obj.register(AdjustableText)
 
 Static(AdjustableText,
 
-  function make (canvas, x0, y0, x1, y1, text)
+  function make (model, x0, y0, x1, y1, text)
   {
-    var r = RenderableText.make(canvas, x0, y0, x1, y1, text)
+    var r = RenderableText.make(model, x0, y0, x1, y1, text)
     r.decorate(SelectableShape)
     r.decorate(AdjustableText)
     return r
@@ -124,9 +124,9 @@ Class(AdjustableText,
   function mkHandles ()
   {
     this.handles = new Obj
-    this.handles.define("topLeft",     Handle.make(this.canvas, this.p0))
-    this.handles.define("bottomRight", Handle.make(this.canvas, this.p1))
-    this.handles.define("center",      Handle.make(this.canvas, this.center))
+    this.handles.define("topLeft",     Handle.make(this.model, this.p0))
+    this.handles.define("bottomRight", Handle.make(this.model, this.p1))
+    this.handles.define("center",      Handle.make(this.model, this.center))
   },
 
   function delHandles ()

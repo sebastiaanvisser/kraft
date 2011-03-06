@@ -1,4 +1,4 @@
-function Rect (revive, ctx, x0, y0, x1, y1)
+function Rect (revive, _, x0, y0, x1, y1)
 {
   if (!revive)
   {
@@ -44,12 +44,12 @@ Static(Rect,
 
 // ----------------------------------------------------------------------------
 
-function RenderableRect (revive, ctx)
+function RenderableRect (revive, model)
 {
-  this.canvas   = ctx
+  this.model    = model
   this.elem     = this.setupElem()
 
-  this.onchange(function () { this.canvas.renderer.enqueue(this) })
+  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
   this.render()
 }
 
@@ -62,7 +62,7 @@ Class(RenderableRect,
     var elem = document.createElement("div")
     $(elem).addClass("rect")
     elem.style.position = "absolute"
-    this.canvas.canvasElem.appendChild(elem)
+    this.model.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -90,7 +90,7 @@ Class(RenderableRect,
 
   function unrender ()
   {
-    this.canvas.canvasElem.removeChild(this.elem)
+    this.model.canvas.canvasElem.removeChild(this.elem)
   }
 
 )
@@ -111,25 +111,25 @@ Class(AdjustableRect,
   {
     // if (keys(this.canvas.selection.selected).length > 1) return
     this.handles = new Obj
-    this.handles.define("topLeft",     Handle.make           (this.canvas, this.p0))
-    this.handles.define("topRight",    Handle.make           (this.canvas, this.p1))
-    this.handles.define("bottomLeft",  Handle.make           (this.canvas, this.p2))
-    this.handles.define("bottomRight", Handle.make           (this.canvas, this.p3))
-    this.handles.define("midLeft",     HorizontalHandle.make (this.canvas, this.midLeft))
-    this.handles.define("midRight",    HorizontalHandle.make (this.canvas, this.midRight))
-    this.handles.define("midTop",      VerticalHandle.make   (this.canvas, this.midTop))
-    this.handles.define("midBottom",   VerticalHandle.make   (this.canvas, this.midBottom))
-    this.handles.define("center",      Handle.make           (this.canvas, this.center))
+    this.handles.define("topLeft",     Handle.make           (this.model, this.p0))
+    this.handles.define("topRight",    Handle.make           (this.model, this.p1))
+    this.handles.define("bottomLeft",  Handle.make           (this.model, this.p2))
+    this.handles.define("bottomRight", Handle.make           (this.model, this.p3))
+    this.handles.define("midLeft",     HorizontalHandle.make (this.model, this.midLeft))
+    this.handles.define("midRight",    HorizontalHandle.make (this.model, this.midRight))
+    this.handles.define("midTop",      VerticalHandle.make   (this.model, this.midTop))
+    this.handles.define("midBottom",   VerticalHandle.make   (this.model, this.midBottom))
+    this.handles.define("center",      Handle.make           (this.model, this.center))
 
     var radiusH = Point.make()
     C.add0(radiusH.$.y, this.topLeft.$.y, val(10))
     C.add0(radiusH.$.x, this.$.radius, this.topLeft.$.x)
-    this.handles.define("radiusH", HorizontalHandle.make (this.canvas, radiusH))
+    this.handles.define("radiusH", HorizontalHandle.make (this.model, radiusH))
 
     var borderH = Point.make()
     C.add0(borderH.$.x, this.$.border, this.topLeft.$.x)
     C.add0(borderH.$.y, this.midLeft.$.y, val(10))
-    this.handles.define("borderH", HorizontalHandle.make (this.canvas, borderH))
+    this.handles.define("borderH", HorizontalHandle.make (this.model, borderH))
   },
 
   function delHandles ()

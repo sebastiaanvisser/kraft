@@ -32,9 +32,10 @@ Static(Line,
 
 // ----------------------------------------------------------------------------
 
-function RenderableLine (revive, ctx)
+function RenderableLine (revive, model)
 {
-  this.canvas = ctx
+  this.model  = model
+  this.canvas = this.model.canvas
   this.elem   = this.setupElem()
 
   this.onchange(function () { this.canvas.renderer.enqueue(this) })
@@ -105,9 +106,9 @@ Obj.register(AdjustableLine)
 
 Static(AdjustableLine,
 
-  function make (canvas, x0, y0, x1, y1, w)
+  function make (model, x0, y0, x1, y1, w)
   {
-    var r = RenderableLine.make(canvas, x0, y0, x1, y1, w)
+    var r = RenderableLine.make(model, x0, y0, x1, y1, w)
     r.decorate(SelectableShape)
     r.decorate(AdjustableLine)
     return r
@@ -120,9 +121,9 @@ Class(AdjustableLine,
   function mkHandles ()
   {
     this.handles = new Obj
-    this.handles.define("topLeft",     Handle.make(this.canvas, this.p0))
-    this.handles.define("bottomRight", Handle.make(this.canvas, this.p1))
-    this.handles.define("center",      Handle.make(this.canvas, this.center))
+    this.handles.define("topLeft",     Handle.make(this.model, this.p0))
+    this.handles.define("bottomRight", Handle.make(this.model, this.p1))
+    this.handles.define("center",      Handle.make(this.model, this.center))
   },
 
   function delHandles ()

@@ -39,22 +39,22 @@ function make (x0, y0, x1, y1)
 
 // ----------------------------------------------------------------------------
 
-function RenderableTriangle (revive, ctx)
+function RenderableTriangle (revive, model)
 {
-  this.canvas = ctx
+  this.model = model
   this.setupElem()
 
-  this.onchange(function () { this.canvas.renderer.enqueue(this) })
+  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
   this.render()
 }
 
 Obj.register(RenderableTriangle)
 
 RenderableTriangle.make =
-function make (canvas, x0, y0, x1, y1)
+function make (model, x0, y0, x1, y1)
 {
   var r = Triangle.make(x0, y0, x1, y1)
-  r.decorate(RenderableTriangle, canvas)
+  r.decorate(RenderableTriangle, model)
   return r
 }
 
@@ -65,7 +65,7 @@ Class(RenderableTriangle,
     var elem = this.elem = document.createElement("div")
     $(elem).addClass("triangle")
     elem.style.position = "absolute"
-    this.canvas.canvasElem.appendChild(elem)
+    this.model.canvas.canvasElem.appendChild(elem)
 
     var elem1 = this.elem1 = document.createElement("div")
     $(elem1).addClass("inner-triangle")
@@ -104,7 +104,7 @@ Class(RenderableTriangle,
 
   function unrender ()
   {
-    this.canvas.canvasElem.removeChild(this.elem)
+    this.model.canvas.canvasElem.removeChild(this.elem)
   }
 
 )
@@ -123,15 +123,15 @@ Class(AdjustableTriangle,
   function mkHandles ()
   {
     this.handles = new Obj
-    this.handles.define("topLeft",     Handle.make           (this.canvas, this.p0))
-    this.handles.define("topRight",    Handle.make           (this.canvas, this.p1))
-    this.handles.define("bottomLeft",  Handle.make           (this.canvas, this.p2))
-    this.handles.define("bottomRight", Handle.make           (this.canvas, this.p3))
-    this.handles.define("midLeft",     HorizontalHandle.make (this.canvas, this.midLeft))
-    this.handles.define("midRight",    HorizontalHandle.make (this.canvas, this.midRight))
-    this.handles.define("midTop",      VerticalHandle.make   (this.canvas, this.midTop))
-    this.handles.define("midBottom",   VerticalHandle.make   (this.canvas, this.midBottom))
-    this.handles.define("center",      Handle.make           (this.canvas, this.center))
+    this.handles.define("topLeft",     Handle.make           (this.model, this.p0))
+    this.handles.define("topRight",    Handle.make           (this.model, this.p1))
+    this.handles.define("bottomLeft",  Handle.make           (this.model, this.p2))
+    this.handles.define("bottomRight", Handle.make           (this.model, this.p3))
+    this.handles.define("midLeft",     HorizontalHandle.make (this.model, this.midLeft))
+    this.handles.define("midRight",    HorizontalHandle.make (this.model, this.midRight))
+    this.handles.define("midTop",      VerticalHandle.make   (this.model, this.midTop))
+    this.handles.define("midBottom",   VerticalHandle.make   (this.model, this.midBottom))
+    this.handles.define("center",      Handle.make           (this.model, this.center))
   },
 
   function delHandles ()
@@ -143,9 +143,9 @@ Class(AdjustableTriangle,
 
 Static(AdjustableTriangle,
 
-  function make (canvas, x0, y0, x1, y1)
+  function make (model, x0, y0, x1, y1)
   {
-    var r = RenderableTriangle.make(canvas, x0, y0, x1, y1)
+    var r = RenderableTriangle.make(model, x0, y0, x1, y1)
     r.decorate(SelectableShape)
     r.decorate(AdjustableTriangle)
     return r

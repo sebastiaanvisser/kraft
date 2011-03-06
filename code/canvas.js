@@ -4,8 +4,8 @@ function Canvas (container)
   this.zoomBox    = $(".zoombox", container)[0]
   this.canvasElem = $(".canvas", container)[0]
   this.gridElem   = $(".grid", container)[0]
+  this.model      = Model.make(this)
 
-  this.selection  = new Selection
   this.renderer   = new Renderer
   this.layers     = {}
 

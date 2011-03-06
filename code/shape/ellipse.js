@@ -1,9 +1,9 @@
-function RenderableEllipse (revive, ctx)
+function RenderableEllipse (revive, model)
 {
-  this.canvas = ctx
+  this.model  = model
   this.elem   = this.setupElem()
 
-  this.onchange(function () { this.canvas.renderer.enqueue(this) })
+  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
   this.render()
 }
 
@@ -16,7 +16,7 @@ Class(RenderableEllipse,
     var elem = document.createElement("div")
     $(elem).addClass("ellipse")
     elem.style.position = "absolute"
-    this.canvas.canvasElem.appendChild(elem)
+    this.model.canvas.canvasElem.appendChild(elem)
     return elem
   },
 
@@ -43,7 +43,7 @@ Class(RenderableEllipse,
 
   function unrender ()
   {
-    this.canvas.canvasElem.removeChild(this.elem)
+    this.model.canvas.canvasElem.removeChild(this.elem)
   }
 
 )

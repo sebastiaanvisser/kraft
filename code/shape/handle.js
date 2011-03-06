@@ -1,7 +1,7 @@
-function Handle (revive, ctx, pt)
+function Handle (revive, model, pt)
 {
-  this.canvas = ctx
-  this.pt     = pt
+  this.model = model
+  this.pt    = pt
 
   this.defHandlePoint("handle", RenderableEllipse, 0, 0, 10, 10)
 }
@@ -13,7 +13,7 @@ Class(Handle,
   function defHandlePoint (prop, type, x, y, w, h)
   {
     this.define(prop, Rect.make(x, y, w, h))
-    this[prop].decorate(type, this.canvas)
+    this[prop].decorate(type, this.model)
     this[prop].decorate(DraggableShape)
     $(this[prop].elem).addClass(prop)
     Point.eq(this[prop].center, this.pt)
@@ -22,10 +22,10 @@ Class(Handle,
 )
 
 Handle.make =
-function make (canvas, pt)
+function make (model, pt)
 {
   var h = new Obj
-  h.decorate(Handle, canvas, pt)
+  h.decorate(Handle, model, pt)
   return h
 }
 
@@ -40,9 +40,9 @@ function VerticalHandle ()
 
 Static(VerticalHandle,
 
-  function make (canvas, pt)
+  function make (model, pt)
   {
-    var h = Handle.make(canvas, pt)
+    var h = Handle.make(model, pt)
     h.decorate(VerticalHandle)
     return h
   }
@@ -60,9 +60,9 @@ function HorizontalHandle ()
 
 Static(HorizontalHandle, 
 
-  function make (canvas, pt)
+  function make (model, pt)
   {
-    var h = Handle.make(canvas, pt)
+    var h = Handle.make(model, pt)
     h.decorate(HorizontalHandle)
     return h
   }
