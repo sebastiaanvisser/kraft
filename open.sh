@@ -1,1 +1,1 @@
-open http://localhost/penkraft/main.html
+open http://localhost/kraft/main.html
