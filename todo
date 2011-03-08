@@ -1,30 +1,52 @@
 Quick todo:
 
-  - restore serialization
-  - ellipse without radius handles
-  - zoom!
+  - Restore serialization.
+  - Ellipse without radius handles.
+
+To get a demoable version:
+
+  - Nesting.
+  - Border + background color + gradient.
+  - Content-editable texts.
+  - Image shape.
+  - Serialization.
+  - Preview mode.
+  - Simple constraints.
+  - Horizontal/vertical guides.
+  - Snap to guides.
+  - Width/height percentage of parent.
+  - Snap to other handles? Connect two shapes?
+  - Enough to setup demo site?
+
+Server:
+  - Users that own projects.
+  - Projects that contains users.
+  - Sing-in.
+  - Select projects.
+  - Save/load projects.
+  - Request invite.
 
 Functionality:
 
   Grouping:
-    - cropping
-    - intersect
-    - union
-    - subtract
+    - Cropping.
+    - Intersect.
+    - Union.
+    - Subtract.
 
   Rendering:
-    - points
-    - lines
-    - rectangles
-    - circles/ellipses
-    - triangles
+    - Points.
+    - Lines.
+    - Rectangles.
+    - Circles/ellipses.
+    - Triangles.
 
   Grid:
-    - zoom (just use css zoom, seems to work pretty well)
-    - snapping
-    - guides
-    - ruler
-    - customizable
+    - Zoom (just use css zoom, seems to work pretty well).
+    - Snapping.
+    - Guides.
+    - Ruler.
+    - Customizable.
 
   Selection:
     - Grouping.
@@ -37,14 +59,14 @@ Functionality:
   Layers: grid, guides, shapes, handles, overlay ...
 
   Dragging:
-    - horizontally
-    - vertically
-    - fixed angle (nice!)
-    - radial
+    - Horizontally.
+    - Vertically.
+    - Fixed angle (nice!).
+    - Radial.
 
   Saving:
-    - serialize
-    - deserialize
+    - serialize.
+    - deserialize.
     - meta hash for migrations?
 
   Translation to css:
