@@ -1,33 +1,24 @@
-function Obj ()
-{
-  this.id = 'o' + Obj.nextId++
+Module("base.Obj")
 
-  this.meta = { onchange     : []
-              , constructors : []
-              , destructors  : []
-              }
+Import("Prelude")
+Import("base.Value")
 
-  this.classes = {}
+Class
+(
 
-  this.$ = {}
-
-  Obj.all[this.id] = this
-}
-
-Obj.classes = {}
-Obj.nextId  = 0
-Obj.all     = {}
-
-Static(Obj,
-
-  function register (ctor)
+  function Obj ()
   {
-    this.classes[ctor.name] = ctor
-  }
+    this.id = 'o' + Obj.nextId++
 
-)
+    this.meta = { onchange     : []
+                , constructors : []
+                , destructors  : []
+                }
 
-Class(Obj,
+    this.classes = {}
+    this.$ = {}
+    Obj.all[this.id] = this
+  },
 
   function decorateOnly (c /* constructor arguments */)
   {
@@ -86,6 +77,23 @@ Class(Obj,
   function changed (v)
   {
     this.meta.onchange.map(function (o) { o.call(this, v) }, this)
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.classes = {}
+    Obj.nextId  = 0
+    Obj.all     = {}
+  },
+
+  function register (ctor)
+  {
+    this.classes[ctor.name] = ctor
   }
 
 )

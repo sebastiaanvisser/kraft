@@ -1,14 +1,17 @@
-function Events ()
-{
-  this.preHooks      = {}
-  this.postHooks     = {}
-  this.preHooksOnce  = {}
-  this.postHooksOnce = {}
-}
+Module("Events")
 
-Events.manager = new Events
+Import("Prelude")
 
-Class(Events,
+Class
+(
+
+  function Events ()
+  {
+    this.preHooks      = {}
+    this.postHooks     = {}
+    this.preHooksOnce  = {}
+    this.postHooksOnce = {}
+  },
 
   function bind (elem, name, fn)
   {
@@ -34,6 +37,16 @@ Class(Events,
   function onThreadEnd       (id, fn) { this.postHooks[id]     = fn },
   function onThreadStartOnce (id, fn) { this.preHooksOnce[id]  = fn },
   function onThreadEndOnce   (id, fn) { this.postHooksOnce[id] = fn }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Events.manager = new Events
+  }
 
 )
 

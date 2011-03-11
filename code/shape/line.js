@@ -1,25 +1,38 @@
-function Line (revive, _, x0, y0, x1, y1, w)
-{
-  if (!revive)
+Module("shape.Line")
+
+Import("base.Obj")
+
+Class
+(
+
+  function Line (revive, _, x0, y0, x1, y1, w)
   {
-    this.define("p0", Point.make(x0, y0))
-    this.define("p1", Point.make(x1, y1))
-    this.define("width", w)
+    if (!revive)
+    {
+      this.define("p0", Point.make(x0, y0))
+      this.define("p1", Point.make(x1, y1))
+      this.define("width", w)
+    }
+
+    Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p1)
+    Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p1)
+    Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p1)
+    
+    C.min0(this.define("left",   0), this.p0.$.x, this.p1.$.x)
+    C.min0(this.define("top",    0), this.p0.$.y, this.p1.$.y)
+    C.max0(this.define("right",  0), this.p0.$.x, this.p1.$.x)
+    C.max0(this.define("bottom", 0), this.p0.$.y, this.p1.$.y)
   }
 
-  Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p1)
-  Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p1)
-  Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p1)
-  
-  C.min0(this.define("left",   0), this.p0.$.x, this.p1.$.x)
-  C.min0(this.define("top",    0), this.p0.$.y, this.p1.$.y)
-  C.max0(this.define("right",  0), this.p0.$.x, this.p1.$.x)
-  C.max0(this.define("bottom", 0), this.p0.$.y, this.p1.$.y)
-}
+)
 
-Obj.register(Line)
+Static
+(
 
-Static(Line,
+  function init ()
+  {
+    Obj.register(Line)
+  },
 
   function make (x0, y0, x1, y1, w)
   {
@@ -30,32 +43,22 @@ Static(Line,
 
 )
 
-// ----------------------------------------------------------------------------
+Module("shape.RenderableLine")
 
-function RenderableLine (revive, model)
-{
-  this.model  = model
-  this.canvas = this.model.canvas
-  this.elem   = this.setupElem()
+Import("base.Obj")
 
-  this.onchange(function () { this.canvas.renderer.enqueue(this) })
-  this.render()
-}
+Class
+(
 
-Obj.register(RenderableLine)
-
-Static(RenderableLine,
-
-  function make (canvas, x0, y0, x1, y1, w)
+  function RenderableLine (revive, model)
   {
-    var r = Line.make(x0, y0, x1, y1, w)
-    r.decorate(RenderableLine, canvas)
-    return r
-  }
+    this.model  = model
+    this.canvas = this.model.canvas
+    this.elem   = this.setupElem()
 
-)
-
-Class(RenderableLine,
+    this.onchange(function () { this.canvas.renderer.enqueue(this) })
+    this.render()
+  },
 
   function setupElem ()
   {
@@ -95,28 +98,33 @@ Class(RenderableLine,
 
 )
 
-// ----------------------------------------------------------------------------
+Static(
 
-function AdjustableLine ()
-{
-  this.selectable(this.mkHandles, this.delHandles)
-}
-
-Obj.register(AdjustableLine)
-
-Static(AdjustableLine,
-
-  function make (model, x0, y0, x1, y1, w)
+  function init ()
   {
-    var r = RenderableLine.make(model, x0, y0, x1, y1, w)
-    r.decorate(SelectableShape)
-    r.decorate(AdjustableLine)
+    Obj.register(RenderableLine)
+  },
+
+  function make (canvas, x0, y0, x1, y1, w)
+  {
+    var r = Line.make(x0, y0, x1, y1, w)
+    r.decorate(RenderableLine, canvas)
     return r
   }
 
 )
 
-Class(AdjustableLine,
+Module("shape.AdjustableLine")
+
+Import("base.Obj")
+
+Class
+(
+
+  function AdjustableLine ()
+  {
+    this.selectable(this.mkHandles, this.delHandles)
+  },
 
   function mkHandles ()
   {
@@ -129,6 +137,24 @@ Class(AdjustableLine,
   function delHandles ()
   {
     this.handles.destructor()
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.register(AdjustableLine)
+  },
+
+  function make (model, x0, y0, x1, y1, w)
+  {
+    var r = RenderableLine.make(model, x0, y0, x1, y1, w)
+    r.decorate(SelectableShape)
+    r.decorate(AdjustableLine)
+    return r
   }
 
 )

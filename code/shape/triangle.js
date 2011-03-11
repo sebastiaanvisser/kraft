@@ -1,64 +1,73 @@
-function Triangle (revive, ctx, x0, y0, x1, y1)
-{
-  if (!revive)
+Module("shape.Triangle")
+
+Import("base.Obj")
+
+Class
+(
+
+  function Triangle (revive, ctx, x0, y0, x1, y1)
   {
-    this.define("p0", Point.make(x0, y0))
-    this.define("p3", Point.make(x1, y1))
+    if (!revive)
+    {
+      this.define("p0", Point.make(x0, y0))
+      this.define("p3", Point.make(x1, y1))
+    }
+
+    Point.yx(this.derive("p1", Point.make()).v, this.p0, this.p3)
+    Point.xy(this.derive("p2", Point.make()).v, this.p0, this.p3)
+
+    Point.mid          (this.derive("center",      Point.make()).v, this.p0, this.p3     )
+    Point.topLeft      (this.derive("topLeft",     Point.make()).v, this.p0, this.p3     )
+    Point.topRight     (this.derive("topRight",    Point.make()).v, this.p0, this.p3     )
+    Point.bottomLeft   (this.derive("bottomLeft",  Point.make()).v, this.p0, this.p3     )
+    Point.bottomRight  (this.derive("bottomRight", Point.make()).v, this.p0, this.p3     )
+    Point.xy           (this.derive("midLeft",     Point.make()).v, this.p0, this.center )
+    Point.xy           (this.derive("midRight",    Point.make()).v, this.p1, this.center )
+    Point.yx           (this.derive("midTop",      Point.make()).v, this.p0, this.center )
+    Point.yx           (this.derive("midBottom",   Point.make()).v, this.p2, this.center )
+
+    C.sub0(this.derive("width",   0), this.bottomRight.$.x, this.topLeft.$.x )
+    C.sub0(this.derive("height",  0), this.bottomRight.$.y, this.topLeft.$.y )
+    C.min0(this.derive("left",    0), this.p0.$.x,          this.p3.$.x      )
+    C.min0(this.derive("top",     0), this.p0.$.y,          this.p3.$.y      )
+    C.max0(this.derive("right",   0), this.p0.$.x,          this.p3.$.x      )
+    C.max0(this.derive("bottom",  0), this.p0.$.y,          this.p3.$.y      )
   }
 
-  Point.yx(this.derive("p1", Point.make()).v, this.p0, this.p3)
-  Point.xy(this.derive("p2", Point.make()).v, this.p0, this.p3)
+)
 
-  Point.mid          (this.derive("center",      Point.make()).v, this.p0, this.p3     )
-  Point.topLeft      (this.derive("topLeft",     Point.make()).v, this.p0, this.p3     )
-  Point.topRight     (this.derive("topRight",    Point.make()).v, this.p0, this.p3     )
-  Point.bottomLeft   (this.derive("bottomLeft",  Point.make()).v, this.p0, this.p3     )
-  Point.bottomRight  (this.derive("bottomRight", Point.make()).v, this.p0, this.p3     )
-  Point.xy           (this.derive("midLeft",     Point.make()).v, this.p0, this.center )
-  Point.xy           (this.derive("midRight",    Point.make()).v, this.p1, this.center )
-  Point.yx           (this.derive("midTop",      Point.make()).v, this.p0, this.center )
-  Point.yx           (this.derive("midBottom",   Point.make()).v, this.p2, this.center )
+Static
+(
 
-  C.sub0(this.derive("width",   0), this.bottomRight.$.x, this.topLeft.$.x )
-  C.sub0(this.derive("height",  0), this.bottomRight.$.y, this.topLeft.$.y )
-  C.min0(this.derive("left",    0), this.p0.$.x,          this.p3.$.x      )
-  C.min0(this.derive("top",     0), this.p0.$.y,          this.p3.$.y      )
-  C.max0(this.derive("right",   0), this.p0.$.x,          this.p3.$.x      )
-  C.max0(this.derive("bottom",  0), this.p0.$.y,          this.p3.$.y      )
-}
+  function init ()
+  {
+    Obj.register(Triangle)
+  },
 
-Obj.register(Triangle)
+  function make (x0, y0, x1, y1)
+  {
+    var r = new Obj
+    r.decorate(Triangle, null, x0, y0, x1, y1)
+    return r
+  }
 
-Triangle.make =
-function make (x0, y0, x1, y1)
-{
-  var r = new Obj
-  r.decorate(Triangle, null, x0, y0, x1, y1)
-  return r
-}
+)
 
-// ----------------------------------------------------------------------------
+Module("shape.RenderableTriangle")
 
-function RenderableTriangle (revive, model)
-{
-  this.model = model
-  this.setupElem()
+Import("base.Obj")
 
-  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
-  this.render()
-}
+Class
+(
 
-Obj.register(RenderableTriangle)
+  function RenderableTriangle (revive, model)
+  {
+    this.model = model
+    this.setupElem()
 
-RenderableTriangle.make =
-function make (model, x0, y0, x1, y1)
-{
-  var r = Triangle.make(x0, y0, x1, y1)
-  r.decorate(RenderableTriangle, model)
-  return r
-}
-
-Class(RenderableTriangle,
+    this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
+    this.render()
+  },
 
   function setupElem ()
   {
@@ -109,16 +118,34 @@ Class(RenderableTriangle,
 
 )
 
-// ----------------------------------------------------------------------------
+Static
+(
 
-function AdjustableTriangle ()
-{
-  this.selectable(this.mkHandles, this.delHandles)
-}
+  function init ()
+  {
+    Obj.register(RenderableTriangle)
+  },
 
-Obj.register(AdjustableTriangle)
+  function make (model, x0, y0, x1, y1)
+  {
+    var r = Triangle.make(x0, y0, x1, y1)
+    r.decorate(RenderableTriangle, model)
+    return r
+  }
 
-Class(AdjustableTriangle,
+)
+
+Module("shape.AdjustableTriangle")
+
+Import("base.Obj")
+
+Class
+(
+
+  function AdjustableTriangle ()
+  {
+    this.selectable(this.mkHandles, this.delHandles)
+  },
 
   function mkHandles ()
   {
@@ -141,7 +168,13 @@ Class(AdjustableTriangle,
 
 )
 
-Static(AdjustableTriangle,
+Static
+(
+
+  function init ()
+  {
+    Obj.register(AdjustableTriangle)
+  },
 
   function make (model, x0, y0, x1, y1)
   {

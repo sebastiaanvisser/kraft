@@ -1,25 +1,37 @@
-function Text (revive, ctx, x0, y0, x1, y1, text)
-{
-  if (!revive)
+Module("shape.Text")
+
+Import("base.Obj")
+
+Class
+(
+
+  function Text (revive, ctx, x0, y0, x1, y1, text)
   {
-    this.define("p0", Point.make(x0, y0))
-    this.define("p1", Point.make(x1, y1))
-    this.define("text", text)
+    if (!revive)
+    {
+      this.define("p0", Point.make(x0, y0))
+      this.define("p1", Point.make(x1, y1))
+      this.define("text", text)
+    }
+
+    Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p1)
+    Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p1)
+    Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p1)
+    
+    C.min0(this.derive("left",   0), this.p0.$.x, this.p1.$.x)
+    C.min0(this.derive("top",    0), this.p0.$.y, this.p1.$.y)
+    C.max0(this.derive("right",  0), this.p0.$.x, this.p1.$.x)
+    C.max0(this.derive("bottom", 0), this.p0.$.y, this.p1.$.y)
   }
 
-  Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p1)
-  Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p1)
-  Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p1)
-  
-  C.min0(this.derive("left",   0), this.p0.$.x, this.p1.$.x)
-  C.min0(this.derive("top",    0), this.p0.$.y, this.p1.$.y)
-  C.max0(this.derive("right",  0), this.p0.$.x, this.p1.$.x)
-  C.max0(this.derive("bottom", 0), this.p0.$.y, this.p1.$.y)
-}
+)
 
-Obj.register(Text)
+Static(
 
-Static(Text,
+  function init ()
+  {
+    Obj.register(Text)
+  },
 
   function make (x0, y0, x1, y1, text)
   {
@@ -30,31 +42,21 @@ Static(Text,
 
 )
 
-// ----------------------------------------------------------------------------
+Module("shape.RenderableText")
 
-function RenderableText (revive, model)
-{
-  this.model  = model
-  this.elem   = this.setupElem()
+Import("base.Obj")
 
-  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
-  this.render()
-}
+Class
+(
 
-Obj.register(RenderableText)
-
-Static(RenderableText,
-
-  function make (model, x0, y0, x1, y1, text)
+  function RenderableText (revive, model)
   {
-    var r = Text.make(x0, y0, x1, y1, text)
-    r.decorate(RenderableText, model)
-    return r
-  }
+    this.model  = model
+    this.elem   = this.setupElem()
 
-)
-
-Class(RenderableText,
+    this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
+    this.render()
+  },
 
   function setupElem ()
   {
@@ -98,28 +100,34 @@ Class(RenderableText,
 
 )
 
-// ----------------------------------------------------------------------------
+Static
+(
 
-function AdjustableText ()
-{
-  this.selectable(this.mkHandles, this.delHandles)
-}
-
-Obj.register(AdjustableText)
-
-Static(AdjustableText,
+  function init ()
+  {
+    Obj.register(RenderableText)
+  },
 
   function make (model, x0, y0, x1, y1, text)
   {
-    var r = RenderableText.make(model, x0, y0, x1, y1, text)
-    r.decorate(SelectableShape)
-    r.decorate(AdjustableText)
+    var r = Text.make(x0, y0, x1, y1, text)
+    r.decorate(RenderableText, model)
     return r
   }
 
 )
 
-Class(AdjustableText,
+Module("shape.AdjustableText")
+
+Import("base.Obj")
+
+Class
+(
+
+  function AdjustableText ()
+  {
+    this.selectable(this.mkHandles, this.delHandles)
+  },
 
   function mkHandles ()
   {
@@ -132,6 +140,24 @@ Class(AdjustableText,
   function delHandles ()
   {
     this.handles.destructor()
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.register(AdjustableText)
+  },
+
+  function make (model, x0, y0, x1, y1, text)
+  {
+    var r = RenderableText.make(model, x0, y0, x1, y1, text)
+    r.decorate(SelectableShape)
+    r.decorate(AdjustableText)
+    return r
   }
 
 )

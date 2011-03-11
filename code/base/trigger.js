@@ -1,16 +1,16 @@
-function Trigger (t, f, s)
-{
-  this.id      = 't' + Trigger.nextId++
-  this.target  = [t, f]
-  this.sources = s
+Module("base.Trigger")
 
-  Trigger.all[this.id] = this
-}
+Class
+(
 
-Trigger.nextId = 0
-Trigger.all    = {}
+  function Trigger (t, f, s)
+  {
+    this.id      = 't' + Trigger.nextId++
+    this.target  = [t, f]
+    this.sources = s
 
-Class(Trigger,
+    Trigger.all[this.id] = this
+  },
 
   function destructor ()
   {
@@ -39,20 +39,30 @@ Class(Trigger,
 
 )
 
-Trigger.compose =
-function compose (t, f /* ... */)
-{
-  // Build up trigger.
-  var s = []
-  for (var i = 2; i < arguments.length; i += 2)
-    s.push([arguments[i], arguments[i+1]])
-  var trigger = new Trigger(t, f, s)
+Static
+(
 
-  // Install trigger.
-  trigger.target[0].triggers[trigger.id] = [true, trigger]
-  for (var i = 0; i < trigger.sources.length; i++)
-    trigger.sources[i][0].triggers[trigger.id] = [false, trigger]
+  function init ()
+  {
+    Trigger.nextId = 0
+    Trigger.all    = {}
+  },
 
-  trigger.app(false)
-}
+  function compose (t, f /* ... */)
+  {
+    // Build up trigger.
+    var s = []
+    for (var i = 2; i < arguments.length; i += 2)
+      s.push([arguments[i], arguments[i+1]])
+    var trigger = new Trigger(t, f, s)
+
+    // Install trigger.
+    trigger.target[0].triggers[trigger.id] = [true, trigger]
+    for (var i = 0; i < trigger.sources.length; i++)
+      trigger.sources[i][0].triggers[trigger.id] = [false, trigger]
+
+    trigger.app(false)
+  }
+
+)
 

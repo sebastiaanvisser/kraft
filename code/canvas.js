@@ -1,33 +1,27 @@
-function Canvas (container)
-{
-  this.container  = $(container)
-  this.zoomBox    = $(".zoombox", container)[0]
-  this.canvasElem = $(".canvas", container)[0]
-  this.gridElem   = $(".grid", container)[0]
-  this.model      = Model.make(this)
+Module("Canvas")
 
-  this.renderer   = new Renderer
-  this.layers     = {}
+Import("base.Obj")
+Import("Renderer")
+Import("Model")
 
-  this.define("zoom",     1)
-  this.define("gridSnap", 10)
-  this.define("gridShow", true)
-}
+Class
+(
 
-Obj.register(Canvas)
-
-Static(Canvas,
-
-  function make (container)
+  function Canvas (container)
   {
-    var r = new Obj
-    r.decorate(Canvas, null, container)
-    return r
-  }
+    this.container  = $(container)
+    this.zoomBox    = $(".zoombox", container)[0]
+    this.canvasElem = $(".canvas", container)[0]
+    this.gridElem   = $(".grid", container)[0]
+    this.model      = Model.make(this)
 
-)
+    this.renderer   = new Renderer
+    this.layers     = {}
 
-Class(Canvas,
+    this.define("zoom",     1)
+    this.define("gridSnap", 10)
+    this.define("gridShow", true)
+  },
 
   function showGrid () { this.gridShow = true;  $(this.gridElem).addClass    ("grid") },
   function hideGrid () { this.gridShow = false; $(this.gridElem).removeClass ("grid") },
@@ -35,6 +29,22 @@ Class(Canvas,
   function zoomIn    () { $(this.zoomBox).css("zoom", this.zoom *= 2) },
   function zoomOut   () { $(this.zoomBox).css("zoom", this.zoom /= 2) },
   function zoomReset () { $(this.zoomBox).css("zoom", this.zoom = 1 ) }
+
+)
+
+Static(
+
+  function init ()
+  {
+    Obj.register(Canvas)
+  },
+
+  function make (container)
+  {
+    var r = new Obj
+    r.decorate(Canvas, null, container)
+    return r
+  }
 
 )
 

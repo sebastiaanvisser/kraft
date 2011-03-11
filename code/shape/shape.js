@@ -1,33 +1,37 @@
-function SelectableShape ()
-{
-  this.onselect   = []
-  this.ondeselect = []
+Module("shape.SelectableShape")
 
-  var sel = this.model.selection
-  sel.selectable[this.id] = this
+Import("Events")
+Import("base.Obj")
 
-  var self = this
+Class
+(
 
-  Events.manager.bind(this.model.canvas.canvasElem, "mousedown",
-    function (e) { sel.deselectAll() })
+  function SelectableShape ()
+  {
+    this.onselect   = []
+    this.ondeselect = []
 
-  Events.manager.bind(this.elem, "mousedown",
-    function (e)
-    {
-      if (e.altKey) return sel.deselect(self)
-      if (!e.shiftKey) sel.deselectAll() // TODO: don't select when is equal to new selection
-      sel.select(self)
-    })
+    var sel = this.model.selection
+    sel.selectable[this.id] = this
 
-  this.selectable
-    ( function () { $(self.elem).addClass("selected")    }
-    , function () { $(self.elem).removeClass("selected") }
-    )
-}
+    var self = this
 
-Obj.register(SelectableShape)
+    Events.manager.bind(this.model.canvas.canvasElem, "mousedown",
+      function (e) { sel.deselectAll() })
 
-Class(SelectableShape,
+    Events.manager.bind(this.elem, "mousedown",
+      function (e)
+      {
+        if (e.altKey) return sel.deselect(self)
+        if (!e.shiftKey) sel.deselectAll() // TODO: don't select when is equal to new selection
+        sel.select(self)
+      })
+
+    this.selectable
+      ( function () { $(self.elem).addClass("selected")    }
+      , function () { $(self.elem).removeClass("selected") }
+      )
+  },
 
   function selectable (s, d)
   {
@@ -47,12 +51,38 @@ Class(SelectableShape,
 
 )
 
-// ----------------------------------------------------------------------------
+Static
+(
 
-function DraggableShape ()
-{
-  this.dragger = new Draggable(this.model.canvas.canvasElem, this, this.elem, false, false, 5, 5, this.model.canvas.$.zoom)
-}
+  function init ()
+  {
+    Obj.register(SelectableShape)
+  }
 
-Obj.register(DraggableShape)
+)
+
+Module("shape.DraggableShape")
+
+Import("Draggable")
+Import("base.Obj")
+
+Class
+(
+
+  function DraggableShape ()
+  {
+    this.dragger = new Draggable(this.model.canvas.canvasElem, this, this.elem, false, false, 5, 5, this.model.canvas.$.zoom)
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.register(DraggableShape)
+  }
+
+)
 

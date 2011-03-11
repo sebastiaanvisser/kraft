@@ -1,37 +1,53 @@
-function Rect (revive, _, x0, y0, x1, y1)
-{
-  if (!revive)
+Module("shape.Rect")
+
+Import("base.Obj")
+Import("constraint.Constraint")
+Qualified("shape.Point", "Pt")
+Qualified("constraint.Point", "Pc")
+
+Class
+(
+
+  function Rect (revive, _, x0, y0, x1, y1)
   {
-    this.define("p0",     Point.make(x0, y0))
-    this.define("p3",     Point.make(x1, y1))
-    this.define("radius", 0)
-    this.define("border", 5)
+    if (!revive)
+    {
+      this.define("p0",     Pt.make(x0, y0))
+      this.define("p3",     Pt.make(x1, y1))
+      this.define("radius", 0)
+      this.define("border", 5)
+    }
+
+    Pc.yx(this.derive("p1", Pt.make()).v, this.p0, this.p3)
+    Pc.xy(this.derive("p2", Pt.make()).v, this.p0, this.p3)
+
+    Pc.mid         (this.derive("center",      Pt.make()).v, this.p0, this.p3     )
+    Pc.topLeft     (this.derive("topLeft",     Pt.make()).v, this.p0, this.p3     )
+    Pc.topRight    (this.derive("topRight",    Pt.make()).v, this.p0, this.p3     )
+    Pc.bottomLeft  (this.derive("bottomLeft",  Pt.make()).v, this.p0, this.p3     )
+    Pc.bottomRight (this.derive("bottomRight", Pt.make()).v, this.p0, this.p3     )
+    Pc.xy          (this.derive("midLeft",     Pt.make()).v, this.p0, this.center )
+    Pc.xy          (this.derive("midRight",    Pt.make()).v, this.p1, this.center )
+    Pc.yx          (this.derive("midTop",      Pt.make()).v, this.p0, this.center )
+    Pc.yx          (this.derive("midBottom",   Pt.make()).v, this.p2, this.center )
+
+    sub0(this.derive("width",  0), this.bottomRight.$.x, this.topLeft.$.x)
+    sub0(this.derive("height", 0), this.bottomRight.$.y, this.topLeft.$.y )
+    min0(this.derive("left",   0), this.p0.$.x,          this.p3.$.x      )
+    min0(this.derive("top",    0), this.p0.$.y,          this.p3.$.y      )
+    max0(this.derive("right",  0), this.p0.$.x,          this.p3.$.x      )
+    max0(this.derive("bottom", 0), this.p0.$.y,          this.p3.$.y      )
   }
 
-  Point.yx(this.derive("p1", Point.make()).v, this.p0, this.p3)
-  Point.xy(this.derive("p2", Point.make()).v, this.p0, this.p3)
+)
 
-  Point.mid         (this.derive("center",      Point.make()).v, this.p0, this.p3     )
-  Point.topLeft     (this.derive("topLeft",     Point.make()).v, this.p0, this.p3     )
-  Point.topRight    (this.derive("topRight",    Point.make()).v, this.p0, this.p3     )
-  Point.bottomLeft  (this.derive("bottomLeft",  Point.make()).v, this.p0, this.p3     )
-  Point.bottomRight (this.derive("bottomRight", Point.make()).v, this.p0, this.p3     )
-  Point.xy          (this.derive("midLeft",     Point.make()).v, this.p0, this.center )
-  Point.xy          (this.derive("midRight",    Point.make()).v, this.p1, this.center )
-  Point.yx          (this.derive("midTop",      Point.make()).v, this.p0, this.center )
-  Point.yx          (this.derive("midBottom",   Point.make()).v, this.p2, this.center )
+Static
+(
 
-  C.sub0(this.derive("width",  0), this.bottomRight.$.x, this.topLeft.$.x)
-  C.sub0(this.derive("height", 0), this.bottomRight.$.y, this.topLeft.$.y )
-  C.min0(this.derive("left",   0), this.p0.$.x,          this.p3.$.x      )
-  C.min0(this.derive("top",    0), this.p0.$.y,          this.p3.$.y      )
-  C.max0(this.derive("right",  0), this.p0.$.x,          this.p3.$.x      )
-  C.max0(this.derive("bottom", 0), this.p0.$.y,          this.p3.$.y      )
-}
-
-Obj.register(Rect)
-
-Static(Rect,
+  function init ()
+  {
+    Obj.register(Rect)
+  },
 
   function make (x0, y0, x1, y1)
   {
@@ -44,18 +60,21 @@ Static(Rect,
 
 // ----------------------------------------------------------------------------
 
-function RenderableRect (revive, model)
-{
-  this.model    = model
-  this.elem     = this.setupElem()
+Module("shape.RenderableRect")
 
-  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
-  this.render()
-}
+Import("base.Obj")
 
-Obj.register(RenderableRect)
+Class
+(
 
-Class(RenderableRect,
+  function RenderableRect (revive, model)
+  {
+    this.model    = model
+    this.elem     = this.setupElem()
+
+    this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
+    this.render()
+  },
 
   function setupElem ()
   {
@@ -95,17 +114,34 @@ Class(RenderableRect,
 
 )
 
-// ----------------------------------------------------------------------------
+Static
+(
 
-function AdjustableRect ()
-{
-  this.adjusting = false
-  this.selectable(this.mkHandles, this.delHandles)
-}
+  function init ()
+  {
+    Obj.register(RenderableRect)
+  }
 
-Obj.register(AdjustableRect)
+)
 
-Class(AdjustableRect,
+Module("shape.AdjustableRect")
+
+Import("base.Obj")
+Import("base.Value")
+Import("constraint.Constraint")
+Import("shape.Handle")
+Import("shape.HorizontalHandle")
+Import("shape.VerticalHandle")
+Qualified("shape.Point", "Pt")
+
+Class
+(
+
+  function AdjustableRect ()
+  {
+    this.adjusting = false
+    this.selectable(this.mkHandles, this.delHandles)
+  },
 
   function mkHandles ()
   {
@@ -121,20 +157,30 @@ Class(AdjustableRect,
     this.handles.define("midBottom",   VerticalHandle.make   (this.model, this.midBottom))
     this.handles.define("center",      Handle.make           (this.model, this.center))
 
-    var radiusH = Point.make()
-    C.add0(radiusH.$.y, this.topLeft.$.y, val(10))
-    C.add0(radiusH.$.x, this.$.radius, this.topLeft.$.x)
+    var radiusH = Pt.make()
+    add0(radiusH.$.y, this.topLeft.$.y, val(10))
+    add0(radiusH.$.x, this.$.radius, this.topLeft.$.x)
     this.handles.define("radiusH", HorizontalHandle.make (this.model, radiusH))
 
-    var borderH = Point.make()
-    C.add0(borderH.$.x, this.$.border, this.topLeft.$.x)
-    C.add0(borderH.$.y, this.midLeft.$.y, val(10))
+    var borderH = Pt.make()
+    add0(borderH.$.x, this.$.border, this.topLeft.$.x)
+    add0(borderH.$.y, this.midLeft.$.y, val(10))
     this.handles.define("borderH", HorizontalHandle.make (this.model, borderH))
   },
 
   function delHandles ()
   {
     this.handles.destructor()
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.register(AdjustableRect)
   }
 
 )

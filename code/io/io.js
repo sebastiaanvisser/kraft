@@ -1,6 +1,7 @@
-function IO () { }
+Module("io.IO")
 
-Static(IO,
+Static
+(
 
   function save (name, message, data)
   {

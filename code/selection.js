@@ -1,11 +1,14 @@
-function Selection ()
-{
-  this.selectable = {}
-  this.selected   = {}
-  this.active     = true
-}
+Module("Selection")
 
-Class(Selection,
+Class
+(
+
+  function Selection ()
+  {
+    this.selectable = {}
+    this.selected   = {}
+    this.active     = true
+  },
 
   function mkSelectable (obj)
   {

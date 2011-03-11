@@ -1,14 +1,21 @@
-function Handle (revive, model, pt)
-{
-  this.model = model
-  this.pt    = pt
+Module("shape.Handle")
 
-  this.defHandlePoint("handle", RenderableEllipse, 0, 0, 10, 10)
-}
+Import("base.Obj")
+Import("shape.DraggableShape")
+Import("shape.Rect")
+Import("shape.RenderableEllipse")
+Qualified("constraint.Point", "P")
 
-Obj.register(Handle)
+Class
+(
 
-Class(Handle,
+  function Handle (revive, model, pt)
+  {
+    this.model = model
+    this.pt    = pt
+
+    this.defHandlePoint("handle", RenderableEllipse, 0, 0, 10, 10)
+  },
 
   function defHandlePoint (prop, type, x, y, w, h)
   {
@@ -16,29 +23,47 @@ Class(Handle,
     this[prop].decorate(type, this.model)
     this[prop].decorate(DraggableShape)
     $(this[prop].elem).addClass(prop)
-    Point.eq(this[prop].center, this.pt)
+    P.eq(this[prop].center, this.pt)
   }
 
 )
 
-Handle.make =
-function make (model, pt)
-{
-  var h = new Obj
-  h.decorate(Handle, model, pt)
-  return h
-}
+Static
+(
 
-// ----------------------------------------------------------------------------
+  function init ()
+  {
+    Obj.register(Handle)
+  },
 
-function VerticalHandle ()
-{
-  this.defHandlePoint("handleV", RenderableRect, 0, 0, 2, 16)
-  this.handle.dragger.lockX  = true
-  this.handleV.dragger.lockX = true
-}
+  function make (model, pt)
+  {
+    var h = new Obj
+    h.decorate(Handle, model, pt)
+    return h
+  }
 
-Static(VerticalHandle,
+)
+
+Module("shape.VerticalHandle")
+
+Import("shape.Handle")
+Import("shape.RenderableRect")
+
+Class
+(
+
+  function VerticalHandle ()
+  {
+    this.defHandlePoint("handleV", RenderableRect, 0, 0, 2, 16)
+    this.handle.dragger.lockX  = true
+    this.handleV.dragger.lockX = true
+  }
+
+)
+
+Static
+(
 
   function make (model, pt)
   {
@@ -49,16 +74,25 @@ Static(VerticalHandle,
 
 )
 
-// ----------------------------------------------------------------------------
+Module("shape.HorizontalHandle")
 
-function HorizontalHandle ()
-{
-  this.defHandlePoint("handleH", RenderableRect, 0, 0, 16, 2)
-  this.handle.dragger.lockY  = true
-  this.handleH.dragger.lockY = true
-}
+Import("shape.Handle")
+Import("shape.RenderableRect")
 
-Static(HorizontalHandle, 
+Class
+(
+
+  function HorizontalHandle ()
+  {
+    this.defHandlePoint("handleH", RenderableRect, 0, 0, 16, 2)
+    this.handle.dragger.lockY  = true
+    this.handleH.dragger.lockY = true
+  }
+
+)
+
+Static
+(
 
   function make (model, pt)
   {

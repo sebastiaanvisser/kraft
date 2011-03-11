@@ -1,15 +1,18 @@
-function RenderableEllipse (revive, model)
-{
-  this.model  = model
-  this.elem   = this.setupElem()
+Module("shape.RenderableEllipse")
 
-  this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
-  this.render()
-}
+Import("base.Obj")
 
-Obj.register(RenderableEllipse)
+Class
+(
 
-Class(RenderableEllipse,
+  function RenderableEllipse (revive, model)
+  {
+    this.model  = model
+    this.elem   = this.setupElem()
+
+    this.onchange(function () { this.model.canvas.renderer.enqueue(this) })
+    this.render()
+  },
 
   function setupElem ()
   {
@@ -44,6 +47,16 @@ Class(RenderableEllipse,
   function unrender ()
   {
     this.model.canvas.canvasElem.removeChild(this.elem)
+  }
+
+)
+
+Static
+(
+
+  function init ()
+  {
+    Obj.register(RenderableEllipse)
   }
 
 )

@@ -1,50 +1,59 @@
-function Value (v, parent, name, soft, t)
-{
-  this.parent   = parent
-  this.name     = name
-  this.soft     = soft // Soft properties will not be serialized.
-  this.type     = t || v.constructor.name
-  this.value    = this.type == "Number" ? 1 * v : v
-  this.triggers = {}
-  this.busy     = false
+Module("base.Value")
 
-  var self = this
+Import("Prelude")
 
-  function get () { return self.value }
+Class
+(
 
-  function set (v)
+  function Value (v, parent, name, soft, t)
   {
-    v = this.type == "Number" ? 1 * v : v
-    if (self.value == v) return
-    if (self.busy) return
-    self.busy = true
-    self.value = v
-    foreach(self.triggers, function (_, t) { t[1].app(t[0]) })
-    if (self.parent) self.parent.changed([this])
-    self.busy = false
-  }
+    this.parent   = parent
+    this.name     = name
+    this.soft     = soft // Soft properties will not be serialized.
+    this.type     = t || v.constructor.name
+    this.value    = this.type == "Number" ? 1 * v : v
+    this.triggers = {}
+    this.busy     = false
 
-  if (this.parent)
-  {
-    this.parent.__defineGetter__(this.name, get)
-    this.parent.__defineSetter__(this.name, set)
-  }
+    var self = this
 
-  this.__defineGetter__("v", get)
-  this.__defineSetter__("v", set)
-}
+    function get () { return self.value }
 
-function val (v)
-{
-  return (v && v.triggers) ? v : new Value(v);
-}
+    function set (v)
+    {
+      v = this.type == "Number" ? 1 * v : v
+      if (self.value == v) return
+      if (self.busy) return
+      self.busy = true
+      self.value = v
+      foreach(self.triggers, function (_, t) { t[1].app(t[0]) })
+      if (self.parent) self.parent.changed([this])
+      self.busy = false
+    }
 
-Class(Value,
+    if (this.parent)
+    {
+      this.parent.__defineGetter__(this.name, get)
+      this.parent.__defineSetter__(this.name, set)
+    }
+
+    this.__defineGetter__("v", get)
+    this.__defineSetter__("v", set)
+  },
 
   function destructor ()
   {
     for (var t in this.triggers) this.triggers[t][1].destructor()
     if (this.value.destructor) this.value.destructor()
+  }
+
+)
+
+Static (
+
+  function val (v)
+  {
+    return (v && v.triggers) ? v : new Value(v)
   }
 
 )

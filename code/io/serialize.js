@@ -1,7 +1,7 @@
-function Serializer () {}
+Module("io.Serializer")
 
 Static
-( Serializer,
+(
 
   function toXml (o)
   {
@@ -55,10 +55,10 @@ Static
 
 )
 
-function Deserializer () {}
+Module("io.Deserializer")
 
 Static
-( Deserializer,
+( 
 
   function fromXml (x)
   {
