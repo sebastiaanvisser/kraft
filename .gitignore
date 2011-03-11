@@ -1,2 +1,4 @@
 _*/
 dist/
+gen/
+loader/loader.js
