@@ -9,6 +9,7 @@ Class
     @queue     = {}
     @timeoutId = 0
     @requireRender()
+    @
 
   enqueue: (o) ->
     @queue[o.id] = o

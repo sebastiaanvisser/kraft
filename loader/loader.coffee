@@ -68,8 +68,8 @@ js.codegen = ->
     nameFromQName = (q) -> (q.match /[^.]*$/)[0]
     name = nameFromQName qname
 
-    assertModuleExists = (qname) -> {}
-      # throw "Module #{mod.qname} imports unknown mod #{qname}" unless js.modules[qname]
+    assertModuleExists = (qname) ->
+      throw "Module #{mod.qname} imports unknown mod #{qname}" unless js.modules[qname]
 
     qualifiedImport = (dep) ->
       assertModuleExists dep[0]
