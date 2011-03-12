@@ -26,10 +26,12 @@ Class
   decorate: (c, ctx, args...) ->
     @decorateOnly c
     c.apply @, [false, ctx].concat args
+    @
 
   revive: (c, ctx) ->
     @decorateOnly(c)
     c.apply @, [true, ctx]
+    @
 
   destructor: ->
     d.call @ for d in @meta.destructors

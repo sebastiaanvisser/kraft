@@ -7,8 +7,7 @@ Class
     @target  = [t, f]
     @sources = s
 
-    # Register this trigger statically.
-    Trigger.all[@id] = this
+    Trigger.all[@id] = @
     @
 
   destructor: ->
@@ -19,9 +18,9 @@ Class
   app: (side) ->
     vs = [@target[0].obj].concat (s[0].obj for s in @sources)
     if side
-      tmp = s[1].apply(this, vs) for s in @sources
+      tmp = s[1].apply(@, vs) for s in @sources
       s[0].v = s for s in tmp
-    else @target[0].v = @target[1].apply(this, vs)
+    else @target[0].v = @target[1].apply(@, vs)
     return
  
 Static
@@ -30,15 +29,16 @@ Static
     Trigger.nextId = 0
     Trigger.all    = {}
 
-  compose: (t, args...) ->
+  compose: (t, f, args...) ->
 
     # Build up trigger.
-    s = ([args[i], args[i + 1]] for i in [0..args.length] by 2)
+    s = ([args[i], args[i + 1]] for i in [0..args.length - 1] by 2)
     trigger = new Trigger(t, f, s)
 
     # Install trigger.
     trigger.target[0].triggers[trigger.id] = [true, trigger]
     s[0].triggers[trigger.id] = [false, trigger] for s in trigger.sources
 
+    # Initialize the trigger by a first apply.
     trigger.app false
 

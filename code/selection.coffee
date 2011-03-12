@@ -8,8 +8,7 @@ Class
     @active     = true
     @
 
-  mkSelectable: (obj) ->
-    obj.selection = this
+  mkSelectable: (obj) -> obj.selection = @
 
   select: (obj) ->
     return if @selected[obj.id]

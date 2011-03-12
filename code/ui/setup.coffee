@@ -3,31 +3,29 @@ Module "ui.Setup"
 Import "Canvas"
 Qualified "Events", "E"
 
-# Import("shape.Ellipse")
-# Import("shape.Line")
-# Import("shape.Rect")
-# Import("shape.RenderableRect")
-# Import("shape.SelectableShape")
-# Import("shape.AdjustableRect")
-# Import("shape.DraggableShape")
-# Import("shape.Text")
-# Import("shape.Triangle")
+# Import "shape.Ellipse"
+# Import "shape.Line"
+Import "shape.Rect"
+Import "shape.RenderableRect"
+Import "shape.SelectableShape"
+Import "shape.AdjustableRect"
+Import "shape.DraggableShape"
+# Import "shape.Text"
+# Import "shape.Triangle"
 
 Static
 
-#  function mkRect (canvas)
-#  {
-#    r = Rect.make(300, 100, 200, 300)
-#    r.decorate(RenderableRect, canvas.model)
-#    r.decorate(SelectableShape)
-#    r.decorate(AdjustableRect)
-#    r.decorate(DraggableShape)
-#    canvas.model.addShape(r);
-#    $(r.elem).addClass("myrect")
-#    $(r.elem).addClass("shape")
-#    return r
-#  },
-#
+  mkRect: (canvas) ->
+    r = Rect.make 300, 100, 200, 300
+    r.decorate RenderableRect, canvas.model
+    r.decorate(SelectableShape)
+    #r.decorate(AdjustableRect)
+    r.decorate(DraggableShape)
+    canvas.model.addShape r
+    $(r.elem).addClass "myrect"
+    $(r.elem).addClass "shape"
+    r
+
 #  function mkEllipse (canvas)
 #  {
 #    e = Rect.make(300, 100, 200, 300)
@@ -73,7 +71,7 @@ Static
   init: ->
     window.myCanvas = Canvas.make $("#mycanvas")[0]
 
- #   E.manager.bind("#toolbar #rect",        "click", () -> mkRect(myCanvas)
+    E.manager.bind "#toolbar #rect",        "click", -> mkRect myCanvas
  #   E.manager.bind("#toolbar #line",        "click", () -> mkLine(myCanvas)
  #   E.manager.bind("#toolbar #triangle",    "click", () -> mkTriangle(myCanvas)
  #   E.manager.bind("#toolbar #ellipse",     "click", () -> mkEllipse(myCanvas)
