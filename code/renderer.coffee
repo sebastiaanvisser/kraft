@@ -1,28 +1,27 @@
 Module "Renderer"
 
 Import "Prelude"
-Import "Events"
+Qualified "Events", "E"
 
 Class
 
   Renderer: ->
-    this.queue     = {}
-    this.timeoutId = 0
-    this.requireRender()
+    @queue     = {}
+    @timeoutId = 0
+    @requireRender()
 
   enqueue: (o) ->
-    this.queue[o.id] = o
-    this.requireRender()
+    @queue[o.id] = o
+    @requireRender()
 
   requireRender: ->
-    self = this
-    Events.manager.onThreadEndOnce "Renderer", () -> self.renderQueue()
-
-  renderQueue: ->
-    this.timeoutId = 0
-    self = this
-    foreach this.queue, (_, o) -> self.render(o)
-    this.queue = {}
+    E.manager.onThreadEndOnce "Renderer", => @renderQueue()
 
   render: (o) -> o.render()
+
+  Private
+  renderQueue: ->
+    @timeoutId = 0
+    @render o for _, o of @queue
+    @queue = {}
 

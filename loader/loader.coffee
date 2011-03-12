@@ -1,35 +1,75 @@
-top = this
+# Utilties.
 
+concat = (a) -> [].concat a...
+
+# Top level loader structures.
+
+top = this
 top.js = js =
   current:    undefined
-  byQname:    {}
+  modules:    {}
   errors:     []
-  collectors: ["Qualified", "Import", "Class", "Static", "Inline", "Get", "Set"]
+  importers:  "Qualified Import".split ' '
+  collectors: "Class Static Private Get Set".split ' '
+
+js.keywords = concat [js.importers, js.collectors]
+
+# Install the module initializer nollector in the global namespace.
 
 top.Module = (q, rest...) ->
-  js.byQname[q]     = js.current = qname: q
-  js.current.name   = (js.current.qname.match /[^.]*$/)[0]
-  js.current.params = rest
-  js.collectors.map (c) -> js.current[c] = []
 
-js.collectors.map (c) ->
-  top[c] = (args...) ->
-    js.current[c].push args.map (a) -> a[c] = true; a
+  # Build module.
+  js.modules[q] =
+    js.current =
+      qname:   q
+      name:    q.match(/[^.]*$/)[0]
+      params:  rest
+      methods: {}
 
-js.compile = (m) ->
-  concat       = (a) -> [].concat.apply([], a)
+  # Build initial collector buckets.
+  js.current[c] = [] for c in js.keywords
+
+# Install all other keywords in the global namespace.
+
+js.keywords.map (c) ->
+  top[c] = (args...) -> js.current[c].push args
+  top[c].annotation = c
+
+# -----------------------------------------------------------------------------
+
+js.compile = ->
+  js.prepare()
+  js.codegen()
+
+js.prepare = ->
+
+  flatten = (mod, def, bucket) ->
+    as = {}; as[def] = true
+    for m in concat bucket
+      switch m.constructor
+        when Function then as[m.annotation] = true
+        when Object
+          for n, f of m
+            mod.methods[n] = f
+            f.annotations = as
+            as = {}; as[def] = true
+
+  for _, mod of js.modules
+    flatten mod, c, mod[c] for c in js.collectors
+
+js.codegen = ->
   mkModuleName = (q) -> "__" + if q.match /^[^.]*$/ then q else q.replace /\./g, "_"
-  inliner      = (f) -> k = f.toString(); if f.Inline then (k.match /\s*function\s+.*\s*\(\s*\;\s*{\s*(.*)\s*};?\s*$/)[1] else "\n  " + k
 
-  for qname, mod of js.byQname
+  for qname, mod of js.modules
+
+    #print "// #{qname}"
+    #print "  // s: #{n} #{k for k of f.annotations}" for n, f of mod.methods
 
     nameFromQName = (q) -> (q.match /[^.]*$/)[0]
     name = nameFromQName qname
 
-    assertModuleExists = (qname) ->
-      if js.byQname[qname]
-      then false
-      else print "console.log('Module #{mod.qname} imports unknown mod #{qname}')"
+    assertModuleExists = (qname) -> {}
+      # throw "Module #{mod.qname} imports unknown mod #{qname}" unless js.modules[qname]
 
     qualifiedImport = (dep) ->
       assertModuleExists dep[0]
@@ -40,23 +80,30 @@ js.compile = (m) ->
 
     staticImport = (imp) ->
       assertModuleExists imp[0]
-      c = js.byQname[imp[0]]
-      ((concat c.Static).map (s) -> "  var #{s.name} = #{c.name}.#{s.name}").join "\n"
+      m = js.modules[imp[0]]
+      eligible = (f) -> f.annotations.Static and not f.annotations.Private
+      ("  var #{n || f.name} = #{m.name}.#{n || f.name}" for n, f of m.methods when eligible f).join "\n"
 
-    mkFunction     = (f, n) -> "  #{name}.prototype.#{n || f.name} = \n  #{f}"
-    mkAccessor     = (f, n) -> "  #{name}.prototype.__define#{f.Get ? "Getter" : "Setter"}__(\"#{n || f.name}\", \n    #{f}\n  )"
-    mkMethod       = (f, n) -> if (f.Get || f.Set) then mkAccessor f, n else mkFunction f, n
-    mkStaticMethod = (f) -> "  var #{f.name} = #{name}.#{f.name} = #{inliner f}"
-    parameters     = (mod.params.map (p) -> "  var #{p} = #{mkModuleName p}()").join "\n"
-    qualifieds     = ((mod.Import.concat mod.Qualified).map qualifiedImport).join "\n"
-    imports        = (mod.Import.map staticImport).join "\n"
-    collected      = concat concat(mod.Class).map (m) -> if m.constructor == Function then [[m, null]] else [f, n] for n, f of m
-    methods        = (collected.map (a) -> mkMethod a...).join "\n\n"
-    staticMethods  = concat(mod.Static).map(mkStaticMethod).join("\n\n")
-    constructor    = "  var #{name} = " + if collected[0] then "\n  " + collected[0][0] else "{}"
-    initializer    = "  if (#{name}.init) #{name}.init.apply(this, arguments)"
-    moduleHeader   = mkModuleName mod.qname + " = function (" + mod.params.map(mkModuleName).join(", ") + ")\n{"
-    moduleFooter   = "  return #{name}\n\n}\n"
+    mkFunction   = (f, n) -> "  #{name}.prototype.#{n || f.name} = \n  #{f}"
+    mkAccessor   = (f, n) -> "  #{name}.prototype.__define#{f.Get ? "Getter" : "Setter"}__(\"#{n || f.name}\", \n    #{f}\n  )"
+    mkMethod     = (f, n) -> mkFunction f, n
+    mkStatic     = (f, n) -> "  var #{n || f.name} = #{name}.#{n || f.name} = #{f.toString()}"
+    qualifieds   = (qualifiedImport q for q in concat [mod.Qualified, mod.Import]).join "\n"
+    imports      = (staticImport    i for i in                        mod.Import ).join "\n"
+    methods      = (mkMethod f, n for n, f of mod.methods when not f.annotations.Static and n != name).join "\n\n"
+    statics      = (mkStatic f, n for n, f of mod.methods when     f.annotations.Static              ).join "\n\n"
+    constructor  = "  var #{name} = " + if mod.methods[name] then "\n  " + mod.methods[name] else "{}"
+    initializer  = "  if (#{name}.init) #{name}.init.apply(this, arguments)"
+    moduleHeader = mkModuleName mod.qname + " = function ()\n{"
+    moduleFooter = "  return #{name}\n}\n"
 
-    print [moduleHeader, parameters, qualifieds, imports, constructor, methods, staticMethods, initializer, moduleFooter, ""].join "\n\n"
+    print [ moduleHeader
+            qualifieds
+            imports
+            constructor
+            methods
+            statics
+            initializer
+            moduleFooter
+          ].join "\n\n"
 
