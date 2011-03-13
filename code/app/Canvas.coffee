@@ -33,8 +33,5 @@ Static
   init: ->
     Obj.register Canvas
 
-  make: (container) ->
-    r = new Obj
-    r.decorate Canvas, null, container
-    r
+  make: (container) -> (new Obj "Canvas").decorate Canvas, null, container
 
