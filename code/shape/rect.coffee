@@ -110,7 +110,7 @@ Class
     @
 
   mkHandles: ->
-    this.define "handles", new Obj("Handles", @)
+    @define "handles", new Obj("Handles", @)
     @handles.define "topLeft",     (Handle.make           @model, @p0)
     @handles.define "topRight",    (Handle.make           @model, @p1)
     @handles.define "bottomLeft",  (Handle.make           @model, @p2)

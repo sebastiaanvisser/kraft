@@ -22,7 +22,7 @@ Class
       @busy = true
       @value = v
       t[1].app t[0] for _, t of @triggers
-      @parent.changed [this] if @parent
+      @parent.changed [@] if @parent
       @busy = false
 
     if @parent
@@ -42,6 +42,5 @@ Class
 
 Static
 
-  val: (v) ->
-    if (v and v.triggers) then v else new Value v
+  val: (v) -> if v and v.triggers then v else new Value v
 
