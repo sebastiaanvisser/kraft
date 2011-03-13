@@ -25,18 +25,23 @@ Class
       @parent.changed [this] if @parent
       @busy = false
 
-    if (@parent)
+    if @parent
       @parent.__defineGetter__ @name, get
       @parent.__defineSetter__ @name, set
 
     @__defineGetter__ "v", get
     @__defineSetter__ "v", set
+    @
 
   destructor: ->
-    t[1].destructor() for t of @triggers
+    t[1].destructor() for _, t of @triggers
     @value.destructor() if @value.destructor
 
-  Static
+  identifier: ->
+    if @parent then @parent.identifier() + '.' + @name else @name
+
+Static
+
   val: (v) ->
     if (v and v.triggers) then v else new Value v
 

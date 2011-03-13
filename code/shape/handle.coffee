@@ -16,16 +16,17 @@ Class
 
   defHandlePoint: (prop, type, x, y, w, h) ->
     @define prop, Rect.make(x, y, w, h)
+    window.xxx = true
+    P.eq @[prop].center, @pt
     @[prop].decorate type, @model
     @[prop].decorate DraggableShape
     $(@[prop].elem).addClass prop
-    P.eq @[prop].center, @pt
 
 Static
 
   init: -> Obj.register Handle
 
-  make: (model, pt) -> (new Obj).decorate Handle, model, pt
+  make: (model, pt) -> (new Obj "Handle").decorate Handle, model, pt
 
 Module "shape.VerticalHandle"
 

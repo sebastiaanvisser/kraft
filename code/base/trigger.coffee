@@ -1,5 +1,7 @@
 Module "base.Trigger"
 
+Import "Prelude"
+
 Class
 
   Trigger: (t, f, s) ->
@@ -13,16 +15,15 @@ Class
   destructor: ->
     delete @target[0].triggers[@id]
     delete s[0].triggers[@id] for s in @sources
-    return
 
   app: (side) ->
-    vs = [@target[0].obj].concat (s[0].obj for s in @sources)
+    vs = ([@target[0].parent].concat (s[0].parent for s in @sources))
     if side
-      tmp = s[1].apply(@, vs) for s in @sources
-      s[0].v = s for s in tmp
-    else @target[0].v = @target[1].apply(@, vs)
-    return
- 
+      computed = (s[1].apply(@, vs) for s in @sources)
+      zip @sources, computed, (s, v) -> s[0].v = v
+    else
+      @target[0].v = @target[1].apply(@, vs)
+
 Static
 
   init: ->

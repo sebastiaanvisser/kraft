@@ -33,7 +33,7 @@ Class
     @elem.style.borderTopLeftRadius     =
     @elem.style.borderTopRightRadius    =
     @elem.style.borderBottomLeftRadius  =
-    @elem.style.borderBottomRightRadius = w/2 + "px " + h/2 + "px "
+    @elem.style.borderBottomRightRadius = @width/2 + "px " + @height/2 + "px "
 
   unrender: ->
     @model.canvas.canvasElem.removeChild @elem

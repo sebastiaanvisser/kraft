@@ -30,6 +30,7 @@ Class
     E.manager.bind pivot,     "mousedown", (e) => @startDrag(e)
     E.manager.bind container, "mouseup",   (e) => @stopDrag(e)
     E.manager.bind container, "mousemove", (e) => @drag(e)
+    @
 
   startDrag: (e) ->
     @dragging     = true

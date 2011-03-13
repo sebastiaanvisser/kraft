@@ -8,7 +8,7 @@ Qualified "shape.Point", "Pt"
 Class
 
   Rect: (revive, _, x0, y0, x1, y1) ->
-    if !revive
+    unless revive
       @define "p0",     Pt.make x0, y0
       @define "p3",     Pt.make x1, y1
       @define "radius", 0
@@ -33,13 +33,14 @@ Class
     min0 @derive("top",    0), @p0.$.y,          @p3.$.y
     max0 @derive("right",  0), @p0.$.x,          @p3.$.x
     max0 @derive("bottom", 0), @p0.$.y,          @p3.$.y
+    @
 
 Static
 
   init: () -> Obj.register Rect
 
   make: (x0, y0, x1, y1) ->
-    (new Obj).decorate Rect, null, x0, y0, x1, y1
+    (new Obj "Rect").decorate Rect, null, x0, y0, x1, y1
 
 # -----------------------------------------------------------------------------
 
@@ -55,6 +56,7 @@ Class
 
     @onchange -> @model.canvas.renderer.enqueue @
     @render()
+    @
 
   setupElem: () ->
     elem = document.createElement "div"
@@ -103,12 +105,12 @@ Qualified "shape.Point", "Pt"
 Class
 
   AdjustableRect: ->
-    @adjusting = false
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
+    @
 
   mkHandles: ->
-    @handles = new Obj
+    this.define "handles", new Obj("Handles", @)
     @handles.define "topLeft",     (Handle.make           @model, @p0)
     @handles.define "topRight",    (Handle.make           @model, @p1)
     @handles.define "bottomLeft",  (Handle.make           @model, @p2)

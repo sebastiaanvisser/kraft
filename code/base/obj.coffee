@@ -5,14 +5,16 @@ Import "base.Value"
 
 Class
 
-  Obj: ->
-    @id = 'o' + Obj.nextId++
-    @meta =
+  Obj: (type, parent) ->
+    @id      = (type || 'o') + Obj.nextId++
+    @parent  = parent
+    @classes = {}
+    @$       = {}
+    @meta    =
       onchange:     []
       constructors: []
       destructors:  []
-    @classes = {}
-    @$ = {}
+
     Obj.all[@id] = @
     @
 
@@ -36,11 +38,16 @@ Class
   destructor: ->
     d.call @ for d in @meta.destructors
     p.destructor() for _, p of @$
+    return
+
+  identifier: ->
+    (if @parent then @parent.identifier() else "") + '{' + @id + '}'
 
   Private
   defineProp: (p, name, init, constraint, args) ->
     # Setup property.
     @$[name] = new Value(init, @, name, !!constraint)
+    init.parent = @$[name]
 
     # Install constraint when given any.
     if constraint
