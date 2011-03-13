@@ -1,4 +1,4 @@
-Module "ui.Setup"
+Module "ui.Main"
 
 # Import "shape.Text"
 # Import "shape.Triangle"
