@@ -1,4 +1,3 @@
 _*/
 dist/
-gen/
-loader/loader.js
+code/gen/
