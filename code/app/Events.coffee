@@ -11,20 +11,26 @@ Class
     @postHooksOnce = {}
     return @
 
-  bind: (elem, name, fn) ->
-    $(elem).bind name, =>
+  Private
+  runWithHooks: (fn, args) ->
 
-      h() for _, h of @preHooks
-      h() for _, h of @preHooksOnce
-      @preHooksOnce = {}
+    h() for _, h of @preHooks
+    h() for _, h of @preHooksOnce
+    @preHooksOnce = {}
 
-      result = fn.apply(this, arguments)
+    result = fn args...
 
-      h() for _, h of @postHooks
-      h() for _, h of @postHooksOnce
-      @postHooksOnce = {}
+    h() for _, h of @postHooks
+    h() for _, h of @postHooksOnce
+    @postHooksOnce = {}
 
-      result
+    result
+
+  # Use jQuery to bind a custom events handler to an element.
+  bind: (elem, name, fn) -> $(elem).bind name, => @runWithHooks fn, arguments
+
+  setTimeout:  (fn, dly) -> window.setTimeout  (=> @runWithHooks fn, arguments), dly
+  setInterval: (fn, dly) -> window.setInterval (=> @runWithHooks fn, arguments), dly
 
   onThreadStart:     (id, fn) -> @preHooks[id]      = fn
   onThreadEnd:       (id, fn) -> @postHooks[id]     = fn
