@@ -18,7 +18,5 @@ Class
 
   delHandles: -> @handles.destructor()
 
-Static
-
-  init: -> Obj.register AdjustableText
+Static init: -> Obj.register AdjustableText
 

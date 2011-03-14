@@ -35,11 +35,11 @@
 
 .canvas .mytext
 {
-  font-size: 40px;
-  font-family: "Alte Haas Grotesk";
-  background: #555;
+  font-size: 30px;
+  font-family: "Helvetica", sans-serif;
+  background: #ddd;
   padding: 0 20px;
-  color: white;
+  color: black;
 }
 
 .canvas .rect.selected,

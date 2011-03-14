@@ -27,7 +27,12 @@ Class
     result
 
   # Use jQuery to bind a custom events handler to an element.
-  bind: (elem, name, fn) -> $(elem).bind name, => @runWithHooks fn, arguments
+  bind: (elem, ev, fn) ->
+    callback = => @runWithHooks fn, arguments
+    if isNotSupportedByJQuery ev
+      elem.addEventListener ev, callback
+    else
+      $(elem).bind ev, callback
 
   setTimeout:  (fn, dly) -> window.setTimeout  (=> @runWithHooks fn, arguments), dly
   setInterval: (fn, dly) -> window.setInterval (=> @runWithHooks fn, arguments), dly
@@ -40,4 +45,12 @@ Class
 Static
 
   init: -> Events.manager = new Events
+
+  isNotSupportedByJQuery: (ev) ->
+    evs =
+      DOMNodeInserted:          true
+      DOMNodeRemoved:           true
+      DOMCharacterDataModified: true
+      DOMAttrModified:          true
+    evs[ev] || false
 

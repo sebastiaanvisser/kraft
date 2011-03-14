@@ -12,16 +12,15 @@ Class
     @model.canvas.renderer.enqueue @
     @
 
-  setupElem: () ->
+  setupElem: ->
     elem = document.createElement "div"
     $(elem).addClass "rect"
     @model.canvas.canvasElem.appendChild elem
     elem
 
-  destructor: () ->
-    @unrender()
+  destructor: -> @unrender()
 
-  render: () ->
+  render: ->
     @elem.style.left   = @left   + "px"
     @elem.style.top    = @top    + "px"
     @elem.style.width  = @width  + "px"
@@ -36,10 +35,7 @@ Class
     b = (if @border >= 0 then @border else Math.round(-@border / 5)) + "px"
     @elem.style.borderWidth = b
 
-  unrender: () ->
-    @model.canvas.canvasElem.removeChild @elem
+  unrender: -> @model.canvas.canvasElem.removeChild @elem
 
-Static
-
-  init: () -> Obj.register RenderableRect
+Static init: -> Obj.register RenderableRect
 
