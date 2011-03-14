@@ -12,20 +12,21 @@ Class
 
     @selection.selectable[@id] = @
 
-    E.manager.bind @model.canvas.canvasElem, "mousedown", =>
-      @selection.deselectAll()
-
-    E.manager.bind @elem, "mousedown", (e) =>
-      return @selection.deselect @ if e.altKey
-      @selection.deselectAll() if !e.shiftKey
-      @selection.select @
-      return false
+    E.manager.bind @model.canvas.canvasElem, "mousedown", (e) => @ondeselect()
+    E.manager.bind @elem,                    "mousedown", (e) => @onselect()
 
     @onselect.push   => $(@.elem).addClass    "selected"
     @ondeselect.push => $(@.elem).removeClass "selected"
 
-  destructor: ->
-    delete @selection.selectable[@id]
+  destructor: -> delete @selection.selectable[@id]
+
+  ondeselect: (e) -> @selection.deselectAll()
+
+  onselect: (e) ->
+    return @selection.deselect @ if e.altKey
+    @selection.deselectAll() if !e.shiftKey
+    @selection.select @
+    false
 
   select:   -> @model.canvas.selection.select   @
   deselect: -> @model.canvas.selection.deselect @

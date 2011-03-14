@@ -6,13 +6,16 @@ Import "Canvas"
 Import "shape.AdjustableDocument"
 Import "shape.AdjustableLine"
 Import "shape.AdjustableRect"
+Import "shape.AdjustableText"
 Import "shape.DraggableShape"
 Import "shape.Line"
 Import "shape.Rect"
 Import "shape.RenderableDocument"
 Import "shape.RenderableEllipse"
 Import "shape.RenderableRect"
+Import "shape.RenderableText"
 Import "shape.SelectableShape"
+Import "shape.Text"
 Qualified "Events", "E"
 
 Static
@@ -50,6 +53,18 @@ Static
     $(e.elem).addClass "shape"
     e
 
+  mkText: (canvas, text) ->
+    t = Text.make 100, 100, 200, 200, text
+    t.decorate RenderableText, canvas.model
+    t.decorate SelectableShape
+    t.decorate AdjustableText
+    t.decorate DraggableShape
+    canvas.model.addShape t
+    $(t.elem).addClass "mytext"
+    $(t.elem).addClass "shape"
+    $(t.elem).attr "contentEditable", true
+    t
+
   mkLine: (canvas) ->
     l = AdjustableLine.make canvas.model, 150, 200, 250, 200, 20
     l.decorate DraggableShape
@@ -65,17 +80,6 @@ Static
 #    canvas.model.addShape(shp);
 #    $(shp.elem).addClass("mytriangle")
 #    $(shp.elem).addClass("shape")
-#    return shp
-#  },
-#
-#
-#  function mkText (canvas, text)
-#  {
-#    var shp = AdjustableText.make(canvas.model, 150, 200, 250, 200, text)
-#    shp.decorate(DraggableShape)
-#    canvas.model.addShape(shp);
-#    $(shp.elem).addClass("mytext")
-#    $(shp.elem).attr("contentEditable", true)
 #    return shp
 #  },
 

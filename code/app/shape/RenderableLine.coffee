@@ -11,7 +11,7 @@ Class
     @elem   = @setupElem()
 
     @onchange => @canvas.renderer.enqueue @
-    @render()
+    @canvas.renderer.enqueue @
     @
 
   setupElem: ->

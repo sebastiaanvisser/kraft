@@ -9,7 +9,7 @@ Class
     @elem     = @setupElem()
 
     @onchange -> @model.canvas.renderer.enqueue @
-    @render()
+    @model.canvas.renderer.enqueue @
     @
 
   setupElem: () ->
