@@ -10,7 +10,7 @@
 {
   -webkit-box-sizing: border-box;
   outline-offset: -1px;
-  outline: dashed 2px #bbb;
+  outline: solid 2px #88c;
 }
 
 .canvas .myrect

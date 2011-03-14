@@ -3,6 +3,7 @@ Module "ui.Main"
 # Import "shape.Text"
 # Import "shape.Triangle"
 Import "Canvas"
+Import "shape.AdjustableDocument"
 Import "shape.AdjustableLine"
 Import "shape.AdjustableRect"
 Import "shape.DraggableShape"
@@ -28,15 +29,15 @@ Static
     r
 
   mkDocument: (canvas) ->
-    e = Rect.make 100, 100, 1000, 600
-    e.decorate RenderableDocument, canvas.model
-    e.decorate SelectableShape
-    e.decorate AdjustableRect
-    e.decorate DraggableShape
-    canvas.model.addShape e
-    $(e.elem).addClass "mydocument"
-    $(e.elem).addClass "shape"
-    e
+    window.d = Rect.make 20, 20, 1020, 620
+    d.decorate RenderableDocument, canvas.model
+    d.decorate SelectableShape
+    d.decorate AdjustableDocument
+    d.decorate DraggableShape
+    canvas.model.addShape d
+    $(d.elem).addClass "mydocument"
+    $(d.elem).addClass "shape"
+    d.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", @x + "px " + @y + "px"
 
   mkEllipse: (canvas) ->
     e = Rect.make 200, 100, 300, 300
