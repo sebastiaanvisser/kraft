@@ -1,3 +1,18 @@
+.canvas .shape,
+.canvas .handle,
+.canvas .handleV,
+.canvas .handleH
+{
+  position: absolute;
+}
+
+.canvas .mydocument
+{
+  -webkit-box-sizing: border-box;
+  outline-offset: -1px;
+  outline: dashed 2px #bbb;
+}
+
 .canvas .myrect
 {
   -webkit-box-sizing: border-box;

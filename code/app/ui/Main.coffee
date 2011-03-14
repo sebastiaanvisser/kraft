@@ -8,6 +8,7 @@ Import "shape.AdjustableRect"
 Import "shape.DraggableShape"
 Import "shape.Line"
 Import "shape.Rect"
+Import "shape.RenderableDocument"
 Import "shape.RenderableEllipse"
 Import "shape.RenderableRect"
 Import "shape.SelectableShape"
@@ -26,6 +27,17 @@ Static
     $(r.elem).addClass "shape"
     r
 
+  mkDocument: (canvas) ->
+    e = Rect.make 100, 100, 1000, 600
+    e.decorate RenderableDocument, canvas.model
+    e.decorate SelectableShape
+    e.decorate AdjustableRect
+    e.decorate DraggableShape
+    canvas.model.addShape e
+    $(e.elem).addClass "mydocument"
+    $(e.elem).addClass "shape"
+    e
+
   mkEllipse: (canvas) ->
     e = Rect.make 200, 100, 300, 300
     e.decorate RenderableEllipse, canvas.model
@@ -42,6 +54,7 @@ Static
     l.decorate DraggableShape
     canvas.model.addShape l
     $(l.elem).addClass "myline"
+    $(l.elem).addClass "shape"
     l
 
 #  function mkTriangle (canvas)
@@ -67,6 +80,8 @@ Static
 
   init: ->
     window.myCanvas = Canvas.make $("#mycanvas")[0]
+
+    mkDocument myCanvas
 
     E.manager.bind "#toolbar #rect",        "click", -> mkRect myCanvas
     E.manager.bind "#toolbar #line",        "click", -> mkLine myCanvas
