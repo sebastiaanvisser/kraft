@@ -30,8 +30,5 @@ Static
 
   init: -> Obj.register Model
 
-  make: (canvas) ->
-    m = new Obj
-    m.decorate Model, canvas
-    m
+  make: (canvas) -> (new Obj "Model").decorate Model, canvas
 
