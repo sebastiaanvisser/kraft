@@ -15,7 +15,6 @@ Class
   setupElem: () ->
     elem = document.createElement "div"
     $(elem).addClass "rect"
-    elem.style.position = "absolute"
     @model.canvas.canvasElem.appendChild elem
     elem
 

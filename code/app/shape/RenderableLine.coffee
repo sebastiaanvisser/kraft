@@ -17,7 +17,6 @@ Class
   setupElem: ->
     elem = document.createElement "div"
     $(elem).addClass "line"
-    elem.style.position = "absolute"
     @canvas.canvasElem.appendChild elem
     elem
 

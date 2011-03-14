@@ -15,7 +15,6 @@ Class
   setupElem: ->
     elem = document.createElement "div"
     $(elem).addClass "ellipse"
-    elem.style.position = "absolute"
     @model.canvas.canvasElem.appendChild elem
     elem
 
