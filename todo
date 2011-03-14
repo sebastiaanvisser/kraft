@@ -6,6 +6,7 @@ Quick todo:
 To get a demoable version:
 
   - Nesting.
+  - Ruler object, arrow object. <= - - - - 800px - - - - =>
   - Border + background color + gradient.
   - Content-editable texts.
   - Image shape.
