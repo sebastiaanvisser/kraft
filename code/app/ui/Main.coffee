@@ -9,9 +9,11 @@ Import "shape.AdjustableRect"
 Import "shape.AdjustableText"
 Import "shape.DraggableShape"
 Import "shape.Line"
+Import "shape.Point"
 Import "shape.Rect"
 Import "shape.RenderableDocument"
 Import "shape.RenderableEllipse"
+Import "shape.RenderableLine"
 Import "shape.RenderableRect"
 Import "shape.RenderableText"
 Import "shape.SelectableShape"
@@ -29,14 +31,12 @@ Static
     canvas.model.addShape r
     $(r.elem).addClass "myrect"
     $(r.elem).addClass "shape"
-    r
 
   mkDocument: (canvas) ->
     window.d = Rect.make 20, 20, 1020, 620
     d.decorate RenderableDocument, canvas.model
     d.decorate SelectableShape
     d.decorate AdjustableDocument
-    d.decorate DraggableShape
     canvas.model.addShape d
     $(d.elem).addClass "mydocument"
     $(d.elem).addClass "shape"
@@ -51,10 +51,9 @@ Static
     canvas.model.addShape e
     $(e.elem).addClass "myellipse"
     $(e.elem).addClass "shape"
-    e
 
   mkText: (canvas, text) ->
-    t = Text.make 100, 100, 200, 200, text
+    t = Text.make 100, 100, 400, 100, text
     t.decorate RenderableText, canvas.model
     t.decorate SelectableShape
     t.decorate AdjustableText
@@ -62,16 +61,18 @@ Static
     canvas.model.addShape t
     $(t.elem).addClass "mytext"
     $(t.elem).addClass "shape"
-    $(t.elem).attr "contentEditable", true
-    t
 
   mkLine: (canvas) ->
-    l = AdjustableLine.make canvas.model, 150, 200, 250, 200, 20
+    l = Line.make (Point.make 150, 200)
+                , (Point.make 250, 200)
+                , 20
+    l.decorate RenderableLine, canvas.model
+    l.decorate SelectableShape
+    l.decorate AdjustableLine
     l.decorate DraggableShape
     canvas.model.addShape l
     $(l.elem).addClass "myline"
     $(l.elem).addClass "shape"
-    l
 
 #  function mkTriangle (canvas)
 #  {

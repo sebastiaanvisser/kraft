@@ -1,7 +1,6 @@
 Module "shape.RenderableText"
 
 Import "base.Obj"
-Qualified "Events", "E"
 
 Class
 
@@ -13,9 +12,6 @@ Class
     @onchange -> @model.canvas.renderer.enqueue @
     @model.canvas.renderer.enqueue @
     @
-
-    E.manager.bind @elem, "DOMCharacterDataModified",
-      ((e) => @model.canvas.renderer.enqueue @)
 
   setupElem: ->
     elem = document.createElement "div"

@@ -38,14 +38,7 @@ Class
 
     @elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
 
-  unrender: ->
-    @canvas.canvasElem.removeChild @elem
+  unrender: -> @canvas.canvasElem.removeChild @elem
 
-Static
-
-  init: ->
-    Obj.register RenderableLine
-
-  make: (canvas, x0, y0, x1, y1, w) ->
-    (Line.make x0, y0, x1, y1, w).decorate RenderableLine, canvas
+Static init: -> Obj.register RenderableLine
 

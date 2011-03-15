@@ -20,11 +20,5 @@ Class
 
   delHandles: -> @handles.destructor()
 
-Static
-
-  init: ->
-    Obj.register AdjustableLine
-
-  make: (model, x0, y0, x1, y1, w) ->
-    (RenderableLine.make model, x0, y0, x1, y1, w).decorate(SelectableShape).decorate AdjustableLine
+Static init: -> Obj.register AdjustableLine
 

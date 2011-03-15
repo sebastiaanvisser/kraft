@@ -7,10 +7,10 @@ Qualified "shape.Point", "Pt"
 
 Class
 
-  Line: (revive, _, x0, y0, x1, y1, w) ->
+  Line: (revive, _, p0, p1, w) ->
     unless revive
-      @define "p0", Pt.make(x0, y0)
-      @define "p1", Pt.make(x1, y1)
+      @define "p0", p0
+      @define "p1", p1
       @define "width", w
 
     Pc.mid          @derive("center",      Pt.make()).v, @p0, @p1
@@ -27,6 +27,5 @@ Static
 
   init: -> Obj.register Line
 
-  make: (x0, y0, x1, y1, w) ->
-    (new Obj).decorate Line, null, x0, y0, x1, y1, w
+  make: (args...) -> (new Obj).decorate Line, null, args...
 

@@ -39,7 +39,7 @@ Class
     @targetOrigin = x: @target.left
                   , y: @target.top
     $(@target.elem).addClass "dragging"
-    return false
+    false
 
   stopDrag: ->
     return unless @dragging
