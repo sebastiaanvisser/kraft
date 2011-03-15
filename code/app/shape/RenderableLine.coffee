@@ -2,6 +2,7 @@ Module "shape.RenderableLine"
 
 Import "base.Obj"
 Import "shape.Line"
+Import "Units"
 
 Class
 
@@ -24,17 +25,13 @@ Class
     @unrender()
 
   render: ->
-    x0 = @p0.x
-    y0 = @p0.y
-    x1 = @p1.x
-    y1 = @p1.y
-    w  = @width
-    len = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2))
-    rot = Math.atan((y1 - y0) / (x1 - x0)) * 180 / Math.PI
-    @elem.style.left   = ((x0 + x1 - len) / 2) + "px"
-    @elem.style.top    = ((y0 + y1 - w)   / 2) + "px"
-    @elem.style.width  = len                   + "px"
-    @elem.style.height = w                     + "px"
+    len = Math.sqrt (Math.pow @p1.x - @p0.x, 2) + (Math.pow @p1.y - @p0.y, 2)
+    rot = (Math.atan (@p1.y - @p0.y) / (@p1.x - @p0.x)) * 180 / Math.PI
+
+    @elem.style.left   = px (@p0.x + @p1.x - len)    / 2
+    @elem.style.top    = px (@p0.y + @p1.y - @width) / 2
+    @elem.style.width  = px len
+    @elem.style.height = px @width
 
     @elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
 

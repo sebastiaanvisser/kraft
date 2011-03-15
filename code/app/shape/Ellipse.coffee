@@ -1,12 +1,13 @@
 Module "shape.RenderableEllipse"
 
 Import "base.Obj"
+Import "Units"
 
 Class
 
   RenderableEllipse: (revive, model) ->
-    @model  = model
-    @elem   = @setupElem()
+    @model = model
+    @elem  = @setupElem()
 
     @onchange => @model.canvas.renderer.enqueue @
     @render()
@@ -21,18 +22,17 @@ Class
   destructor: -> @unrender()
 
   render: ->
-    w = @right  - @left
-    h = @bottom - @top
+    style = @elem.style
 
-    @elem.style.left   = @left + "px"
-    @elem.style.top    = @top  + "px"
-    @elem.style.width  = w     + "px"
-    @elem.style.height = h     + "px"
+    style.left   = px @left
+    style.top    = px @top
+    style.width  = px @width
+    style.height = px @height
 
-    @elem.style.borderTopLeftRadius     =
-    @elem.style.borderTopRightRadius    =
-    @elem.style.borderBottomLeftRadius  =
-    @elem.style.borderBottomRightRadius = @width/2 + "px " + @height/2 + "px "
+    style.borderTopLeftRadius     =
+    style.borderTopRightRadius    =
+    style.borderBottomLeftRadius  =
+    style.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
 
   unrender: ->
     @model.canvas.canvasElem.removeChild @elem

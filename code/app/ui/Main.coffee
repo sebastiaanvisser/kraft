@@ -18,6 +18,7 @@ Import "shape.RenderableRect"
 Import "shape.RenderableText"
 Import "shape.SelectableShape"
 Import "shape.Text"
+Import "Units"
 Qualified "Events", "E"
 
 Static
@@ -40,7 +41,7 @@ Static
     canvas.model.addShape d
     $(d.elem).addClass "mydocument"
     $(d.elem).addClass "shape"
-    d.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", @x + "px " + @y + "px"
+    d.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", px @x + ' ' + px @y
 
   mkEllipse: (canvas) ->
     e = Rect.make 200, 100, 300, 300

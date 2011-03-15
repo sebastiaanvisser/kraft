@@ -1,6 +1,7 @@
 Module "shape.RenderableDocument"
 
 Import "base.Obj"
+Import "Units"
 
 Class
 
@@ -21,13 +22,10 @@ Class
   destructor: -> @unrender()
 
   render: ->
-    w = @right  - @left
-    h = @bottom - @top
-
-    @elem.style.left   = @left + "px"
-    @elem.style.top    = @top  + "px"
-    @elem.style.width  = w     + "px"
-    @elem.style.height = h     + "px"
+    @elem.style.left   = px @left
+    @elem.style.top    = px @top
+    @elem.style.width  = px @right  - @left
+    @elem.style.height = px @bottom - @top
 
   unrender: ->
     @model.canvas.canvasElem.removeChild @elem

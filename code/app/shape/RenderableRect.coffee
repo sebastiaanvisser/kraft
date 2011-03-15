@@ -1,6 +1,7 @@
 Module "shape.RenderableRect"
 
 Import "base.Obj"
+Import "Units"
 
 Class
 
@@ -14,26 +15,28 @@ Class
 
   setupElem: ->
     elem = document.createElement "div"
-    $(elem).addClass "rect"
+    ($ elem).addClass "rect"
     @model.canvas.canvasElem.appendChild elem
     elem
 
   destructor: -> @unrender()
 
   render: ->
-    @elem.style.left   = @left   + "px"
-    @elem.style.top    = @top    + "px"
-    @elem.style.width  = @width  + "px"
-    @elem.style.height = @height + "px"
+    style = @elem.style
 
-    r = (if @radius >= 0 then @radius else Math.round(-@radius / 5)) + "px"
-    @elem.style.borderTopLeftRadius     =
-    @elem.style.borderTopRightRadius    =
-    @elem.style.borderBottomLeftRadius  =
-    @elem.style.borderBottomRightRadius = r
+    style.left   = px @left
+    style.top    = px @top
+    style.width  = px @width
+    style.height = px @height
 
-    b = (if @border >= 0 then @border else Math.round(-@border / 5)) + "px"
-    @elem.style.borderWidth = b
+    style.borderTopLeftRadius     =
+    style.borderTopRightRadius    =
+    style.borderBottomLeftRadius  =
+    style.borderBottomRightRadius =
+      px if @radius >= 0 then @radius else Math.round -@radius / 5
+
+    style.borderWidth =
+      px if @border >= 0 then @border else Math.round -@border / 5
 
   unrender: -> @model.canvas.canvasElem.removeChild @elem
 
