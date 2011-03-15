@@ -21,7 +21,6 @@
 ::-webkit-scrollbar-thumb
 {
   background: #555;
-  -webkit-border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover
