@@ -16,7 +16,6 @@ Class
 
   defHandlePoint: (prop, type, x, y, w, h) ->
     @define prop, Rect.make(x, y, w, h)
-    window.xxx = true
     P.eq @[prop].center, @pt
     @[prop].decorate type, @model
     @[prop].decorate DraggableShape

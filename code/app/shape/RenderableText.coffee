@@ -15,7 +15,7 @@ Class
     @
 
     E.manager.bind @elem, "DOMCharacterDataModified",
-      ((e) => console.log Math.random(), e; @model.canvas.renderer.enqueue @)
+      ((e) => @model.canvas.renderer.enqueue @)
 
   setupElem: ->
     elem = document.createElement "div"
@@ -26,20 +26,14 @@ Class
   destructor: -> @unrender()
 
   render: ->
-    x0 = @p0.x
-    y0 = @p0.y
-    x1 = @p1.x
-    y1 = @p1.y
-
     w = @elem.offsetWidth
     h = @elem.offsetHeight
 
-    console.log Math.random(), "..."
-    len = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2))
-    rot = Math.atan((y1 - y0) / (x1 - x0)) * 180 / Math.PI
+    len = Math.sqrt(Math.pow(@p1.x - @p0.x, 2) + Math.pow(@p1.y - @p0.y, 2))
+    rot = Math.atan((@p1.y - @p0.y) / (@p1.x - @p0.x)) * 180 / Math.PI
 
-    @elem.style.left = ((x0 + x1 - w) / 2) + "px"
-    @elem.style.top  = ((y0 + y1 - h) / 2) + "px"
+    @elem.style.left = ((@p0.x + @p1.x - w) / 2) + "px"
+    @elem.style.top  = ((@p0.y + @p1.y - h) / 2) + "px"
     @elem.style["-webkit-transform"] = "rotate(" + rot + "deg)"
 
   unrender: -> @model.canvas.canvasElem.removeChild @elem
