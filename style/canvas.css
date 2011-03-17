@@ -14,8 +14,8 @@
 .grid
 {
   position: absolute;
-  width: 2000px;
-  height: 2000px;
+  width: 5000px;
+  height: 5000px;
 
   overflow: hidden;
 }

@@ -1,12 +1,12 @@
 Module "ui.Main"
 
-# Import "shape.Text"
-# Import "shape.Triangle"
 Import "Canvas"
+Import "Units"
 Import "shape.AdjustableDocument"
 Import "shape.AdjustableLine"
 Import "shape.AdjustableRect"
 Import "shape.AdjustableText"
+Import "shape.AdjustableTriangle"
 Import "shape.DraggableShape"
 Import "shape.Line"
 Import "shape.Point"
@@ -16,9 +16,10 @@ Import "shape.RenderableEllipse"
 Import "shape.RenderableLine"
 Import "shape.RenderableRect"
 Import "shape.RenderableText"
+Import "shape.RenderableTriangle"
 Import "shape.SelectableShape"
 Import "shape.Text"
-Import "Units"
+Import "shape.Triangle"
 Qualified "Events", "E"
 
 Static
@@ -64,9 +65,7 @@ Static
     $(t.elem).addClass "shape"
 
   mkLine: (canvas) ->
-    l = Line.make (Point.make 150, 200)
-                , (Point.make 250, 200)
-                , 20
+    l = Line.make (Point.make 150, 200), (Point.make 250, 200), 20
     l.decorate RenderableLine, canvas.model
     l.decorate SelectableShape
     l.decorate AdjustableLine
@@ -75,15 +74,15 @@ Static
     $(l.elem).addClass "myline"
     $(l.elem).addClass "shape"
 
-#  function mkTriangle (canvas)
-#  {
-#    var shp = AdjustableTriangle.make(canvas.model, 100, 100, 200, 200)
-#    shp.decorate(DraggableShape)
-#    canvas.model.addShape(shp);
-#    $(shp.elem).addClass("mytriangle")
-#    $(shp.elem).addClass("shape")
-#    return shp
-#  },
+  mkTriangle: (canvas) ->
+    t = Triangle.make 100, 100, 200, 200
+    t.decorate RenderableTriangle, canvas.model
+    t.decorate SelectableShape
+    t.decorate AdjustableTriangle
+    t.decorate DraggableShape
+    canvas.model.addShape t
+    ($ t.elem).addClass "mytriangle"
+    ($ t.elem).addClass "shape"
 
   init: ->
     window.myCanvas = Canvas.make $("#mycanvas")[0]

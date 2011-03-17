@@ -1,7 +1,8 @@
 .canvas .shape,
 .canvas .handle,
 .canvas .handleV,
-.canvas .handleH
+.canvas .handleH,
+.canvas .shape div
 {
   position: absolute;
 }
@@ -10,7 +11,7 @@
 {
   -webkit-box-sizing: border-box;
   outline-offset: -1px;
-  outline: solid 2px #88c;
+  outline: dashed 2px #999;
 }
 
 .canvas .myrect
