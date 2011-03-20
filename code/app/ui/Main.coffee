@@ -24,7 +24,45 @@ Import "visible.VisibleText"
 Import "visible.VisibleTriangle"
 Qualified "Events", "E"
 
-Static
+Class
+
+  Main: ->
+    @setupCanvas()
+    @setupRootContainer()
+    @setupDocument()
+    @setupMenu()
+    @
+
+  setupCanvas: ->
+    @canvas = Canvas.make $("#mycanvas")[0]
+
+  setupRootContainer: ->
+    @root = Container.make @canvas
+    @root.decorate VisibleContainer
+
+  setupDocument: ->
+    @document = Rect.make @root, 20, 20, 620, 520
+    @document.decorate VisibleDocument
+    @document.decorate SelectableShape
+    @document.decorate AdjustableDocument
+    ($ @document.elem).addClass "mydocument"
+    ($ @document.elem).addClass "shape"
+    @document
+
+  setupMenu: ->
+    E.manager.bind "#toolbar #rect",        "click", => @mkRect @root
+    E.manager.bind "#toolbar #line",        "click", => @mkLine @root
+    E.manager.bind "#toolbar #triangle",    "click", => @mkTriangle @root
+    E.manager.bind "#toolbar #ellipse",     "click", => @mkEllipse @root
+    E.manager.bind "#toolbar #text",        "click", => @mkText @root, prompt() || "..."
+    E.manager.bind "#toolbar #selectall",   "click", => @root.selection.selectAll()
+    E.manager.bind "#toolbar #deselectall", "click", => @root.selection.deselectAll()
+    E.manager.bind "#toolbar #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
+    E.manager.bind "#toolbar #zoomin",      "click", => @canvas.zoom *= 2
+    E.manager.bind "#toolbar #zoomout",     "click", => @canvas.zoom /= 2
+    E.manager.bind "#toolbar #zoomreset",   "click", => @canvas.zoom = 1
+    # E.manager.bind("#toolbar #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
+    # E.manager.bind("#toolbar #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   mkRect: (parent) ->
     r = Rect.make parent, 200, 100, 300, 300
@@ -76,38 +114,11 @@ Static
     ($ t.elem).addClass "mytriangle"
     ($ t.elem).addClass "shape"
 
+Static
+
   init: -> E.manager.documentReady startup
 
   startup: ->
-    canvas = Canvas.make $("#mycanvas")[0]
-
-    root = Container.make canvas
-    root.decorate VisibleContainer
-
-    doc = Rect.make root, 20, 20, 620, 520
-    doc.decorate VisibleDocument
-    doc.decorate SelectableShape
-    doc.decorate AdjustableDocument
-    ($ doc.elem).addClass "mydocument"
-    ($ doc.elem).addClass "shape"
-
-    # For now, make top level canvas globally available.
-    window.canvas = canvas
-
-    E.manager.bind "#toolbar #rect",        "click", -> mkRect root
-    E.manager.bind "#toolbar #line",        "click", -> mkLine root
-    E.manager.bind "#toolbar #triangle",    "click", -> mkTriangle root
-    E.manager.bind "#toolbar #ellipse",     "click", -> mkEllipse root
-    E.manager.bind "#toolbar #text",        "click", -> mkText root, prompt() || "..."
-
-    E.manager.bind "#toolbar #selectall",   "click", -> root.selection.selectAll()
-    E.manager.bind "#toolbar #deselectall", "click", -> root.selection.deselectAll()
-
-    E.manager.bind "#toolbar #togglegrid",  "click", -> canvas.gridShow = !canvas.gridShow
-    E.manager.bind "#toolbar #zoomin",      "click", -> canvas.zoom *= 2
-    E.manager.bind "#toolbar #zoomout",     "click", -> canvas.zoom /= 2
-    E.manager.bind "#toolbar #zoomreset",   "click", -> canvas.zoom = 1
-
-    # E.manager.bind("#toolbar #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(canvas))
-    # E.manager.bind("#toolbar #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
+    main = new Main()
+    window.main = main
 
