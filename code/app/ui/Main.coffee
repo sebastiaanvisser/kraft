@@ -9,6 +9,8 @@ Import "adjustable.AdjustableText"
 Import "adjustable.AdjustableTriangle"
 Import "adjustable.MoveableShape"
 Import "adjustable.SelectableShape"
+Import "handle.HorizontalGuide"
+Import "handle.VerticalGuide"
 Import "shape.Container"
 Import "shape.Line"
 Import "shape.Point"
@@ -31,6 +33,7 @@ Class
     @setupRootContainer()
     @setupDocument()
     @setupMenu()
+    @setupGuides()
     @
 
   setupCanvas: ->
@@ -41,13 +44,19 @@ Class
     @root.decorate VisibleContainer
 
   setupDocument: ->
-    @document = Rect.make @root, 20, 20, 620, 520
+    @document = Rect.make @root, 20, 20, 720, 520
     @document.decorate VisibleDocument
     @document.decorate SelectableShape
     @document.decorate AdjustableDocument
     ($ @document.elem).addClass "mydocument"
     ($ @document.elem).addClass "shape"
     @document
+
+  setupGuides: ->
+    @hguide0 = HorizontalGuide.make @root, 10
+    @vguide0 = VerticalGuide.make   @root, 10
+    @vguide1 = HorizontalGuide.make @root, 530
+    @hguide1 = VerticalGuide.make   @root, 730
 
   setupMenu: ->
     E.manager.bind "#toolbar #rect",        "click", => @mkRect @root

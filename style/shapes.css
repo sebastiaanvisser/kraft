@@ -91,6 +91,25 @@
   background: white;
 }
 
+.canvas .guide
+{
+  background: #9ad;
+}
+
+.canvas .guide.selected
+{
+  background: #68f;
+}
+
+.canvas .guide-caption
+{
+  background: #9ad;
+  padding: 2px;
+  color: white;
+  font-size: 12px;
+  font-family: "Helvetica", sans-serif;
+}
+
 .text-spine
 {
   background: #88f;

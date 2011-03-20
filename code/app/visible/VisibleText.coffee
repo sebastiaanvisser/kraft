@@ -11,8 +11,6 @@ Class
     @renderer   = @parent.renderer
     @elem       = @setupElem()
 
-    @elem.innerHTML = @text
-
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
     @renderer.enqueue @
@@ -27,6 +25,7 @@ Class
   destructor: -> @unrender()
 
   render: ->
+    @elem.innerHTML = @text
     w = @elem.offsetWidth
     h = @elem.offsetHeight
 
