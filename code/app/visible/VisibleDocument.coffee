@@ -11,6 +11,9 @@ Class
     @renderer   = @parent.renderer
     @elem       = @setupElem()
 
+    @topLeft.onchange ->
+      ($ @parent.canvas.gridElem).css "-webkit-mask-position", (px @x) + ' ' + (px @y)
+
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
     @renderer.enqueue @

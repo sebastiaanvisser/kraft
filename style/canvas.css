@@ -1,4 +1,4 @@
-#mycanvas
+.container
 {
   position: absolute;
   left: 0;
@@ -10,13 +10,9 @@
   background: white;
 }
 
-.canvas,
-.grid
+.container .zoombox *
 {
   position: absolute;
-  width: 5000px;
-  height: 5000px;
-
   overflow: hidden;
 }
 

@@ -90,7 +90,6 @@ Static
     doc.decorate AdjustableDocument
     ($ doc.elem).addClass "mydocument"
     ($ doc.elem).addClass "shape"
-    doc.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", (px @x) + ' ' + (px @y)
 
     # For now, make top level canvas globally available.
     window.canvas = canvas
@@ -104,10 +103,10 @@ Static
     E.manager.bind "#toolbar #selectall",   "click", -> root.selection.selectAll()
     E.manager.bind "#toolbar #deselectall", "click", -> root.selection.deselectAll()
 
-    E.manager.bind "#toolbar #togglegrid",  "click", -> if canvas.gridShow then canvas.hideGrid() else canvas.showGrid()
-    E.manager.bind "#toolbar #zoomin",      "click", -> canvas.zoomIn()
-    E.manager.bind "#toolbar #zoomout",     "click", -> canvas.zoomOut()
-    E.manager.bind "#toolbar #zoomreset",   "click", -> canvas.zoomReset()
+    E.manager.bind "#toolbar #togglegrid",  "click", -> canvas.gridShow = !canvas.gridShow
+    E.manager.bind "#toolbar #zoomin",      "click", -> canvas.zoom *= 2
+    E.manager.bind "#toolbar #zoomout",     "click", -> canvas.zoom /= 2
+    E.manager.bind "#toolbar #zoomreset",   "click", -> canvas.zoom = 1
 
     # E.manager.bind("#toolbar #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(canvas))
     # E.manager.bind("#toolbar #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
