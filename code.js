@@ -6,7 +6,7 @@ var __slice = Array.prototype.slice
 var __bind = function (fn, me) { return function bind () { return fn.apply(me, arguments); }; };
 
 // Generated JavaScript.
-<!--#exec cmd="js-shell code/gen/Compiler.js `find code/gen -name '*.js' \! -name 'Compiler.js'` -e 'js.compile();'" -->
+<!--#exec cmd="./code/compile.sh" -->
 
 // Startup application.
 __ui_Main()

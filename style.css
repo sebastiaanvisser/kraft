@@ -1,5 +1,1 @@
-<!--#include virtual="style/main.css" -->
-<!--#include virtual="style/scrollbar.css" -->
-<!--#include virtual="style/canvas.css" -->
-<!--#include virtual="style/shapes.css" -->
-<!--#include virtual="style/toolbar.css" -->
+<!--#exec cmd="/usr/local/bin/node /usr/local/share/npm/bin/lessc style/all.less" -->

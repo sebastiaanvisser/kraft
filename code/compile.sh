@@ -1,11 +1,1 @@
-#!/bin/bash
-while [ 1 ]
-do
-  # clear
-  echo -n "compiling... "
-  coffee -o gen -c Compiler.coffee &&
-    coffee -o gen --compile app &&
-    echo ok &&
-    sleep 1
-done
-
+js-shell -e "`/usr/local/bin/node /usr/local/bin/coffee -p code/Compiler.coffee code/app`; js.compile()"

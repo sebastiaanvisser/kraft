@@ -1,0 +1,122 @@
+.canvas
+{
+
+  .shape,
+  .handle,
+  .handleV,
+  .handleH,
+  .shape div
+  {
+    position: absolute;
+  }
+
+  .mydocument
+  {
+    -webkit-box-sizing: border-box;
+    outline-offset: -1px;
+    outline: dashed 2px #999;
+    -webkit-transition: outline-color 0.1s;
+  }
+
+  .mydocument.selected
+  {
+    outline-color: #333;
+  }
+
+  .myrect
+  {
+    -webkit-box-sizing: border-box;
+    background: #ddd;
+    border: solid 5px #666;
+  }
+
+  .myellipse
+  {
+    -webkit-box-sizing: border-box;
+    background: #ddd;
+    border: solid 5px #666;
+  }
+
+  .myline
+  {
+    -webkit-box-sizing: border-box;
+    background: #444;
+  }
+
+  .mytext
+  {
+    font-size: 30px;
+    font-family: "Helvetica", sans-serif;
+    background: #ddd;
+    padding: 0 20px;
+    color: black;
+  }
+
+  .rect.selected,
+  .ellipse.selected,
+  .triangle.selected
+  {
+    outline: dashed 2px #88f;
+    outline-offset: -1px;
+  }
+
+  .inner-triangle
+  {
+    background: #888;
+    opacity: 0.4;
+  }
+
+  .handle
+  {
+    background: white;
+    border: solid 2px black;
+    -webkit-box-sizing: border-box;
+  }
+
+  .handleH,
+  .handleV
+  {
+    background: rgba(0,0,0, 0.3);
+  }
+
+  .handle:hover
+  {
+    border-color: #4444cc;
+  }
+
+  .handle.dragging
+  {
+    border-color: #44cc44;
+  }
+
+  .handle1
+  {
+    background: white;
+  }
+
+  .guide
+  {
+    background: #9ad;
+  }
+
+  .guide.selected
+  {
+    background: #68f;
+  }
+
+  .guide-caption
+  {
+    background: #9ad;
+    padding: 2px;
+    color: white;
+    font-size: 12px;
+    font-family: "Helvetica", sans-serif;
+  }
+
+  .text-spine
+  {
+    background: #88f;
+  }
+
+}
+
