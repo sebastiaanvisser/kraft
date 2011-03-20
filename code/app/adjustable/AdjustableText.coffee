@@ -1,7 +1,7 @@
 Module "shape.AdjustableText"
 
 Import "base.Obj"
-Import "shape.DraggableShape"
+Import "shape.MoveableShape"
 Import "shape.Handle"
 Import "shape.Line"
 Import "shape.Point"
@@ -30,7 +30,7 @@ Class
     @handles.define "spine", (Line.make @parent, (Point.make @parent), (Point.make @parent), 2)
     sp = @handles.spine
     sp.decorate VisibleLine, @parent
-    sp.decorate DraggableShape
+    sp.decorate MoveableShape
     $(sp.elem).addClass "text-spine"
     $(sp.elem).addClass "shape"
     Pc.eq sp.p0, @p0

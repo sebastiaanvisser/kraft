@@ -1,10 +1,10 @@
-Module "Draggable"
+Module "Dragger"
 
 Qualified "Events", "E"
 
 Class
 
-  Draggable: (container, target, pivot, lockX, lockY, snapX, snapY, zoom) ->
+  Dragger: (container, target, pivot, lockX, lockY, snapX, snapY, zoom) ->
 
     # Dragging elements.
     @container = container

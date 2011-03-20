@@ -1,7 +1,7 @@
 Module "shape.Handle"
 
 Import "base.Obj"
-Import "shape.DraggableShape"
+Import "shape.MoveableShape"
 Import "shape.Rect"
 Import "shape.VisibleEllipse"
 Qualified "constraint.Point", "P"
@@ -18,7 +18,7 @@ Class
     @define prop, Rect.make @parent, x, y, w, h
     P.eq @[prop].center, @pt
     @[prop].decorate type
-    @[prop].decorate DraggableShape
+    @[prop].decorate MoveableShape
     $(@[prop].elem).addClass prop
 
 Static

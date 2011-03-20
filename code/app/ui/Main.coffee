@@ -9,7 +9,7 @@ Import "shape.AdjustableLine"
 Import "shape.AdjustableRect"
 Import "shape.AdjustableText"
 Import "shape.AdjustableTriangle"
-Import "shape.DraggableShape"
+Import "shape.MoveableShape"
 Import "shape.Line"
 Import "shape.Point"
 Import "shape.Rect"
@@ -31,7 +31,7 @@ Static
     r.decorate VisibleRect
     r.decorate SelectableShape
     r.decorate AdjustableRect
-    r.decorate DraggableShape
+    r.decorate MoveableShape
     parent.addShape r
     $(r.elem).addClass "myrect"
     $(r.elem).addClass "shape"
@@ -41,7 +41,7 @@ Static
     e.decorate VisibleEllipse
     e.decorate SelectableShape
     e.decorate AdjustableRect
-    e.decorate DraggableShape
+    e.decorate MoveableShape
     parent.addShape e
     $(e.elem).addClass "myellipse"
     $(e.elem).addClass "shape"
@@ -51,7 +51,7 @@ Static
     t.decorate VisibleText
     t.decorate SelectableShape
     t.decorate AdjustableText
-    t.decorate DraggableShape
+    t.decorate MoveableShape
     parent.addShape t
     $(t.elem).addClass "mytext"
     $(t.elem).addClass "shape"
@@ -61,7 +61,7 @@ Static
     l.decorate VisibleLine
     l.decorate SelectableShape
     l.decorate AdjustableLine
-    l.decorate DraggableShape
+    l.decorate MoveableShape
     parent.addShape l
     $(l.elem).addClass "myline"
     $(l.elem).addClass "shape"
@@ -71,7 +71,7 @@ Static
     t.decorate VisibleTriangle
     t.decorate SelectableShape
     t.decorate AdjustableTriangle
-    t.decorate DraggableShape
+    t.decorate MoveableShape
     parent.addShape t
     ($ t.elem).addClass "mytriangle"
     ($ t.elem).addClass "shape"
