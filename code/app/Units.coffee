@@ -2,5 +2,5 @@ Module "Units"
 
 Static
 
-  px: (a) -> a + "px"
+  px: (a) -> (Math.round a) + "px"
 

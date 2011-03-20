@@ -42,7 +42,7 @@ Static
     canvas.model.addShape d
     $(d.elem).addClass "mydocument"
     $(d.elem).addClass "shape"
-    d.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", px @x + ' ' + px @y
+    d.topLeft.onchange () -> ($ ".grid").css "-webkit-mask-position", (px @x) + ' ' + (px @y)
 
   mkEllipse: (canvas) ->
     e = Rect.make 200, 100, 300, 300
