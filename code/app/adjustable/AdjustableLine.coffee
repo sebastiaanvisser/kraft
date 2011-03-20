@@ -1,7 +1,7 @@
-Module "shape.AdjustableLine"
+Module "adjustable.AdjustableLine"
 
-Import "shape.Handle"
-Import "shape.SelectableShape"
+Import "handle.Handle"
+Import "adjustable.SelectableShape"
 Import "base.Obj"
 
 Class

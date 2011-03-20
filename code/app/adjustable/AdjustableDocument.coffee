@@ -1,11 +1,11 @@
-Module "shape.AdjustableDocument"
+Module "adjustable.AdjustableDocument"
 
 Import "base.Obj"
 Import "base.Value"
 Import "constraint.Constraint"
-Import "shape.Handle"
-Import "shape.HorizontalHandle"
-Import "shape.VerticalHandle"
+Import "handle.Handle"
+Import "handle.HorizontalHandle"
+Import "handle.VerticalHandle"
 Qualified "shape.Point", "Pt"
 
 Class

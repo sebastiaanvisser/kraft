@@ -1,4 +1,4 @@
-Module "shape.VisibleTriangle"
+Module "visible.VisibleTriangle"
 
 Import "base.Obj"
 Import "Units"

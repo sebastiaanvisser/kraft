@@ -1,4 +1,4 @@
-Module "shape.VisibleLine"
+Module "visible.VisibleLine"
 
 Import "base.Obj"
 Import "shape.Line"

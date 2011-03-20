@@ -1,4 +1,4 @@
-Module "VisibleContainer"
+Module "visible.VisibleContainer"
 
 Import "Events"
 Import "Selection"

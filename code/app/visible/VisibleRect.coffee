@@ -1,4 +1,4 @@
-Module "shape.VisibleRect"
+Module "visible.VisibleRect"
 
 Import "base.Obj"
 Import "Units"

@@ -1,9 +1,9 @@
-Module "shape.AdjustableTriangle"
+Module "adjustable.AdjustableTriangle"
 
 Import "base.Obj"
-Import "shape.Handle"
-Import "shape.VerticalHandle"
-Import "shape.HorizontalHandle"
+Import "handle.Handle"
+Import "handle.VerticalHandle"
+Import "handle.HorizontalHandle"
 
 Class
 

@@ -1,4 +1,4 @@
-Module "shape.VisibleDocument"
+Module "visible.VisibleDocument"
 
 Import "base.Obj"
 Import "Units"

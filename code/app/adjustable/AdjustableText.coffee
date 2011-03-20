@@ -1,13 +1,13 @@
-Module "shape.AdjustableText"
+Module "adjustable.AdjustableText"
 
+Import "adjustable.MoveableShape"
 Import "base.Obj"
-Import "shape.MoveableShape"
-Import "shape.Handle"
+Import "handle.Handle"
 Import "shape.Line"
 Import "shape.Point"
-Import "shape.VisibleLine"
-Qualified "constraint.Point", "Pc"
+Import "visible.VisibleLine"
 Qualified "Events", "E"
+Qualified "constraint.Point", "Pc"
 
 Class
 

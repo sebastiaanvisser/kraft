@@ -1,4 +1,4 @@
-Module "shape.MoveableShape"
+Module "adjustable.MoveableShape"
 
 Import "Dragger"
 Import "base.Obj"

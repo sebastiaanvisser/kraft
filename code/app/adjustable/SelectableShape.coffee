@@ -1,4 +1,4 @@
-Module "shape.SelectableShape"
+Module "adjustable.SelectableShape"
 
 Import "base.Obj"
 Qualified "Events", "E"

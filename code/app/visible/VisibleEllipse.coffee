@@ -1,4 +1,4 @@
-Module "shape.VisibleEllipse"
+Module "visible.VisibleEllipse"
 
 Import "base.Obj"
 Import "Units"
