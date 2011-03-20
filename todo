@@ -1,31 +1,29 @@
-Quick todo:
-
-  - Restore serialization.
-  - Ellipse without radius handles.
-
 To get a demoable version:
 
-  - Nesting.
-  - Ruler object, arrow object. <= - - - - 800px - - - - =>
-  - Border + background color + gradient.
-  - Content-editable texts.
-  - Image shape.
-  - Serialization.
-  - Preview mode.
-  - Simple constraints.
-  - Horizontal/vertical guides.
-  - Snap to guides.
-  - Width/height percentage of parent.
-  - Snap to other handles? Connect two shapes?
-  - Enough to setup demo site?
+  Client:
+    - Restore serialization.
+    - Ellipse without radius handles.
+    - Nesting.
+    - Ruler object, arrow object. <= - - - - 800px - - - - =>
+    - Border + background color + gradient.
+    - Content-editable texts.
+    - Image shape.
+    - Serialization.
+    - Preview/embed mode.
+    - Simple constraints.
+    - Horizontal/vertical guides.
+    - Snap to guides.
+    - Width/height percentage of parent.
+    - Snap to other handles? Connect two shapes?
+    - Enough to setup demo site?
 
-Server:
-  - Users that own projects.
-  - Projects that contains users.
-  - Sing-in.
-  - Select projects.
-  - Save/load projects.
-  - Request invite.
+  Server:
+    - Users that own projects.
+    - Projects that contains users.
+    - Sing-in.
+    - Select projects.
+    - Save/load projects.
+    - Request invite.
 
 Functionality:
 
