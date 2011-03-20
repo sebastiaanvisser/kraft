@@ -1,11 +1,11 @@
-Module "shape.RenderableText"
+Module "shape.VisibleText"
 
 Import "base.Obj"
 Import "Units"
 
 Class
 
-  RenderableText: (revive) ->
+  VisibleText: (revive) ->
     @parentElem = @parent.elem
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
@@ -40,5 +40,5 @@ Class
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register RenderableText
+Static init: -> Obj.register VisibleText
 

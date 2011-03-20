@@ -5,7 +5,7 @@ Import "shape.DraggableShape"
 Import "shape.Handle"
 Import "shape.Line"
 Import "shape.Point"
-Import "shape.RenderableLine"
+Import "shape.VisibleLine"
 Qualified "constraint.Point", "Pc"
 Qualified "Events", "E"
 
@@ -29,7 +29,7 @@ Class
 
     @handles.define "spine", (Line.make @parent, (Point.make @parent), (Point.make @parent), 2)
     sp = @handles.spine
-    sp.decorate RenderableLine, @parent
+    sp.decorate VisibleLine, @parent
     sp.decorate DraggableShape
     $(sp.elem).addClass "text-spine"
     $(sp.elem).addClass "shape"

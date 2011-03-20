@@ -2,7 +2,6 @@ Module "shape.AdjustableLine"
 
 Import "shape.Handle"
 Import "shape.SelectableShape"
-Import "shape.RenderableLine"
 Import "base.Obj"
 
 Class

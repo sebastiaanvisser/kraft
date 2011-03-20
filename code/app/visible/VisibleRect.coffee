@@ -1,11 +1,11 @@
-Module "shape.RenderableRect"
+Module "shape.VisibleRect"
 
 Import "base.Obj"
 Import "Units"
 
 Class
 
-  RenderableRect: (revive) ->
+  VisibleRect: (revive) ->
     @parentElem = @parent.elem
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
@@ -43,5 +43,5 @@ Class
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register RenderableRect
+Static init: -> Obj.register VisibleRect
 

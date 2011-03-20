@@ -1,11 +1,11 @@
-Module "shape.RenderableTriangle"
+Module "shape.VisibleTriangle"
 
 Import "base.Obj"
 Import "Units"
 
 Class
 
-  RenderableTriangle: (revive, model) ->
+  VisibleTriangle: (revive, model) ->
     @model = model
     @setupElem()
 
@@ -43,5 +43,5 @@ Class
 
   unrender: -> @model.canvas.canvasElem.removeChild @elem
 
-Static init: -> Obj.register RenderableTriangle
+Static init: -> Obj.register VisibleTriangle
 

@@ -1,4 +1,4 @@
-Module "shape.RenderableLine"
+Module "shape.VisibleLine"
 
 Import "base.Obj"
 Import "shape.Line"
@@ -6,7 +6,7 @@ Import "Units"
 
 Class
 
-  RenderableLine: (revive) ->
+  VisibleLine: (revive) ->
     @parentElem = @parent.elem
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
@@ -40,5 +40,5 @@ Class
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register RenderableLine
+Static init: -> Obj.register VisibleLine
 

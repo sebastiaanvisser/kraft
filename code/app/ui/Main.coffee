@@ -13,22 +13,22 @@ Import "shape.DraggableShape"
 Import "shape.Line"
 Import "shape.Point"
 Import "shape.Rect"
-Import "shape.RenderableDocument"
-Import "shape.RenderableEllipse"
-Import "shape.RenderableLine"
-Import "shape.RenderableRect"
-Import "shape.RenderableText"
-Import "shape.RenderableTriangle"
 Import "shape.SelectableShape"
 Import "shape.Text"
 Import "shape.Triangle"
+Import "shape.VisibleDocument"
+Import "shape.VisibleEllipse"
+Import "shape.VisibleLine"
+Import "shape.VisibleRect"
+Import "shape.VisibleText"
+Import "shape.VisibleTriangle"
 Qualified "Events", "E"
 
 Static
 
   mkRect: (parent) ->
     r = Rect.make parent, 200, 100, 300, 300
-    r.decorate RenderableRect
+    r.decorate VisibleRect
     r.decorate SelectableShape
     r.decorate AdjustableRect
     r.decorate DraggableShape
@@ -38,7 +38,7 @@ Static
 
   mkEllipse: (parent) ->
     e = Rect.make parent, 200, 100, 300, 300
-    e.decorate RenderableEllipse
+    e.decorate VisibleEllipse
     e.decorate SelectableShape
     e.decorate AdjustableRect
     e.decorate DraggableShape
@@ -48,7 +48,7 @@ Static
 
   mkText: (parent, text) ->
     t = Text.make parent, 100, 100, 400, 100, text
-    t.decorate RenderableText
+    t.decorate VisibleText
     t.decorate SelectableShape
     t.decorate AdjustableText
     t.decorate DraggableShape
@@ -58,7 +58,7 @@ Static
 
   mkLine: (parent) ->
     l = Line.make parent, (Point.make parent, 150, 200), (Point.make parent, 250, 200), 20
-    l.decorate RenderableLine
+    l.decorate VisibleLine
     l.decorate SelectableShape
     l.decorate AdjustableLine
     l.decorate DraggableShape
@@ -68,7 +68,7 @@ Static
 
   mkTriangle: (parent) ->
     t = Triangle.make parent, 100, 100, 200, 200
-    t.decorate RenderableTriangle
+    t.decorate VisibleTriangle
     t.decorate SelectableShape
     t.decorate AdjustableTriangle
     t.decorate DraggableShape
@@ -85,7 +85,7 @@ Static
     root.decorate VisibleContainer
 
     doc = Rect.make root, 20, 20, 620, 520
-    doc.decorate RenderableDocument
+    doc.decorate VisibleDocument
     doc.decorate SelectableShape
     doc.decorate AdjustableDocument
     ($ doc.elem).addClass "mydocument"

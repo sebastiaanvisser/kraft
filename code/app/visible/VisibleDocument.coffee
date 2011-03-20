@@ -1,11 +1,11 @@
-Module "shape.RenderableEllipse"
+Module "shape.VisibleDocument"
 
 Import "base.Obj"
 Import "Units"
 
 Class
 
-  RenderableEllipse: (revive) ->
+  VisibleDocument: (revive) ->
     @parentElem = @parent.elem
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
@@ -18,26 +18,21 @@ Class
 
   setupElem: ->
     elem = document.createElement "div"
-    ($ elem).addClass "ellipse"
+    $(elem).addClass "document"
     @parentElem.appendChild elem
     elem
 
   destructor: -> @unrender()
 
   render: ->
-    st = @elem.style
-
-    st.left   = px @left
-    st.top    = px @top
-    st.width  = px @width
-    st.height = px @height
-
-    st.borderTopLeftRadius     =
-    st.borderTopRightRadius    =
-    st.borderBottomLeftRadius  =
-    st.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
+    @elem.style.left   = px @left
+    @elem.style.top    = px @top
+    @elem.style.width  = px @right  - @left
+    @elem.style.height = px @bottom - @top
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register RenderableEllipse
+Static
+
+  init: -> Obj.register VisibleDocument
 
