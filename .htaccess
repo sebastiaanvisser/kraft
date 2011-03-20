@@ -2,5 +2,5 @@ Options +Includes +ExecCGI +FollowSymLinks +Indexes
 #RewriteEngine on
 #RewriteRule (.*) server/webstore/webstore.cgi [L]
 AddHandler cgi-script .cgi
-AddHandler server-parsed .html .js
+AddHandler server-parsed .html .css .js
 AddDefaultCharset utf-8
