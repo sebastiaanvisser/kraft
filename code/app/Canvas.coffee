@@ -2,19 +2,16 @@ Module "Canvas"
 
 Import "base.Obj"
 Import "Renderer"
-Import "Model"
 
 Class
 
-  Canvas: (container) ->
-    @container  = $ container
+  Canvas: (revive, container) ->
+    @container  = container
     @zoomBox    = $(".zoombox", container)[0]
-    @canvasElem = $(".canvas", container)[0]
+    @elem       = $(".canvas", container)[0]
     @gridElem   = $(".grid", container)[0]
-    @model      = Model.make @
 
     @renderer   = new Renderer
-    @layers     = {}
 
     @define "zoom",     1
     @define "gridSnap", 10
@@ -30,8 +27,7 @@ Class
 
 Static
 
-  init: ->
-    Obj.register Canvas
+  init: -> Obj.register Canvas
 
-  make: (container) -> (new Obj "Canvas").decorate Canvas, null, container
+  make: (container) -> (new Obj "Canvas").decorate Canvas, container
 

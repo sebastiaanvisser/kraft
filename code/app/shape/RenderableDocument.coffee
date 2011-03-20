@@ -5,18 +5,21 @@ Import "Units"
 
 Class
 
-  RenderableDocument: (revive, model) ->
-    @model  = model
-    @elem   = @setupElem()
+  RenderableDocument: (revive) ->
+    @parentElem = @parent.elem
+    @canvas     = @parent.canvas
+    @renderer   = @parent.renderer
+    @elem       = @setupElem()
 
-    @onchange => @model.canvas.renderer.enqueue @
-    @render()
+    # Setup rendering and perform initial render.
+    @onchange -> @renderer.enqueue @
+    @renderer.enqueue @
     @
 
   setupElem: ->
     elem = document.createElement "div"
     $(elem).addClass "document"
-    @model.canvas.canvasElem.appendChild elem
+    @parentElem.appendChild elem
     elem
 
   destructor: -> @unrender()
@@ -27,8 +30,7 @@ Class
     @elem.style.width  = px @right  - @left
     @elem.style.height = px @bottom - @top
 
-  unrender: ->
-    @model.canvas.canvasElem.removeChild @elem
+  unrender: -> @parentElem.removeChild @elem
 
 Static
 

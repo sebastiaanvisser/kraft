@@ -1,11 +1,11 @@
-Module "shape.RenderableRect"
+Module "shape.RenderableEllipse"
 
 Import "base.Obj"
 Import "Units"
 
 Class
 
-  RenderableRect: (revive) ->
+  RenderableEllipse: (revive) ->
     @parentElem = @parent.elem
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
@@ -18,7 +18,7 @@ Class
 
   setupElem: ->
     elem = document.createElement "div"
-    ($ elem).addClass "rect"
+    ($ elem).addClass "ellipse"
     @parentElem.appendChild elem
     elem
 
@@ -35,13 +35,9 @@ Class
     st.borderTopLeftRadius     =
     st.borderTopRightRadius    =
     st.borderBottomLeftRadius  =
-    st.borderBottomRightRadius =
-      px if @radius >= 0 then @radius else Math.round -@radius / 5
-
-    st.borderWidth =
-      px if @border >= 0 then @border else Math.round -@border / 5
+    st.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register RenderableRect
+Static init: -> Obj.register RenderableEllipse
 

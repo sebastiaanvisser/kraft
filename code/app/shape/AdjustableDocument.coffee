@@ -17,13 +17,11 @@ Class
 
   mkHandles: ->
     @define "handles", new Obj("Handles", @)
-    @handles.define "topLeft",     (Handle.make @model, @p0)
-    @handles.define "bottomRight", (Handle.make @model, @p3)
+    @handles.define "topLeft",     (Handle.make @parent, @p0)
+    @handles.define "bottomRight", (Handle.make @parent, @p3)
 
   delHandles: ->
     @handles.destructor()
 
-Static
-
-  init: -> Obj.register AdjustableDocument
+Static init: -> Obj.register AdjustableDocument
 

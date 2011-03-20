@@ -8,16 +8,16 @@ Qualified "constraint.Point", "P"
 
 Class
 
-  Handle: (revive, model, pt) ->
-    @model = model
-    @pt    = pt
+  Handle: (revive, parent, pt) ->
+    @parent = parent
+    @pt     = pt
     @defHandlePoint "handle", RenderableEllipse, 0, 0, 10, 10
     @
 
   defHandlePoint: (prop, type, x, y, w, h) ->
-    @define prop, Rect.make(x, y, w, h)
+    @define prop, Rect.make @parent, x, y, w, h
     P.eq @[prop].center, @pt
-    @[prop].decorate type, @model
+    @[prop].decorate type
     @[prop].decorate DraggableShape
     $(@[prop].elem).addClass prop
 
@@ -25,7 +25,7 @@ Static
 
   init: -> Obj.register Handle
 
-  make: (model, pt) -> (new Obj "Handle").decorate Handle, model, pt
+  make: (args...) -> (new Obj "Handle").decorate Handle, args...
 
 Module "shape.VerticalHandle"
 
@@ -39,9 +39,7 @@ Class
     @handle.dragger.lockX  = true
     @handleV.dragger.lockX = true
 
-Static
-
-  make: (model, pt) -> (Handle.make model, pt).decorate VerticalHandle
+Static make: (args...) -> (Handle.make args...).decorate VerticalHandle
 
 Module "shape.HorizontalHandle"
 
@@ -55,7 +53,5 @@ Class
     @handle.dragger.lockY  = true
     @handleH.dragger.lockY = true
 
-Static
-
-  make: (model, pt) -> (Handle.make model, pt).decorate HorizontalHandle
+Static make: (args...) -> (Handle.make args...).decorate HorizontalHandle
 

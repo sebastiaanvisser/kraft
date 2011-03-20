@@ -24,15 +24,16 @@ Class
     # Store the contructor and destructor.
     @meta.constructors.push c
     @meta.destructors.push c.prototype.destructor if c.prototype.destructor
-
-  decorate: (c, ctx, args...) ->
-    @decorateOnly c
-    c.apply @, [false, ctx].concat args
     @
 
-  revive: (c, ctx) ->
-    @decorateOnly(c)
-    c.apply @, [true, ctx]
+  decorate: (c, args...) ->
+    @decorateOnly c
+    c.call @, false, args...
+    @
+
+  revive: (c, args...) ->
+    @decorateOnly c
+    c.call @, true, args...
     @
 
   destructor: ->
@@ -40,14 +41,12 @@ Class
     p.destructor() for _, p of @$
     return
 
-  identifier: ->
-    (if @parent then @parent.identifier() else "") + '{' + @id + '}'
+  identifier: -> (if @parent then @parent.identifier() else "") + '{' + @id + '}'
 
   Private
   defineProp: (p, name, init, constraint, args) ->
     # Setup property.
     @$[name] = new Value(init, @, name, !!constraint)
-    init.parent = @$[name]
 
     # Install constraint when given any.
     if constraint
@@ -75,6 +74,5 @@ Static
     Obj.nextId  = 0
     Obj.all     = {}
 
-  register: (ctor) ->
-    Obj.classes[ctor.name] = ctor
+  register: (ctor) -> Obj.classes[ctor.name] = ctor
 

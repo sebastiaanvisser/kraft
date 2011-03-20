@@ -12,6 +12,12 @@
   -webkit-box-sizing: border-box;
   outline-offset: -1px;
   outline: dashed 2px #999;
+  -webkit-transition: outline-color 0.1s;
+}
+
+.canvas .mydocument.selected
+{
+  outline-color: #333;
 }
 
 .canvas .myrect

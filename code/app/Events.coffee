@@ -37,6 +37,8 @@ Class
   setTimeout:  (fn, dly) -> window.setTimeout  (=> @runWithHooks fn, arguments), dly
   setInterval: (fn, dly) -> window.setInterval (=> @runWithHooks fn, arguments), dly
 
+  documentReady: (fn) -> ($ document).ready => @runWithHooks fn, arguments
+
   onThreadStart:     (id, fn) -> @preHooks[id]      = fn
   onThreadEnd:       (id, fn) -> @postHooks[id]     = fn
   onThreadStartOnce: (id, fn) -> @preHooksOnce[id]  = fn

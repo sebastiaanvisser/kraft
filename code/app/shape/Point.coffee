@@ -4,16 +4,18 @@ Import "base.Obj"
 
 Class
 
-  Point: (revive, ctx, x, y) ->
+  Point: (revive, parent, x, y) ->
     unless revive
       @define "x", x || 0
       @define "y", y || 0
+
+    @parent = parent
     @
 
 Static
 
   init: () -> Obj.register Point
 
-  make: (x, y) ->
-    (new Obj "Point").decorate Point, null, x, y
+  make: (args...) ->
+    (new Obj "Point").decorate Point, args...
 

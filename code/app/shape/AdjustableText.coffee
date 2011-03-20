@@ -17,19 +17,19 @@ Class
     @
 
     E.manager.bind @elem, "DOMCharacterDataModified",
-      ((e) => @model.canvas.renderer.enqueue @)
+      ((e) => @renderer.enqueue @)
 
   mkHandles: ->
     $(@elem).attr "contentEditable", true
 
     @handles = new Obj
-    @handles.define "topLeft",     (Handle.make @model, @p0)
-    @handles.define "bottomRight", (Handle.make @model, @p1)
-    @handles.define "center",      (Handle.make @model, @center)
+    @handles.define "topLeft",     (Handle.make @parent, @p0)
+    @handles.define "bottomRight", (Handle.make @parent, @p1)
+    @handles.define "center",      (Handle.make @parent, @center)
 
-    @handles.define "spine",       (Line.make Point.make(), Point.make(), 2)
+    @handles.define "spine", (Line.make @parent, (Point.make @parent), (Point.make @parent), 2)
     sp = @handles.spine
-    sp.decorate RenderableLine, @model
+    sp.decorate RenderableLine, @parent
     sp.decorate DraggableShape
     $(sp.elem).addClass "text-spine"
     $(sp.elem).addClass "shape"

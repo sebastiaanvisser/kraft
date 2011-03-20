@@ -5,19 +5,23 @@ Import "Units"
 
 Class
 
-  RenderableText: (revive, model) ->
-    @model = model
-    @elem  = @setupElem()
+  RenderableText: (revive) ->
+    @parentElem = @parent.elem
+    @canvas     = @parent.canvas
+    @renderer   = @parent.renderer
+    @elem       = @setupElem()
+
     @elem.innerHTML = @text
 
-    @onchange -> @model.canvas.renderer.enqueue @
-    @model.canvas.renderer.enqueue @
+    # Setup rendering and perform initial render.
+    @onchange -> @renderer.enqueue @
+    @renderer.enqueue @
     @
 
   setupElem: ->
     elem = document.createElement "div"
     ($ elem).addClass "text"
-    @model.canvas.canvasElem.appendChild elem
+    @parentElem.appendChild elem
     elem
 
   destructor: -> @unrender()
@@ -34,7 +38,7 @@ Class
     st.top  = px (@p0.y + @p1.y - h) / 2
     st["-webkit-transform"] = "rotate(" + rot + "deg)"
 
-  unrender: -> @model.canvas.canvasElem.removeChild @elem
+  unrender: -> @parentElem.removeChild @elem
 
 Static init: -> Obj.register RenderableText
 

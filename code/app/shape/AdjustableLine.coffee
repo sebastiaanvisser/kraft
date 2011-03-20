@@ -14,9 +14,9 @@ Class
 
   mkHandles: ->
     @handles = new Obj
-    @handles.define "topLeft",     Handle.make(@model, @p0)
-    @handles.define "bottomRight", Handle.make(@model, @p1)
-    @handles.define "center",      Handle.make(@model, @center)
+    @handles.define "topLeft",     Handle.make(@parent, @p0)
+    @handles.define "bottomRight", Handle.make(@parent, @p1)
+    @handles.define "center",      Handle.make(@parent, @center)
 
   delHandles: -> @handles.destructor()
 
