@@ -1,7 +1,9 @@
 Module "Canvas"
 
 Import "base.Obj"
+Import "shape.Rect"
 Import "Renderer"
+Qualified "Events", "E"
 
 Class
 
@@ -20,6 +22,10 @@ Class
     @define "width",  4000
     @define "height", 4000
     @setSize()
+
+    # Define active viewport.
+    @define "viewport", Rect.make @, 0, 0, 100, 100
+    E.manager.bind ($ @container), "scroll", => @setViewport()
 
     # Define canvas grid.
     @define "zoom",     1
@@ -45,6 +51,12 @@ Class
       ($ @gridElem).addClass "grid"
     else
       ($ @gridElem).removeClass "grid"
+
+  setViewport: ->
+    @viewport.p0.x   = @container.scrollLeft   / @zoom
+    @viewport.p0.y   = @container.scrollTop    / @zoom
+    @viewport.width  = @container.clientWidth  / @zoom
+    @viewport.height = @container.clientHeight / @zoom
 
 Static
 

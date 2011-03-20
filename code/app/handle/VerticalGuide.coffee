@@ -1,6 +1,7 @@
 Module "handle.VerticalGuide"
 
 Import "base.Obj"
+Import "base.Value"
 Import "shape.Line"
 Import "shape.Point"
 Import "shape.Text"
@@ -38,9 +39,12 @@ Class
     @caption.dragger.lockY = true
     $(@caption.elem).addClass "guide-caption"
     $(@caption.elem).addClass "shape"
+
     C.eq @$.x, @caption.p0.$.x
     C.eq @$.x, @caption.p1.$.x
     C.eq @caption.$.text, @$.x
+    C.eq   @caption.p0.$.y, @canvas.viewport.p0.$.y
+    C.add0 @caption.p1.$.y, @canvas.viewport.p0.$.y, val 50
 
 Static
 

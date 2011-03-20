@@ -53,10 +53,8 @@ Class
     @document
 
   setupGuides: ->
-    @hguide0 = HorizontalGuide.make @root, 10
-    @vguide0 = VerticalGuide.make   @root, 10
-    @vguide1 = HorizontalGuide.make @root, 530
-    @hguide1 = VerticalGuide.make   @root, 730
+    @hguide = VerticalGuide.make   @root, 880
+    @vguide = HorizontalGuide.make @root, 600
 
   setupMenu: ->
     E.manager.bind "#toolbar #rect",        "click", => @mkRect @root

@@ -6,7 +6,7 @@ Qualified "Events", "E"
 Class
 
   Renderer: ->
-    @queue     = {}
+    @queue = {}
 
     # Require an initial render.
     @requireRender()
