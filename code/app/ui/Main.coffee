@@ -44,7 +44,7 @@ Class
     @root.decorate VisibleContainer
 
   setupDocument: ->
-    @document = Rect.make @root, 20, 20, 720, 520
+    @document = Rect.make @root, 30, 20, 720, 520
     @document.decorate VisibleDocument
     @document.decorate SelectableShape
     @document.decorate AdjustableDocument
@@ -57,19 +57,19 @@ Class
     @vguide = HorizontalGuide.make @root, 600
 
   setupMenu: ->
-    E.manager.bind "#toolbar #rect",        "click", => @mkRect @root
-    E.manager.bind "#toolbar #line",        "click", => @mkLine @root
-    E.manager.bind "#toolbar #triangle",    "click", => @mkTriangle @root
-    E.manager.bind "#toolbar #ellipse",     "click", => @mkEllipse @root
-    E.manager.bind "#toolbar #text",        "click", => @mkText @root, prompt() || "..."
-    E.manager.bind "#toolbar #selectall",   "click", => @root.selection.selectAll()
-    E.manager.bind "#toolbar #deselectall", "click", => @root.selection.deselectAll()
-    E.manager.bind "#toolbar #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
-    E.manager.bind "#toolbar #zoomin",      "click", => @canvas.zoom *= 2
-    E.manager.bind "#toolbar #zoomout",     "click", => @canvas.zoom /= 2
-    E.manager.bind "#toolbar #zoomreset",   "click", => @canvas.zoom = 1
-    # E.manager.bind("#toolbar #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
-    # E.manager.bind("#toolbar #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
+    E.manager.bind "#menu #rect",        "click", => @mkRect @root
+    E.manager.bind "#menu #line",        "click", => @mkLine @root
+    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
+    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
+    E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
+    E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
+    E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
+    E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
+    E.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
+    E.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
+    E.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
+    # E.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
+    # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   mkRect: (parent) ->
     r = Rect.make parent, 200, 100, 300, 300
