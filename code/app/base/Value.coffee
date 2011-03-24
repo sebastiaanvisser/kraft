@@ -6,21 +6,23 @@ Class
 
   Value: (v, parent, name, soft, t) ->
 
-    @parent   = parent
-    @name     = name
-    @soft     = soft # Soft properties will not be serialized.
-    @type     = t || v.constructor.name
-    @value    = if @type == "Number" then 1 * v else v
-    @triggers = {}
-    @busy     = false
+    @parent    = parent
+    @name      = name
+    @soft      = soft # Soft properties will not be serialized.
+    @type      = t || v.constructor.name
+    @value     = if @type == "Number" then 1 * v else v
+    @triggers  = {}
+    @busy      = false
+    @normalize = null
 
     get = => @value
 
     set = (v) =>
-      v = if @type == "Number" then 1 * v else v
-      return if @value == v or @busy
+      w = if @normalize then @normalize v else v
+      w = if @type == "Number" then 1 * w else w
+      return if @value == w or @busy
       @busy = true
-      @value = v
+      @value = w
       t[1].app t[0] for _, t of @triggers
       @parent.changed [@] if @parent
       @busy = false
