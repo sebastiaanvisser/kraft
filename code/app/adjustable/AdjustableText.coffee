@@ -16,8 +16,10 @@ Class
     @ondeselect.push => @delHandles()
     @
 
-    E.manager.bind @elem, "DOMCharacterDataModified",
-      ((e) => @renderer.enqueue @)
+    E.manager.bind @elem, "DOMCharacterDataModified", (e) =>
+      @text = @elem.innerHTML
+      @renderer.enqueue @
+      return true
 
   mkHandles: ->
     $(@elem).attr "contentEditable", true

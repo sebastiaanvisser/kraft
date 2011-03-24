@@ -25,7 +25,7 @@ Class
   destructor: -> @unrender()
 
   render: ->
-    @elem.innerHTML = @text
+    @elem.innerHTML = @text unless @elem.innerHTML == @text
     w = @elem.offsetWidth
     h = @elem.offsetHeight
 
