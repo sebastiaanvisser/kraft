@@ -17,7 +17,7 @@ Class
     delete s[0].triggers[@id] for s in @sources
 
   app: (side) ->
-    vs = ([@target[0].parent].concat (s[0].parent for s in @sources))
+    vs = ([@target[0]].concat (s[0] for s in @sources))
     if side
       computed = (s[1].apply(@, vs) for s in @sources)
       zip @sources, computed, (s, v) -> s[0].v = v
