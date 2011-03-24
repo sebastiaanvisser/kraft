@@ -42,6 +42,7 @@ Class
   setupRootContainer: ->
     @root = Container.make @canvas
     @root.decorate VisibleContainer
+    @target = @root
 
   setupDocument: ->
     @document = Rect.make @root, 30, 20, 720, 520
@@ -57,13 +58,13 @@ Class
     @vguide = HorizontalGuide.make @root, 600
 
   setupMenu: ->
-    E.manager.bind "#menu #rect",        "click", => @mkRect @root
-    E.manager.bind "#menu #line",        "click", => @mkLine @root
-    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
-    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
-    E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
-    E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
-    E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
+    E.manager.bind "#menu #rect",        "click", => @mkRect @target
+    E.manager.bind "#menu #line",        "click", => @mkLine @target
+    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @target
+    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @target
+    E.manager.bind "#menu #text",        "click", => @mkText @target, prompt() || "..."
+    E.manager.bind "#menu #selectall",   "click", => @target.selection.selectAll()
+    E.manager.bind "#menu #deselectall", "click", => @target.selection.deselectAll()
     E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
     E.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
     E.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
@@ -80,6 +81,10 @@ Class
     parent.addShape r
     $(r.elem).addClass "myrect"
     $(r.elem).addClass "shape"
+
+    r.container = Container.make r
+    r.container.decorate VisibleContainer
+    @target = r.container
 
   mkEllipse: (parent) ->
     e = Rect.make parent, 200, 100, 300, 300
