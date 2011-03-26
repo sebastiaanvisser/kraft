@@ -2,6 +2,7 @@ Module "visible.VisibleRect"
 
 Import "base.Obj"
 Import "Units"
+Import "style.Color"
 
 Class
 
@@ -10,6 +11,9 @@ Class
     @canvas     = @parent.canvas
     @renderer   = @parent.renderer
     @elem       = @setupElem()
+
+    @define "background", Color.make()
+    @background.hex = "#ffcc00"
 
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
@@ -31,6 +35,8 @@ Class
     st.top    = px @top
     st.width  = px @width
     st.height = px @height
+
+    st.backgroundColor = @background.rgba
 
     st.borderTopLeftRadius     =
     st.borderTopRightRadius    =
