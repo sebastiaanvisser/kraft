@@ -26,6 +26,11 @@ Import "visible.VisibleText"
 Import "visible.VisibleTriangle"
 Qualified "Events", "E"
 
+Qualified "constraint.Constraint", "C"
+Import "base.List"
+Import "style.Color"
+Import "style.Gradient"
+
 Class
 
   Main: ->
@@ -34,7 +39,19 @@ Class
     @setupDocument()
     @setupMenu()
     @setupGuides()
+    @playground()
     @
+
+  playground: ->
+    window.myGradient = Gradient.make()
+    d = @document
+    myGradient.onchange -> ($ d.elem).css "background", @webkit
+    myGradient.ramp.push [0.0, Color.make "#fff"]
+    myGradient.ramp.push [0.5, Color.make "#fc0"]
+    myGradient.ramp.push [0.6, Color.make "#444"]
+    myGradient.ramp.push [0.9, Color.make "#000"]
+    myGradient.ramp.push [1.0, Color.make "#00f"]
+    myGradient.ramp.push [1.0, Color.make "#00f"]
 
   setupCanvas: ->
     @canvas = Canvas.make $("#mycanvas")[0]
@@ -45,7 +62,7 @@ Class
     @target = @root
 
   setupDocument: ->
-    @document = Rect.make @root, 30, 20, 720, 520
+    @document = Rect.make @root, 30, 20, 730, 520
     @document.decorate VisibleDocument
     @document.decorate SelectableShape
     @document.decorate AdjustableDocument
@@ -54,8 +71,8 @@ Class
     @document
 
   setupGuides: ->
-    @hguide = VerticalGuide.make   @root, 880
-    @vguide = HorizontalGuide.make @root, 600
+    @hguide = VerticalGuide.make   @root, 630
+    @vguide = HorizontalGuide.make @root, 420
 
   setupMenu: ->
     E.manager.bind "#menu #rect",        "click", => @mkRect @target
@@ -73,7 +90,7 @@ Class
     # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   mkRect: (parent) ->
-    r = Rect.make parent, 200, 100, 300, 300
+    r = Rect.make parent, 130, 120, 230, 320
     r.decorate VisibleRect
     r.decorate SelectableShape
     r.decorate AdjustableRect
@@ -84,7 +101,9 @@ Class
 
     r.container = Container.make r
     r.container.decorate VisibleContainer
-    @target = r.container
+    # @target = r.container
+
+    r
 
   mkEllipse: (parent) ->
     e = Rect.make parent, 200, 100, 300, 300
@@ -97,7 +116,7 @@ Class
     $(e.elem).addClass "shape"
 
   mkText: (parent, text) ->
-    t = Text.make parent, 100, 100, 400, 100, text
+    t = Text.make parent, 30, 70, 130, 70, text
     t.decorate VisibleText
     t.decorate SelectableShape
     t.decorate AdjustableText
@@ -105,6 +124,7 @@ Class
     parent.addShape t
     $(t.elem).addClass "mytext"
     $(t.elem).addClass "shape"
+    t
 
   mkLine: (parent) ->
     l = Line.make parent, (Point.make parent, 150, 200), (Point.make parent, 250, 200), 20

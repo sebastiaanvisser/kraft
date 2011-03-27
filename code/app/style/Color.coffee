@@ -6,25 +6,23 @@ Import "base.Trigger"
 
 Class
 
-  Color: () ->
-
+  Color: (revive, hex) ->
     @define "red",   0
     @define "green", 0
     @define "blue",  0
     @define "alpha", 1
     @define "hex",   "#000000"
     @define "rgba",  "rgba(0,0,0,1)"
-
     @$.hex.normalize  = normalizeHex
     @$.rgba.normalize = normalizeRgba
     channelsToHex  @$.hex,  @$.red, @$.green, @$.blue
     channelsToRgba @$.rgba, @$.red, @$.green, @$.blue, @$.alpha
+    @hex = hex if hex
     @
 
 Static
 
-  init: ->
-    Obj.register Color
+  init: -> Obj.register Color
 
   make: (args...) -> (new Obj).decorate Color, args...
 
