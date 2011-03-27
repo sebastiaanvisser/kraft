@@ -13,7 +13,7 @@ Class
     @elem       = @setupElem()
 
     @define "background", Color.make()
-    @background.hex = "#ffcc00"
+    @background.hex = "#ffbb00"
 
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @

@@ -12,7 +12,7 @@ Class
       @define "p0",     Pt.make @, x0, y0
       @define "p3",     Pt.make @, x1, y1
       @define "radius", 0
-      @define "border", 5
+      @define "border", 0
 
     @parent = parent
 
