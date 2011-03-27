@@ -24,7 +24,7 @@ Class
       @busy = true
       @value = w
       t[1].app t[0] for _, t of @triggers
-      @parent.changed [@] if @parent
+      @parent.changed [@] if @parent and not soft
       @busy = false
 
     if @parent

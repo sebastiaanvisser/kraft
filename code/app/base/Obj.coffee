@@ -21,7 +21,7 @@ Class
   decorateOnly: (c) ->
     @[n] = f for n, f of c.prototype when n != "destructor"
 
-    # Store the contructor and destructor.
+    # Store the constructor and destructor.
     @meta.constructors.push c
     @meta.destructors.push c.prototype.destructor if c.prototype.destructor
     @
@@ -44,16 +44,15 @@ Class
   identifier: -> (if @parent then @parent.identifier() else "") + '{' + @id + '}'
 
   Private
-  defineProp: (p, name, init, constraint, args) ->
+  defineProp: (hard, name, init, constraint, args) ->
     # Setup property.
-    @$[name] = new Value(init, @, name, !!constraint)
+    @$[name] = new Value(init, @, name, !hard)
 
     # Install constraint when given any.
-    if constraint
-      constraint [if p then @$[name] else @[name]].concat(args)...
+    constraint [if hard then @$[name] else @[name]].concat(args)... if constraint
 
-    # Propagate changes.
-    if @[name].onchange
+    # Propagate changes to the ancestors.
+    if hard and @[name].onchange
       @[name].onchange (v) =>
         v.push @[name]
         @changed v
