@@ -3,12 +3,13 @@ Module "visible.VisibleEllipse"
 Import "base.Obj"
 Import "Units"
 
+Register "Obj"
 Class
 
-  VisibleEllipse: (revive) ->
-    @parentElem = @parent.elem
-    @canvas     = @parent.canvas
-    @renderer   = @parent.renderer
+  VisibleEllipse: (canvas, renderer, parentElem) ->
+    @canvas     = canvas
+    @renderer   = renderer
+    @parentElem = parentElem
     @elem       = @setupElem()
 
     # Setup rendering and perform initial render.
@@ -38,6 +39,4 @@ Class
     st.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
 
   unrender: -> @parentElem.removeChild @elem
-
-Static init: -> Obj.register VisibleEllipse
 

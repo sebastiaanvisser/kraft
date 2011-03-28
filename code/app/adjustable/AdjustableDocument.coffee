@@ -4,10 +4,8 @@ Import "base.Obj"
 Import "base.Value"
 Import "constraint.Constraint"
 Import "handle.Handle"
-Import "handle.HorizontalHandle"
-Import "handle.VerticalHandle"
-Qualified "shape.Point", "Pt"
 
+Register "Obj"
 Class
 
   AdjustableDocument: ->
@@ -16,12 +14,12 @@ Class
     @
 
   mkHandles: ->
-    @define "handles", new Obj("Handles", @)
-    @handles.define "topLeft",     (Handle.make @parent, @p0)
-    @handles.define "bottomRight", (Handle.make @parent, @p3)
+    @derive handles: new Obj
+    @handles.define
+      topLeft:     mk Handle, @p0, @canvas, @renderer, @parentElem
+      bottomRight: mk Handle, @p3, @canvas, @renderer, @parentElem
+      xx:          mk Handle, @p1, @canvas, @renderer, @parentElem
+      yy:          mk Handle, @p2, @canvas, @renderer, @parentElem
 
-  delHandles: ->
-    @handles.destructor()
-
-Static init: -> Obj.register AdjustableDocument
+  delHandles: -> @handles.destructor()
 

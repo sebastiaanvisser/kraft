@@ -4,16 +4,16 @@ Import "base.Obj"
 Import "Units"
 Import "style.Color"
 
+Register "Obj"
 Class
 
-  VisibleRect: (revive) ->
-    @parentElem = @parent.elem
-    @canvas     = @parent.canvas
-    @renderer   = @parent.renderer
+  VisibleRect: (canvas, renderer, parentElem) ->
+    @canvas     = canvas
+    @renderer   = renderer
+    @parentElem = parentElem
     @elem       = @setupElem()
 
-    @define "background", Color.make()
-    @background.hex = "#ffbb00"
+    @define background: mk Color, "#ffbb00"
 
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
@@ -48,6 +48,4 @@ Class
       px if @border >= 0 then @border else Math.round -@border / 5
 
   unrender: -> @parentElem.removeChild @elem
-
-Static init: -> Obj.register VisibleRect
 

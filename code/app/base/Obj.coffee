@@ -5,73 +5,66 @@ Import "base.Value"
 
 Class
 
-  Obj: (type, parent) ->
-    @id      = (type || 'o') + Obj.nextId++
-    @parent  = parent
-    @classes = {}
-    @$       = {}
-    @meta    =
-      onchange:     []
+  Obj: () ->
+    @$    = {}
+    @meta =
+      id:           Obj.nextId++
       constructors: []
       destructors:  []
-
-    Obj.all[@id] = @
+      defined:      {}
+      derived:      {}
+      reactors:     []
     @
 
-  decorateOnly: (c) ->
-    @[n] = f for n, f of c.prototype when n != "destructor"
-
-    # Store the constructor and destructor.
-    @meta.constructors.push c
-    @meta.destructors.push c.prototype.destructor if c.prototype.destructor
-    @
-
-  decorate: (c, args...) ->
-    @decorateOnly c
-    c.call @, false, args...
-    @
-
-  revive: (c, args...) ->
-    @decorateOnly c
-    c.call @, true, args...
-    @
+  id: -> @meta.constructors[0].name.replace /_Constructor$/, '' + @meta.id
 
   destructor: ->
     d.call @ for d in @meta.destructors
     p.destructor() for _, p of @$
     return
 
-  identifier: -> (if @parent then @parent.identifier() else "") + '{' + @id + '}'
+  decorate: (ctor, args...) ->
+
+    # Decorate the current object.
+    proto = ctor.prototype
+    @[n] = f for n, f of proto when n != "destructor"
+
+    # Store the constructor and destructor.
+    @meta.constructors.push ctor
+    @meta.destructors.push proto.destructor if proto.destructor
+
+    # Call constructor.
+    ctor.call @, args...
+    @
+
+  define: (defs) -> @meta.defined[name] = @property name, v for name, v of defs; @
+  derive: (defs) -> @meta.derived[name] = @property name, v for name, v of defs; @
 
   Private
-  defineProp: (hard, name, init, constraint, args) ->
-    # Setup property.
-    @$[name] = new Value(init, @, name, !hard)
+  property: (name, v) ->
+    p = @$[name] = val v
+    p.parent = @
+    p.name = name
+    @__defineGetter__ name,     -> p.get()
+    @__defineSetter__ name, (v) -> p.set(v)
+    p
 
-    # Install constraint when given any.
-    constraint [if hard then @$[name] else @[name]].concat(args)... if constraint
+  onchange: (f) -> @meta.reactors.push f
+  changed: (args...) -> r.apply @, args.concat [@] for r in @meta.reactors
 
-    # Propagate changes to the ancestors.
-    if hard and @[name].onchange
-      @[name].onchange (v) =>
-        v.push @[name]
-        @changed v
-
-    @$[name]
-
-  define: (args...) -> @defineProp true,  args...
-  derive: (args...) -> @defineProp false, args...
-
-  onchange: (f) -> @meta.onchange.push(f)
-
-  changed: (v) -> o.call(@, v) for o in @meta.onchange
+  debug: () ->
+    indent = (s) -> ("  " + l for l in s.split /\n/).join "\n"
+    res = (n + ": " + (if p.v.debug then "\n" + indent p.v.debug() else p.v) for n, p of @$)
+    res.join "\n"
 
 Static
 
   init: ->
     Obj.classes = {}
     Obj.nextId  = 0
-    Obj.all     = {}
 
-  register: (ctor) -> Obj.classes[ctor.name] = ctor
+  register: (ctor) ->
+    Obj.classes[ctor.name] = ctor unless Obj.classes[ctor.name]
+
+  mk: (ctor, args...) -> (new Obj ctor).decorate ctor, args...
 

@@ -4,15 +4,15 @@ Import "Events"
 Import "Selection"
 Import "base.Obj"
 
+Register "Obj"
 Class
 
-  Container: (revive, parent) ->
-    @parent = parent
-    @define "shapes", {}
+  Container: ->
+    @define shapes: {}
     @selection = new Selection
     @
 
-  addShape: (shape) -> @shapes[shape.id] = shape
+  addShape: (shape) -> @shapes[shape.id()] = shape
 
   delShape: (id) ->
     obj = @shapes[id]
@@ -21,10 +21,4 @@ Class
     delete @shapes[id]
     @selection.deselect obj
     obj.destructor()
-
-Static
-
-  init: -> Obj.register Container
-
-  make: (parent) -> (new Obj "Container").decorate Container, parent
 

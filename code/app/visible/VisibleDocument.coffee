@@ -5,14 +5,14 @@ Import "Units"
 
 Class
 
-  VisibleDocument: (revive) ->
-    @parentElem = @parent.elem
-    @canvas     = @parent.canvas
-    @renderer   = @parent.renderer
+  VisibleDocument: (canvas, renderer, elem) ->
+    @canvas     = canvas
+    @renderer   = renderer
+    @parentElem = elem
     @elem       = @setupElem()
 
-    @topLeft.onchange ->
-      ($ @parent.canvas.gridElem).css "-webkit-mask-position", (px @x) + ' ' + (px @y)
+    @topLeft.onchange (_, p) =>
+      ($ @canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)
 
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
@@ -21,7 +21,7 @@ Class
 
   setupElem: ->
     elem = document.createElement "div"
-    $(elem).addClass "document"
+    ($ elem).addClass "document"
     @parentElem.appendChild elem
     elem
 

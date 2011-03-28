@@ -1,15 +1,25 @@
 Module "handle.VerticalHandle"
 
-Import "handle.Handle"
+Import "adjustable.MoveableShape"
+Import "base.Obj"
+Import "shape.Rect"
 Import "visible.VisibleRect"
+Qualified "constraint.Point", "Pt"
 
+Register "Obj"
 Class
 
-  VerticalHandle: ->
-    @defHandlePoint "handleV", VisibleRect, 0, 0, 2, 16
-    @handle.dragger.lockX   = true
-    @handleV.dragger.lockX  = true
-    @handleV.background.hex = "rgba(0,0,0, 0.8)"
+  VerticalHandle: (canvas, renderer, elem) ->
 
-Static make: (args...) -> (Handle.make args...).decorate VerticalHandle
+    @define handleV: mk Rect, 0, 0, 2, 16
+    @handleV.decorate VisibleRect, canvas, renderer, elem
+    @handleV.decorate MoveableShape
+    ($ @handleV.elem).addClass "handleV"
+    Pt.eq @handleV.center, @pt
+
+    @handle.dragger.lockX  = true
+    @handleV.dragger.lockX = true
+    @handleV.background.rgba = "rgba(0,0,0, 0.4)"
+
+    @
 

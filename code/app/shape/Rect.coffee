@@ -1,45 +1,49 @@
 Module "shape.Rect"
 
 Import "base.Obj"
+Import "base.Value"
 Import "constraint.Constraint"
+Import "shape.Point"
 Qualified "constraint.Point", "Pc"
-Qualified "shape.Point", "Pt"
 
+Register "Obj"
 Class
 
-  Rect: (revive, parent, x0, y0, x1, y1) ->
-    unless revive
-      @define "p0",     Pt.make @, x0, y0
-      @define "p3",     Pt.make @, x1, y1
-      @define "radius", 0
-      @define "border", 0
+  Rect: (x0, y0, x1, y1) ->
 
-    @parent = parent
+    @define
+      p0:     mk Point, x0, y0
+      p3:     mk Point, x1, y1
+      radius: 0
+      border: 0
 
-    Pc.yx @derive("p1", Pt.make @).v, @p0, @p3
-    Pc.xy @derive("p2", Pt.make @).v, @p0, @p3
+    @derive
+      p1: Pc.yx @p0, @p3
+      p2: Pc.xy @p0, @p3
 
-    Pc.mid          @derive("center",      Pt.make @).v, @p0, @p3
-    Pc.topLeft      @derive("topLeft",     Pt.make @).v, @p0, @p3
-    Pc.topRight     @derive("topRight",    Pt.make @).v, @p0, @p3
-    Pc.bottomLeft   @derive("bottomLeft",  Pt.make @).v, @p0, @p3
-    Pc.bottomRight  @derive("bottomRight", Pt.make @).v, @p0, @p3
-    Pc.xy           @derive("midLeft",     Pt.make @).v, @p0, @center
-    Pc.xy           @derive("midRight",    Pt.make @).v, @p1, @center
-    Pc.yx           @derive("midTop",      Pt.make @).v, @p0, @center
-    Pc.yx           @derive("midBottom",   Pt.make @).v, @p2, @center
+    @derive
+      left:   min.f @p0.$.x, @p3.$.x
+      top:    min.f @p0.$.y, @p3.$.y
+      right:  max.f @p0.$.x, @p3.$.x
+      bottom: max.f @p0.$.y, @p3.$.y
 
-    sub0 @derive("width",  0), @bottomRight.$.x, @topLeft.$.x
-    sub0 @derive("height", 0), @bottomRight.$.y, @topLeft.$.y
-    min0 @derive("left",   0), @p0.$.x,          @p3.$.x
-    min0 @derive("top",    0), @p0.$.y,          @p3.$.y
-    max0 @derive("right",  0), @p0.$.x,          @p3.$.x
-    max0 @derive("bottom", 0), @p0.$.y,          @p3.$.y
+    @derive center: Pc.mid @p0, @p3
+
+    @derive
+      topLeft:     Pc.topLeft     @p0, @p3
+      topRight:    Pc.topRight    @p0, @p3
+      bottomLeft:  Pc.bottomLeft  @p0, @p3
+      bottomRight: Pc.bottomRight @p0, @p3
+
+    @derive
+      midLeft:   Pc.xy @p0, @center
+      midRight:  Pc.xy @p1, @center
+      midTop:    Pc.yx @p0, @center
+      midBottom: Pc.yx @p2, @center
+
+    @derive
+      width:  sub0.f @bottomRight.$.x, @topLeft.$.x
+      height: sub0.f @bottomRight.$.y, @topLeft.$.y
+
     @
-
-Static
-
-  init: () -> Obj.register Rect
-
-  make: (args...) -> (new Obj "Rect").decorate Rect, args...
 

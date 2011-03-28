@@ -1,38 +1,43 @@
 Module "constraint.Constraint"
 
-Import "base.Trigger"
+Import "base.Value"
 
 Static
 
-  eq: (a, b) ->      Trigger.compose a, (-> b.v)
-                                   , b, (-> a.v)
+  _: -> _
 
-  add0: (a, b, c) -> Trigger.compose a, (-> b.v + c.v)
-                                   , b, (-> a.v - c.v)
-                                   , c, (-> c.v)
+  Stage
+  eq: -> constraint 1
+    , ((a, b) -> b.v = a.v)
+    , ((a, b) -> a.v = b.v)
 
-  sub0: (a, b, c) -> Trigger.compose a, (-> b.v - c.v)
-                                   , b, (-> c.v + a.v)
-                                   , c, (-> c.v)
+  Stage
+  mid: -> constraint 1
+    , ((a, b, c) -> d = (c.v - b.v) / 2; b.v = a.v - d; c.v = a.v + d)
+    , ((a, b, c) -> a.v = b.v + (c.v - b.v) / 2)
+    , ((a, b, c) -> a.v = b.v + (c.v - b.v) / 2)
 
-  mid: (a, b, c) ->  Trigger.compose a, (-> (b.v + c.v) / 2)
-                                   , b, (-> a.v - (c.v - b.v) / 2)
-                                   , c, (-> a.v + (c.v - b.v) / 2)
+  Stage
+  add0: -> constraint 1
+    , ((a, b, c) -> b.v = a.v - c.v)
+    , ((a, b, c) -> a.v = b.v + c.v)
+    , ((a, b, c) -> a.v = b.v + c.v)
 
-  min: (a, b, c) ->  Trigger.compose a, (-> Math.min b.v, c.v)
-                                   , b, (-> if b.v <= c.v then a.v else b.v)
-                                   , c, (-> if c.v <  b.v then a.v else c.v)
+  Stage
+  sub0: -> constraint 1
+    , ((a, b, c) -> b.v = a.v + c.v)
+    , ((a, b, c) -> a.v = b.v - c.v)
+    , ((a, b, c) -> a.v = b.v - c.v)
 
-  max: (a, b, c) ->  Trigger.compose a, (-> Math.max b.v, c.v)
-                                   , b, (-> if b.v >= c.v then a.v else b.v)
-                                   , c, (-> if c.v >  b.v then a.v else c.v)
+  Stage
+  min: -> constraint 1
+    , ((a, b, c) -> d = a.v - Math.min b.v, c.v; b.v += d; c.v += d)
+    , ((a, b, c) -> a.v = Math.min b.v, c.v)
+    , ((a, b, c) -> a.v = Math.min b.v, c.v)
 
-  min0: (a, b, c) -> Trigger.compose a, (-> Math.min b.v, c.v)
-                                   , b, (-> a.v + if b.v <= c.v then 0 else b.v - c.v)
-                                   , c, (-> a.v + if c.v <  b.v then 0 else c.v - b.v)
-
-  max0: (a, b, c) -> Trigger.compose a, (-> Math.max b.v, c.v)
-                                   , b, (-> a.v - if b.v >= c.v then 0 else c.v - b.v)
-                                   , c, (-> a.v - if c.v >  b.v then 0 else b.v - c.v)
-
+  Stage
+  max: -> constraint 1
+    , ((a, b, c) -> d = a.v - Math.max b.v, c.v; b.v -= d; c.v -= d)
+    , ((a, b, c) -> a.v = Math.max b.v, c.v)
+    , ((a, b, c) -> a.v = Math.max b.v, c.v)
 

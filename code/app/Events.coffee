@@ -1,7 +1,5 @@
 Module "Events"
 
-Import "Prelude"
-
 Class
 
   Events: ->

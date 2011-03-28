@@ -5,10 +5,10 @@ Qualified "Events", "E"
 
 Class
 
-  SelectableShape: ->
+  SelectableShape: (selection) ->
     @onselect   = []
     @ondeselect = []
-    @selection  = @parent.selection
+    @selection  = selection
 
     @selection.selectable[@id] = @
 

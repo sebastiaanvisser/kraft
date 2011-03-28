@@ -1,29 +1,21 @@
 Module "handle.Handle"
 
+Import "adjustable.MoveableShape"
 Import "base.Obj"
 Import "shape.Rect"
-Import "adjustable.MoveableShape"
 Import "visible.VisibleEllipse"
-Qualified "constraint.Point", "P"
+Qualified "constraint.Point", "Pt"
 
+Register "Obj"
 Class
 
-  Handle: (revive, parent, pt) ->
-    @parent = parent
-    @pt     = pt
-    @defHandlePoint "handle", VisibleEllipse, 0, 0, 10, 10
+  Handle: (pt, canvas, renderer, elem) ->
+    @define pt: pt
+
+    @define handle: mk Rect, 0, 0, 10, 10
+    @handle.decorate VisibleEllipse, canvas, renderer, elem
+    @handle.decorate MoveableShape
+    ($ @handle.elem).addClass "handle"
+    Pt.eq @handle.center, @pt
     @
-
-  defHandlePoint: (prop, type, x, y, w, h) ->
-    @define prop, Rect.make @parent, x, y, w, h
-    P.eq @[prop].center, @pt
-    @[prop].decorate type
-    @[prop].decorate MoveableShape
-    $(@[prop].elem).addClass prop
-
-Static
-
-  init: -> Obj.register Handle
-
-  make: (args...) -> (new Obj "Handle").decorate Handle, args...
 

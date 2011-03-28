@@ -14,12 +14,12 @@ Class
     # In case something happens from the web-inspector or on application load
     # that requires a rerender, we install a setInterval to make sure things
     # get rendered. When no render is needed this trick should be cheap enough.
-
     E.manager.setInterval (=> @requireRender()), 50
+
     @
 
   enqueue: (o) ->
-    @queue[o.id] = o
+    @queue[o.id()] = o
     @requireRender()
 
   requireRender: -> E.manager.onThreadEndOnce "Renderer", => @renderQueue()

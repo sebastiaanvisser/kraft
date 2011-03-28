@@ -4,13 +4,12 @@ Import "Events"
 Import "Selection"
 Import "base.Obj"
 
+Register "Obj"
 Class
 
-  VisibleContainer: (revive) ->
-    @canvas   = @parent
-    @renderer = @parent.renderer
-    @elem     = @parent.elem
+  VisibleContainer: (canvas, renderer, elem) ->
+    @canvas   = canvas
+    @renderer = renderer
+    @elem     = elem
     @
-
-Static init: -> Obj.register VisibleContainer
 

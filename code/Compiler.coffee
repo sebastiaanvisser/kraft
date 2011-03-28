@@ -10,7 +10,7 @@ top.js = js =
   current:    undefined
   modules:    {}
   errors:     []
-  importers:  "Qualified Import".split ' '
+  importers:  "Qualified Import Register Stage".split ' '
   collectors: "Class Static Private".split ' '
 
 js.keywords = concat [js.importers, js.collectors]
@@ -84,25 +84,26 @@ js.codegen = ->
 
     # mkAccessor   = (f, n) -> "  #{name}.prototype.__define#{f.Get ? "Getter" : "Setter"}__(\"#{n}\", \n    #{f}\n  )"
     rename       = (f, n) -> f.toString().replace /function\s*/, "function " + name + '_' + n + ' '
-    mkMethod     = (f, n) -> "  #{name}.prototype.#{n} = \n  #{rename f, n}"
-    mkStatic     = (f, n) -> "  var #{n} = #{name}.#{n} = #{rename f, n}"
-
+    mkMethod     = (f, n) -> "  #{name}.prototype.#{n} = \n  #{rename f, n}" + (if f.annotations.Stage then "(this)" else "")
+    mkStatic     = (f, n) -> "  var #{n} = #{name}.#{n} = #{rename f, n}" + (if f.annotations.Stage then "(this)" else "")
     moduleHeader = genGlobalName mod.qname + " = function ()\n{"
     qualifieds   = (qualifiedImport q for q in concat [mod.Qualified, mod.Import]).join "\n"
     imports      = (staticImport i for i in mod.Import ).join "\n"
     constructor  = "  var #{name} = " + if mod.methods[name] then "\n  " + rename mod.methods[name], "Constructor" else "{}"
+    register     = ("  #{o}.register(#{name});" for o in mod.Register).join "\n"
     methods      = (mkMethod f, n for n, f of mod.methods when not f.annotations.Static and n != name).join "\n\n"
     statics      = (mkStatic f, n for n, f of mod.methods when f.annotations.Static).join "\n\n"
     initializer  = "  if (#{name}.init) #{name}.init.apply(this, arguments)"
     moduleFooter = "  return #{name}\n}\n"
 
-    print [ moduleHeader
-            qualifieds
-            imports
-            constructor
-            methods
-            statics
-            initializer
-            moduleFooter
-          ].join "\n\n"
+    evaluate [ moduleHeader
+               qualifieds
+               imports
+               constructor
+               register
+               methods
+               statics
+               initializer
+               moduleFooter
+             ].join "\n\n"
 
