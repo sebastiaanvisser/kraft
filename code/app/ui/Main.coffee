@@ -1,36 +1,31 @@
 Module "ui.Main"
 
-# Import "adjustable.AdjustableLine"
-# Import "adjustable.AdjustableText"
-# Import "adjustable.AdjustableTriangle"
-# Import "base.List"
-# Import "handle.HorizontalGuide"
-# Import "handle.VerticalGuide"
-# Import "shape.Line"
-# Import "shape.Point"
-# Import "shape.Rect"
-# Import "shape.Text"
-# Import "shape.Triangle"
-# Import "style.Color"
-# Import "style.Gradient"
-# Import "visible.VisibleLine"
-# Import "visible.VisibleText"
-# Import "visible.VisibleTriangle"
 Import "Canvas"
 Import "Units"
 Import "adjustable.AdjustableDocument"
+Import "adjustable.AdjustableLine"
 Import "adjustable.AdjustableRect"
+Import "adjustable.AdjustableText"
+Import "adjustable.AdjustableTriangle"
 Import "adjustable.MoveableShape"
 Import "adjustable.SelectableShape"
 Import "base.Obj"
 Import "base.Value"
+Import "handle.HorizontalGuide"
+Import "handle.VerticalGuide"
 Import "shape.Container"
+Import "shape.Line"
 Import "shape.Point"
 Import "shape.Rect"
+Import "shape.Text"
+Import "shape.Triangle"
 Import "visible.VisibleContainer"
 Import "visible.VisibleDocument"
 Import "visible.VisibleEllipse"
+Import "visible.VisibleLine"
 Import "visible.VisibleRect"
+Import "visible.VisibleText"
+Import "visible.VisibleTriangle"
 Qualified "Events", "E"
 Qualified "constraint.Constraint", "C"
 
@@ -65,6 +60,25 @@ Class
     ($ @document.elem).addClass "shape"
     @document
 
+  setupGuides: ->
+    @hguide = mk VerticalGuide,   @canvas, @canvas.renderer, @canvas.elem, 630
+    @vguide = mk HorizontalGuide, @canvas, @canvas.renderer, @canvas.elem, 420
+
+  setupMenu: ->
+    E.manager.bind "#menu #rect",        "click", => @mkRect @root
+    E.manager.bind "#menu #line",        "click", => @mkLine @root
+    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
+    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
+    E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
+    E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
+    E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
+    E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
+    E.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
+    E.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
+    E.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
+    # E.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
+    # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
+
   mkRect: (parent) ->
     r = mk Rect, 130, 120, 230, 320
     r.decorate VisibleRect, @canvas, @canvas.renderer, @canvas.elem
@@ -89,40 +103,21 @@ Class
     $(e.elem).addClass "myellipse"
     $(e.elem).addClass "shape"
 
-  setupMenu: ->
-    E.manager.bind "#menu #rect",        "click", => @mkRect @root
-    E.manager.bind "#menu #line",        "click", => @mkLine @root
-    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
-    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
-    E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
-    E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
-    E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
-    E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
-    E.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
-    E.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
-    E.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
-    # E.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
-    # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
-
-Static
-
-  init: -> # E.manager.documentReady startup
-    startup()
-
-  startup: ->
-    main = new Main()
-    window.main = main
-
-###
-
-  setupGuides: ->
-    @hguide = VerticalGuide.mk   @root, 630
-    @vguide = HorizontalGuide.mk @root, 420
+  mkLine: (parent) ->
+    l = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
+    l.decorate VisibleLine, @canvas, @canvas.renderer, @canvas.elem, 20
+    l.decorate SelectableShape, @root.selection
+    l.decorate AdjustableLine
+    l.decorate MoveableShape
+    parent.addShape l
+    $(l.elem).addClass "myline"
+    $(l.elem).addClass "shape"
 
   mkText: (parent, text) ->
-    t = Text.mk parent, 30, 70, 130, 70, text
-    t.decorate VisibleText
-    t.decorate SelectableShape
+    t = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
+    t = t.decorate Text, text
+    t.decorate VisibleText, @canvas, @canvas.renderer, @canvas.elem
+    t.decorate SelectableShape, @root.selection
     t.decorate AdjustableText
     t.decorate MoveableShape
     parent.addShape t
@@ -130,15 +125,14 @@ Static
     $(t.elem).addClass "shape"
     t
 
-  mkLine: (parent) ->
-    l = Line.mk parent, (Point.mk parent, 150, 200), (Point.mk parent, 250, 200), 20
-    l.decorate VisibleLine
-    l.decorate SelectableShape
-    l.decorate AdjustableLine
-    l.decorate MoveableShape
-    parent.addShape l
-    $(l.elem).addClass "myline"
-    $(l.elem).addClass "shape"
+Static
+
+  init: -> E.manager.documentReady startup
+
+  startup: ->
+    window.main = new Main()
+
+###
 
   mkTriangle: (parent) ->
     t = Triangle.mk parent, 100, 100, 200, 200

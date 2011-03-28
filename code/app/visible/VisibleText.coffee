@@ -3,12 +3,13 @@ Module "visible.VisibleText"
 Import "base.Obj"
 Import "Units"
 
+Register "Obj"
 Class
 
-  VisibleText: (revive) ->
-    @parentElem = @parent.elem
-    @canvas     = @parent.canvas
-    @renderer   = @parent.renderer
+  VisibleText: (canvas, renderer, parentElem) ->
+    @canvas     = canvas
+    @renderer   = renderer
+    @parentElem = parentElem
     @elem       = @setupElem()
 
     # Setup rendering and perform initial render.
@@ -39,5 +40,4 @@ Class
 
   unrender: -> @parentElem.removeChild @elem
 
-Static init: -> Obj.register VisibleText
 

@@ -11,6 +11,7 @@ Import "visible.VisibleLine"
 Import "visible.VisibleText"
 Qualified "constraint.Constraint", "C"
 
+Register "Obj"
 Class
 
   VerticalGuide: (revive, parent, x) ->
@@ -45,10 +46,4 @@ Class
     C.eq @caption.$.text, @$.x
     C.eq   @caption.p0.$.y, @canvas.viewport.p0.$.y
     C.add0 @caption.p1.$.y, @canvas.viewport.p0.$.y, val 50
-
-Static
-
-  init: -> Obj.register VerticalGuide
-
-  make: (args...) -> (new Obj "VerticalGuide").decorate VerticalGuide, args...
 

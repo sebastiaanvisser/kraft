@@ -4,13 +4,16 @@ Import "base.Obj"
 Import "shape.Line"
 Import "Units"
 
+Register "Obj"
 Class
 
-  VisibleLine: (revive) ->
-    @parentElem = @parent.elem
-    @canvas     = @parent.canvas
-    @renderer   = @parent.renderer
+  VisibleLine: (canvas, renderer, parentElem, w) ->
+    @canvas     = canvas
+    @renderer   = renderer
+    @parentElem = parentElem
     @elem       = @setupElem()
+
+    @define width: w
 
     # Setup rendering and perform initial render.
     @onchange -> @renderer.enqueue @
@@ -23,8 +26,7 @@ Class
     @parentElem.appendChild elem
     elem
 
-  destructor: ->
-    @unrender()
+  destructor: -> @unrender()
 
   render: ->
     len = Math.sqrt (Math.pow @p1.x - @p0.x, 2) + (Math.pow @p1.y - @p0.y, 2)
@@ -39,6 +41,4 @@ Class
     st["-webkit-transform"] = "rotate(" + rot + "deg)"
 
   unrender: -> @parentElem.removeChild @elem
-
-Static init: -> Obj.register VisibleLine
 

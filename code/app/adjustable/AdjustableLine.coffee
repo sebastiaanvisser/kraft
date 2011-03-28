@@ -4,6 +4,7 @@ Import "handle.Handle"
 Import "adjustable.SelectableShape"
 Import "base.Obj"
 
+Register "Obj"
 Class
 
   AdjustableLine: ->
@@ -13,11 +14,10 @@ Class
 
   mkHandles: ->
     @handles = new Obj
-    @handles.define "topLeft",     Handle.make(@parent, @p0)
-    @handles.define "bottomRight", Handle.make(@parent, @p1)
-    @handles.define "center",      Handle.make(@parent, @center)
+    @handles.define
+      topLeft:     mk Handle, @p0,     @canvas, @renderer, @parentElem
+      bottomRight: mk Handle, @p1,     @canvas, @renderer, @parentElem
+      center:      mk Handle, @center, @canvas, @renderer, @parentElem
 
   delHandles: -> @handles.destructor()
-
-Static init: -> Obj.register AdjustableLine
 
