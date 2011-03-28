@@ -1,10 +1,11 @@
 # Utilties.
 
+top = this
+evaluate = if top.window then eval else print
 concat = (a) -> [].concat a...
 
 # Top level loader structures.
 
-top = this
 top.js = js =
   current:    undefined
   modules:    {}
