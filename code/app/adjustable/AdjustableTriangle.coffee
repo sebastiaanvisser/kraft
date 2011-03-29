@@ -5,6 +5,7 @@ Import "handle.Handle"
 Import "handle.VerticalHandle"
 Import "handle.HorizontalHandle"
 
+Register "Obj"
 Class
 
   AdjustableTriangle: ->
@@ -25,6 +26,4 @@ Class
     @handles.define "center",      (Handle.make           @model, @center)
 
   delHandles: -> @handles.destructor()
-
-Static init: -> Obj.register AdjustableTriangle
 

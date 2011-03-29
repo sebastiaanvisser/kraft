@@ -3,6 +3,7 @@ Module "visible.VisibleTriangle"
 Import "base.Obj"
 Import "Units"
 
+Register "Obj"
 Class
 
   VisibleTriangle: (revive, model) ->
@@ -42,6 +43,4 @@ Class
     st["-webkit-transform"] = "skew(" + (90 + rot) + "deg)"
 
   unrender: -> @model.canvas.canvasElem.removeChild @elem
-
-Static init: -> Obj.register VisibleTriangle
 

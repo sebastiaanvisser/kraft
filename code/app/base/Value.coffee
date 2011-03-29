@@ -17,6 +17,10 @@ Class
     @__defineGetter__ "v", @get
     @__defineSetter__ "v", @set
 
+  destructor: ->
+    @value.destructor() if @value.destructor
+    # todo: unlink
+
   get: -> @value
 
   set: (v) ->

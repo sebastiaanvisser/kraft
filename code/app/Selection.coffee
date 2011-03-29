@@ -1,5 +1,8 @@
 Module "Selection"
 
+Import "base.Obj"
+
+Register "Obj"
 Class
 
   Selection: ->

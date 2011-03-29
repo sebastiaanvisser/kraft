@@ -38,5 +38,8 @@ Class
     st.borderBottomLeftRadius  =
     st.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
 
-  unrender: -> @parentElem.removeChild @elem
+  unrender: ->
+    # unless @elem.parentNode
+      # debugger
+    @parentElem.removeChild @elem
 

@@ -3,6 +3,7 @@ Module "adjustable.SelectableShape"
 Import "base.Obj"
 Qualified "Events", "E"
 
+Register "Obj"
 Class
 
   SelectableShape: (selection) ->
@@ -30,6 +31,4 @@ Class
 
   select:   -> @selection.select   @
   deselect: -> @selection.deselect @
-
-Static init: -> Obj.register SelectableShape
 

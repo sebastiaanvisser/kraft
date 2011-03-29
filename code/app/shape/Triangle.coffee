@@ -5,6 +5,7 @@ Import "constraint.Constraint"
 Qualified "constraint.Point", "Pc"
 Qualified "shape.Point", "Pt"
 
+Register "Obj"
 Class
 
   Triangle: (revive, ctx, x0, y0, x1, y1) ->
@@ -31,10 +32,4 @@ Class
     min0 (@derive "top",     0), @p0.$.y,          @p3.$.y
     max0 (@derive "right",   0), @p0.$.x,          @p3.$.x
     max0 (@derive "bottom",  0), @p0.$.y,          @p3.$.y
-
-Static
-
-  init: -> Obj.register Triangle
-
-  make: (args...) -> (new Obj "Triangle").decorate Triangle, args...
 

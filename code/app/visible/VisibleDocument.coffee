@@ -3,6 +3,7 @@ Module "visible.VisibleDocument"
 Import "base.Obj"
 Import "Units"
 
+Register "Obj"
 Class
 
   VisibleDocument: (canvas, renderer, elem) ->

@@ -16,12 +16,14 @@ Class
       reactors:     []
     @
 
-  id: -> @meta.constructors[0].name.replace /_Constructor$/, '' + @meta.id
+  id: ->
+    ctor = @meta.constructors[0]
+    name = ctor and ctor.name.replace /_Constructor$/, ''
+    (name or "Anonymous") + @meta.id
 
   destructor: ->
     d.call @ for d in @meta.destructors
-    p.destructor() for _, p of @$
-    return
+    p.destructor() for _, p of @$ when p.destructor
 
   decorate: (ctor, args...) ->
 
