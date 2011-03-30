@@ -24,6 +24,7 @@ Import "visible.VisibleDocument"
 Import "visible.VisibleEllipse"
 Import "visible.VisibleLine"
 Import "visible.VisibleRect"
+Import "visible.VisiblePointer"
 Import "visible.VisibleShape"
 Import "visible.VisibleText"
 Import "visible.VisibleTriangle"
@@ -72,6 +73,7 @@ Class
     E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
     E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
     E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
+    E.manager.bind "#menu #pointer",     "click", => @mkPointer @root
     E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
     E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
     E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
@@ -81,44 +83,41 @@ Class
     # E.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
     # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
-  mkRect: (parent) ->
+  mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320
     r.decorate VisibleShape, @root
     r.decorate VisibleRect
     r.decorate SelectableShape, @root.selection
     r.decorate AdjustableRect
     r.decorate MoveableShape
-    parent.addShape r
+    ctx.addShape r
     $(r.elem).addClass "myrect"
-    $(r.elem).addClass "shape"
     # r.container = Container.mk r
     # r.container.decorate RenderContext
     # @target = r.container
     r
 
-  mkEllipse: (parent) ->
+  mkEllipse: (ctx) ->
     e = mk Rect, 230, 120, 330, 320
     e.decorate VisibleShape, @root
     e.decorate VisibleEllipse
     e.decorate SelectableShape, @root.selection
     e.decorate AdjustableRect
     e.decorate MoveableShape
-    parent.addShape e
+    ctx.addShape e
     $(e.elem).addClass "myellipse"
-    $(e.elem).addClass "shape"
 
-  mkLine: (parent) ->
+  mkLine: (ctx) ->
     l = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
     l.decorate VisibleShape, @root
     l.decorate VisibleLine
     l.decorate SelectableShape, @root.selection
     l.decorate AdjustableLine
     l.decorate MoveableShape
-    parent.addShape l
+    ctx.addShape l
     $(l.elem).addClass "myline"
-    $(l.elem).addClass "shape"
 
-  mkText: (parent, text) ->
+  mkText: (ctx, text) ->
     t = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
     t = t.decorate Text, text
     t.decorate VisibleShape, @root
@@ -126,20 +125,30 @@ Class
     t.decorate SelectableShape, @root.selection
     t.decorate AdjustableText
     t.decorate MoveableShape
-    parent.addShape t
+    ctx.addShape t
     $(t.elem).addClass "mytext"
-    $(t.elem).addClass "shape"
+    t
+
+  mkPointer: (ctx) ->
+    t = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
+    t.decorate VisibleShape, @root
+    t.decorate VisiblePointer
+    t.decorate SelectableShape, @root.selection
+    t.decorate AdjustableLine
+    t.decorate MoveableShape
+    ctx.addShape t
+    $(t.elem).addClass "mypointer"
     t
 
 ###
 
-  mkTriangle: (parent) ->
-    t = Triangle.mk parent, 100, 100, 200, 200
+  mkTriangle: (ctx) ->
+    t = Triangle.mk ctx, 100, 100, 200, 200
     t.decorate VisibleTriangle
     t.decorate SelectableShape
     t.decorate AdjustableTriangle
     t.decorate MoveableShape
-    parent.addShape t
+    ctx.addShape t
     ($ t.elem).addClass "mytriangle"
     ($ t.elem).addClass "shape"
 
