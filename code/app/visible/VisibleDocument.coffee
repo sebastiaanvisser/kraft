@@ -9,7 +9,7 @@ Class
   VisibleDocument: () ->
     $(@elem).addClass "document"
     @topLeft.onchange (_, p) =>
-      $(@canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)
+      $(@renderContext.canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)
     @
 
   render: ->

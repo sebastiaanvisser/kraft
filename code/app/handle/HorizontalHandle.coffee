@@ -10,13 +10,13 @@ Qualified "constraint.Point", "Pt"
 Register "Obj"
 Class
 
-  HorizontalHandle: (canvas, renderer, elem) ->
+  HorizontalHandle: () ->
 
     @define handleH: mk Rect, 0, 0, 16, 2
-    @handleH.decorate VisibleShape, canvas, renderer, elem
+    @handleH.decorate VisibleShape, @renderContext
     @handleH.decorate VisibleRect
     @handleH.decorate MoveableShape
-    ($ @handleH.elem).addClass "handleH"
+    $(@handleH.elem).addClass "handleH"
     Pt.eq @handleH.center, @pt
 
     @handle.dragger.lockY  = true

@@ -16,8 +16,8 @@ Class
   mkHandles: ->
     @derive handles: new Obj
     @handles.define
-      topLeft:     mk Handle, @p0, @canvas, @renderer, @parentElem
-      bottomRight: mk Handle, @p3, @canvas, @renderer, @parentElem
+      topLeft:     mk Handle, @p0, @renderContext
+      bottomRight: mk Handle, @p3, @renderContext
 
   delHandles: ->
     @handles.destructor()

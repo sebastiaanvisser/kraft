@@ -10,13 +10,14 @@ Qualified "constraint.Point", "Pt"
 Register "Obj"
 Class
 
-  Handle: (pt, canvas, renderer, elem) ->
+  Handle: (pt, renderContext) ->
     @pt = pt
+    @renderContext = renderContext
     @define handle: mk Rect, 0, 0, 10, 10
-    @handle.decorate VisibleShape, canvas, renderer, elem
+    @handle.decorate VisibleShape, renderContext
     @handle.decorate VisibleEllipse
     @handle.decorate MoveableShape
-    ($ @handle.elem).addClass "handle"
+    $(@handle.elem).addClass "handle"
     Pt.eq @handle.center, @pt
     @
 

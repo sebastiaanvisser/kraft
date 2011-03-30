@@ -1,4 +1,4 @@
-Module "visible.VisibleContainer"
+Module "visible.RenderContext"
 
 Import "Events"
 Import "Selection"
@@ -7,7 +7,7 @@ Import "base.Obj"
 Register "Obj"
 Class
 
-  VisibleContainer: (canvas, renderer, elem) ->
+  RenderContext: (canvas, renderer, elem) ->
     @canvas   = canvas
     @renderer = renderer
     @elem     = elem

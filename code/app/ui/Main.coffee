@@ -19,7 +19,7 @@ Import "shape.Point"
 Import "shape.Rect"
 Import "shape.Text"
 Import "shape.Triangle"
-Import "visible.VisibleContainer"
+Import "visible.RenderContext"
 Import "visible.VisibleDocument"
 Import "visible.VisibleEllipse"
 Import "visible.VisibleLine"
@@ -50,11 +50,11 @@ Class
 
   setupRootContainer: ->
     @root = mk Container, @canvas
-    @root.decorate VisibleContainer, @canvas, @canvas.renderer, @canvas.elem
+    @root.decorate RenderContext, @canvas, @canvas.renderer, @canvas.elem
 
   setupDocument: ->
     @document = mk Rect, 30, 20, 230, 520
-    @document.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    @document.decorate VisibleShape, @root
     @document.decorate VisibleDocument
     @document.decorate SelectableShape, @root.selection
     @document.decorate AdjustableDocument
@@ -63,8 +63,8 @@ Class
     @document
 
   setupGuides: ->
-    @hguide = mk VerticalGuide,   @canvas, @canvas.renderer, @canvas.elem, 630
-    @vguide = mk HorizontalGuide, @canvas, @canvas.renderer, @canvas.elem, 420
+    @hguide = mk VerticalGuide,   @root, 630
+    @vguide = mk HorizontalGuide, @root, 420
 
   setupMenu: ->
     E.manager.bind "#menu #rect",        "click", => @mkRect @root
@@ -83,7 +83,7 @@ Class
 
   mkRect: (parent) ->
     r = mk Rect, 130, 120, 230, 320
-    r.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    r.decorate VisibleShape, @root
     r.decorate VisibleRect
     r.decorate SelectableShape, @root.selection
     r.decorate AdjustableRect
@@ -92,13 +92,13 @@ Class
     $(r.elem).addClass "myrect"
     $(r.elem).addClass "shape"
     # r.container = Container.mk r
-    # r.container.decorate VisibleContainer
+    # r.container.decorate RenderContext
     # @target = r.container
     r
 
   mkEllipse: (parent) ->
     e = mk Rect, 230, 120, 330, 320
-    e.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    e.decorate VisibleShape, @root
     e.decorate VisibleEllipse
     e.decorate SelectableShape, @root.selection
     e.decorate AdjustableRect
@@ -109,7 +109,8 @@ Class
 
   mkLine: (parent) ->
     l = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
-    l.decorate VisibleLine, @canvas, @canvas.renderer, @canvas.elem, 20
+    l.decorate VisibleShape, @root
+    l.decorate VisibleLine
     l.decorate SelectableShape, @root.selection
     l.decorate AdjustableLine
     l.decorate MoveableShape
@@ -120,7 +121,7 @@ Class
   mkText: (parent, text) ->
     t = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
     t = t.decorate Text, text
-    t.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    t.decorate VisibleShape, @root
     t.decorate VisibleText
     t.decorate SelectableShape, @root.selection
     t.decorate AdjustableText
@@ -129,13 +130,6 @@ Class
     $(t.elem).addClass "mytext"
     $(t.elem).addClass "shape"
     t
-
-Static
-
-  init: -> E.manager.documentReady startup
-
-  startup: ->
-    window.main = new Main()
 
 ###
 
@@ -150,4 +144,10 @@ Static
     ($ t.elem).addClass "shape"
 
 ###
+
+Static
+
+  init: -> E.manager.documentReady startup
+
+  startup: -> window.main = new Main()
 

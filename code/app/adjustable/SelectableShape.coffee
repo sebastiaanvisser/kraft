@@ -13,8 +13,8 @@ Class
 
     @selection.selectable[@id] = @
 
-    E.manager.bind @parentElem, "mousedown", (e) => @handleDeselect(e)
-    E.manager.bind @elem,       "mousedown", (e) => @handleSelect(e)
+    E.manager.bind @renderContext.elem, "mousedown", (e) => @handleDeselect(e)
+    E.manager.bind @elem,               "mousedown", (e) => @handleSelect(e)
 
     @onselect.push   => $(@.elem).addClass    "selected"
     @ondeselect.push => $(@.elem).removeClass "selected"

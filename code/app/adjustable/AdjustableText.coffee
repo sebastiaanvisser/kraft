@@ -27,9 +27,9 @@ Class
 
     @derive handles: new Obj
     @handles.define
-      topLeft:      mk Handle, @p0,     @canvas, @renderer, @parentElem
-      bottomRight:  mk Handle, @p1,     @canvas, @renderer, @parentElem
-      center:       mk Handle, @center, @canvas, @renderer, @parentElem
+      topLeft:      mk Handle, @p0,     @renderContext
+      bottomRight:  mk Handle, @p1,     @renderContext
+      center:       mk Handle, @center, @renderContext
 
     # @handles.define "spine", (Line.make @parent, (Point.make @parent), (Point.make @parent), 2)
     # sp = @handles.spine

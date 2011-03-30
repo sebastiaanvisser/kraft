@@ -5,26 +5,23 @@ Import "base.Obj"
 Register "Obj"
 Class
 
-  VisibleShape: (canvas, renderer, parentElem) ->
-    @canvas     = canvas
-    @renderer   = renderer
-    @parentElem = parentElem
-    @elem       = @setupElem()
+  VisibleShape: (renderContext) ->
+    @renderContext = renderContext
+    @setupElem()
 
     # Setup rendering and perform initial render.
-    @onchange -> @renderer.enqueue @
-    @renderer.enqueue @
+    @onchange -> @renderContext.renderer.enqueue @
+    @renderContext.renderer.enqueue @
     @
 
   setupElem: ->
-    elem = document.createElement "div"
-    ($ elem).addClass "shape"
-    @parentElem.appendChild elem
-    elem
+    @elem = document.createElement "div"
+    $(@elem).addClass "shape"
+    @renderContext.elem.appendChild @elem
 
   destructor: -> @unrender()
 
   render: -> {}
 
-  unrender: -> @parentElem.removeChild @elem
+  unrender: -> @renderContext.elem.removeChild @elem
 

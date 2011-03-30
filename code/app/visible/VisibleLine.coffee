@@ -1,32 +1,14 @@
 Module "visible.VisibleLine"
 
 Import "base.Obj"
-Import "shape.Line"
 Import "Units"
 
 Register "Obj"
 Class
 
-  VisibleLine: (canvas, renderer, parentElem, w) ->
-    @canvas     = canvas
-    @renderer   = renderer
-    @parentElem = parentElem
-    @elem       = @setupElem()
-
+  VisibleLine: (w) ->
+    $(@elem).addClass "line"
     @define width: w
-
-    # Setup rendering and perform initial render.
-    @onchange -> @renderer.enqueue @
-    @renderer.enqueue @
-    @
-
-  setupElem: ->
-    elem = document.createElement "div"
-    $(elem).addClass "line"
-    @parentElem.appendChild elem
-    elem
-
-  destructor: -> @unrender()
 
   render: ->
     len = Math.sqrt (Math.pow @p1.x - @p0.x, 2) + (Math.pow @p1.y - @p0.y, 2)
@@ -39,6 +21,4 @@ Class
     st.height = px @width
 
     st["-webkit-transform"] = "rotate(" + rot + "deg)"
-
-  unrender: -> @parentElem.removeChild @elem
 
