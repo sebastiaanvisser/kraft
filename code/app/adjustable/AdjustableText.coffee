@@ -43,4 +43,5 @@ Class
   delHandles: ->
     ($ @elem).attr "contentEditable", false
     @handles.destructor()
+    delete @handles
 

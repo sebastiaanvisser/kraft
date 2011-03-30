@@ -19,5 +19,7 @@ Class
       bottomRight: mk Handle, @p1,     @canvas, @renderer, @parentElem
       center:      mk Handle, @center, @canvas, @renderer, @parentElem
 
-  delHandles: -> @handles.destructor()
+  delHandles: ->
+    @handles.destructor()
+    delete @handles
 

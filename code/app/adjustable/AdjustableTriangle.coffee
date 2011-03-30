@@ -25,5 +25,7 @@ Class
     @handles.define "midBottom",   (VerticalHandle.make   @model, @midBottom)
     @handles.define "center",      (Handle.make           @model, @center)
 
-  delHandles: -> @handles.destructor()
+  delHandles: ->
+    @handles.destructor()
+    delete @handles
 

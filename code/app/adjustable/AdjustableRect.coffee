@@ -47,5 +47,7 @@ Class
     @handles.define borderH: mk Handle, borderH, @canvas, @renderer, @parentElem
     @handles.borderH.decorate HorizontalHandle, @canvas, @renderer, @parentElem
 
-  delHandles: -> @handles.destructor()
+  delHandles: ->
+    @handles.destructor()
+    delete @handles
 
