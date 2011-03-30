@@ -12,7 +12,7 @@ Class
     @selection = new Selection
     @
 
-  addShape: (shape) -> @shapes[shape.id()] = shape
+  addShape: (shape) -> @shapes[shape.id] = shape
 
   delShape: (id) ->
     obj = @shapes[id]

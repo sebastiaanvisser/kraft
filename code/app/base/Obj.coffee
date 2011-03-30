@@ -7,8 +7,8 @@ Class
 
   Obj: () ->
     @$    = {}
+    @id   = Obj.nextId++
     @meta =
-      id:           Obj.nextId++
       constructors: []
       destructors:  []
       defined:      {}

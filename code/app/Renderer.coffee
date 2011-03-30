@@ -19,7 +19,7 @@ Class
     @
 
   enqueue: (o) ->
-    @queue[o.id()] = o
+    @queue[o.id] = o
     @requireRender()
 
   requireRender: -> E.manager.onThreadEndOnce "Renderer", => @renderQueue()
