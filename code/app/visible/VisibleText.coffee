@@ -6,24 +6,9 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleText: (canvas, renderer, parentElem) ->
-    @canvas     = canvas
-    @renderer   = renderer
-    @parentElem = parentElem
-    @elem       = @setupElem()
-
-    # Setup rendering and perform initial render.
-    @onchange -> @renderer.enqueue @
-    @renderer.enqueue @
+  VisibleText: () ->
+    $(@elem).addClass "text"
     @
-
-  setupElem: ->
-    elem = document.createElement "div"
-    ($ elem).addClass "text"
-    @parentElem.appendChild elem
-    elem
-
-  destructor: -> @unrender()
 
   render: ->
     @elem.innerHTML = @text unless @elem.innerHTML == @text
@@ -37,7 +22,4 @@ Class
     st.left = px (@p0.x + @p1.x - w) / 2
     st.top  = px (@p0.y + @p1.y - h) / 2
     st["-webkit-transform"] = "rotate(" + rot + "deg)"
-
-  unrender: -> @parentElem.removeChild @elem
-
 

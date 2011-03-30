@@ -4,6 +4,7 @@ Import "adjustable.MoveableShape"
 Import "base.Obj"
 Import "shape.Rect"
 Import "visible.VisibleRect"
+Import "visible.VisibleShape"
 Qualified "constraint.Point", "Pt"
 
 Register "Obj"
@@ -12,7 +13,8 @@ Class
   VerticalHandle: (canvas, renderer, elem) ->
 
     @define handleV: mk Rect, 0, 0, 2, 16
-    @handleV.decorate VisibleRect, canvas, renderer, elem
+    @handleV.decorate VisibleShape, canvas, renderer, elem
+    @handleV.decorate VisibleRect
     @handleV.decorate MoveableShape
     ($ @handleV.elem).addClass "handleV"
     Pt.eq @handleV.center, @pt

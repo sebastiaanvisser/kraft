@@ -6,33 +6,17 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleDocument: (canvas, renderer, elem) ->
-    @canvas     = canvas
-    @renderer   = renderer
-    @parentElem = elem
-    @elem       = @setupElem()
-
+  VisibleDocument: () ->
+    $(@elem).addClass "document"
     @topLeft.onchange (_, p) =>
-      ($ @canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)
-
-    # Setup rendering and perform initial render.
-    @onchange -> @renderer.enqueue @
-    @renderer.enqueue @
+      $(@canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)
     @
 
-  setupElem: ->
-    elem = document.createElement "div"
-    ($ elem).addClass "document"
-    @parentElem.appendChild elem
-    elem
-
-  destructor: -> @unrender()
-
   render: ->
-    @elem.style.left   = px @left
-    @elem.style.top    = px @top
-    @elem.style.width  = px @right  - @left
-    @elem.style.height = px @bottom - @top
+    st = @elem.style
 
-  unrender: -> @parentElem.removeChild @elem
+    st.left   = px @left
+    st.top    = px @top
+    st.width  = px @right  - @left
+    st.height = px @bottom - @top
 

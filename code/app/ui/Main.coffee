@@ -24,6 +24,7 @@ Import "visible.VisibleDocument"
 Import "visible.VisibleEllipse"
 Import "visible.VisibleLine"
 Import "visible.VisibleRect"
+Import "visible.VisibleShape"
 Import "visible.VisibleText"
 Import "visible.VisibleTriangle"
 Qualified "Events", "E"
@@ -41,7 +42,7 @@ Class
     @
 
   playground: ->
-    window.pt = mk Point, 10, 20
+    window.pt   = mk Point, 10, 20
     window.rect = mk Rect, 100, 200, 400, 600
 
   setupCanvas: ->
@@ -53,7 +54,8 @@ Class
 
   setupDocument: ->
     @document = mk Rect, 30, 20, 230, 520
-    @document.decorate VisibleDocument, @canvas, @canvas.renderer, @canvas.elem
+    @document.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    @document.decorate VisibleDocument
     @document.decorate SelectableShape, @root.selection
     @document.decorate AdjustableDocument
     ($ @document.elem).addClass "mydocument"
@@ -81,7 +83,8 @@ Class
 
   mkRect: (parent) ->
     r = mk Rect, 130, 120, 230, 320
-    r.decorate VisibleRect, @canvas, @canvas.renderer, @canvas.elem
+    r.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    r.decorate VisibleRect
     r.decorate SelectableShape, @root.selection
     r.decorate AdjustableRect
     r.decorate MoveableShape
@@ -95,7 +98,8 @@ Class
 
   mkEllipse: (parent) ->
     e = mk Rect, 230, 120, 330, 320
-    e.decorate VisibleEllipse, @canvas, @canvas.renderer, @canvas.elem
+    e.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    e.decorate VisibleEllipse
     e.decorate SelectableShape, @root.selection
     e.decorate AdjustableRect
     e.decorate MoveableShape
@@ -116,7 +120,8 @@ Class
   mkText: (parent, text) ->
     t = mk Line, (mk Point, 150, 200), (mk Point, 250, 200)
     t = t.decorate Text, text
-    t.decorate VisibleText, @canvas, @canvas.renderer, @canvas.elem
+    t.decorate VisibleShape, @canvas, @canvas.renderer, @canvas.elem
+    t.decorate VisibleText
     t.decorate SelectableShape, @root.selection
     t.decorate AdjustableText
     t.decorate MoveableShape

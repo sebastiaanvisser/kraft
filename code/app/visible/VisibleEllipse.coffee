@@ -6,24 +6,8 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleEllipse: (canvas, renderer, parentElem) ->
-    @canvas     = canvas
-    @renderer   = renderer
-    @parentElem = parentElem
-    @elem       = @setupElem()
-
-    # Setup rendering and perform initial render.
-    @onchange -> @renderer.enqueue @
-    @renderer.enqueue @
-    @
-
-  setupElem: ->
-    elem = document.createElement "div"
-    ($ elem).addClass "ellipse"
-    @parentElem.appendChild elem
-    elem
-
-  destructor: -> @unrender()
+  VisibleEllipse: ->
+    $(@elem).addClass "ellipse"
 
   render: ->
     st = @elem.style
@@ -37,9 +21,4 @@ Class
     st.borderTopRightRadius    =
     st.borderBottomLeftRadius  =
     st.borderBottomRightRadius = (px @width / 2) + ' ' + (px @height / 2)
-
-  unrender: ->
-    # unless @elem.parentNode
-      # debugger
-    @parentElem.removeChild @elem
 
