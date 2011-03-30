@@ -16,14 +16,10 @@ Class
       reactors:     []
     @
 
-  id: ->
-    ctor = @meta.constructors[0]
-    name = ctor and ctor.name.replace /_Constructor$/, ''
-    (name or "Anonymous") + @meta.id
-
   destructor: ->
     d.call @ for d in @meta.destructors
     p.destructor() for _, p of @$ when p.destructor
+    return
 
   decorate: (ctor, args...) ->
 
@@ -45,6 +41,8 @@ Class
   Private
   property: (name, v) ->
     p = @$[name] = val v
+    # console.warn "Double bound of value: ", v.id if v.parent
+    v.parent = p
     p.parent = @
     p.name = name
     @__defineGetter__ name,     -> p.get()
@@ -53,6 +51,12 @@ Class
 
   onchange: (f) -> @meta.reactors.push f
   changed: (args...) -> r.apply @, args.concat [@] for r in @meta.reactors
+
+  path: ->
+    prnt = if @parent and @parent.path then @parent.path() + "." else ""
+    ctor = @meta.constructors[0]
+    name = ctor and ctor.name.replace /_Constructor$/, ''
+    prnt + (name or "Anonymous") + '[' + @id + ']'
 
   debug: () ->
     indent = (s) -> ("  " + l for l in s.split /\n/).join "\n"

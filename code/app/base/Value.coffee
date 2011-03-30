@@ -36,6 +36,10 @@ Class
     @parent.changed [@name, v] if @parent
     @busy = false
 
+  path: ->
+    prnt = if @parent and @parent.path then @parent.path() + "." else ""
+    prnt + (@name or "Value") + '[' + @id + ']'
+
 Static
 
   # The Value smart constructor that build a reactive value when it not already
