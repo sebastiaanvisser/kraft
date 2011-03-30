@@ -10,8 +10,7 @@ Register "Obj"
 Class
 
   Handle: (pt, canvas, renderer, elem) ->
-    @define pt: pt
-
+    @pt = pt
     @define handle: mk Rect, 0, 0, 10, 10
     @handle.decorate VisibleEllipse, canvas, renderer, elem
     @handle.decorate MoveableShape
