@@ -3,6 +3,7 @@ Module "base.List"
 Import "base.Obj"
 Import "base.Value"
 
+Register "Obj"
 Class
 
   List: (revive, ls) ->
@@ -28,10 +29,4 @@ Class
   push: (a) -> @add @length, a
 
   debug: -> (@list.map (i) -> i.v[0] + ':' + i.v[1]).join ', '
-
-Static
-
-  init: -> Obj.register List
-
-  make: (args...) -> (new Obj "List").decorate List, args...
 

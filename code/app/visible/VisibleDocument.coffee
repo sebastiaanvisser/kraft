@@ -36,7 +36,3 @@ Class
 
   unrender: -> @parentElem.removeChild @elem
 
-Static
-
-  init: -> Obj.register VisibleDocument
-
