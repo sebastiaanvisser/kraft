@@ -7,5 +7,5 @@ Register "Obj"
 Class
 
   MoveableShape: ->
-    @dragger = new Dragger @renderContext.elem, @, @elem, false, false, 5, 5, @renderContext.canvas.$.zoom
+    @dragger = new Dragger @context.elem, @, @elem, false, false, 5, 5, @context.canvas.$.zoom
 

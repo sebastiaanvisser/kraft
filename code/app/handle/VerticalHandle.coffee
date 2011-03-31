@@ -10,10 +10,10 @@ Qualified "visible.Shape",    As "VisibleShape"
 Register "Obj"
 Class
 
-  VerticalHandle: () ->
+  VerticalHandle: ->
 
     @define handleV: mk Rect, 0, 0, 2, 16
-    @handleV.decorate VisibleShape, @renderContext
+    @handleV.decorate VisibleShape, @context
     @handleV.decorate VisibleRect
     @handleV.decorate MoveableShape
     $(@handleV.elem).addClass "handleV"

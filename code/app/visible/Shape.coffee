@@ -5,23 +5,23 @@ Import "base.Obj"
 Register "Obj"
 Class
 
-  Shape: (renderContext) ->
-    @renderContext = renderContext
+  Shape: (context) ->
+    @context = context
     @setupElem()
 
     # Setup rendering and perform initial render.
-    @onchange -> @renderContext.renderer.enqueue @
-    @renderContext.renderer.enqueue @
+    @onchange -> @context.renderer.enqueue @
+    @context.renderer.enqueue @
     @
 
   setupElem: ->
     @elem = document.createElement "div"
     $(@elem).addClass "shape"
-    @renderContext.elem.appendChild @elem
+    @context.elem.appendChild @elem
 
   destructor: -> @unrender()
 
   render: -> {}
 
-  unrender: -> @renderContext.elem.removeChild @elem
+  unrender: -> @context.elem.removeChild @elem
 

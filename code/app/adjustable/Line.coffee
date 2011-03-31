@@ -15,9 +15,9 @@ Class
   mkHandles: ->
     @handles = new Obj
     @handles.define
-      topLeft:     mk Handle, @p0,     @renderContext
-      bottomRight: mk Handle, @p1,     @renderContext
-      center:      mk Handle, @center, @renderContext
+      topLeft:     mk Handle, @context, @p0
+      bottomRight: mk Handle, @context, @p1
+      center:      mk Handle, @context, @center
 
   delHandles: ->
     @handles.destructor()

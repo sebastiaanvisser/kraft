@@ -6,29 +6,28 @@ Qualified "Events", As "E"
 Register "Obj"
 Class
 
-  SelectableShape: (selection) ->
+  SelectableShape: () ->
     @onselect   = []
     @ondeselect = []
-    @selection  = selection
 
-    @selection.selectable[@id] = @
+    @context.selection.selectable[@id] = @
 
-    E.manager.bind @renderContext.elem, "mousedown", (e) => @handleDeselect(e)
+    E.manager.bind @context.elem, "mousedown", (e) => @handleDeselect(e)
     E.manager.bind @elem,               "mousedown", (e) => @handleSelect(e)
 
     @onselect.push   => $(@.elem).addClass    "selected"
     @ondeselect.push => $(@.elem).removeClass "selected"
 
-  destructor: -> delete @selection.selectable[@id]
+  destructor: -> delete @context.selection.selectable[@id]
 
-  handleDeselect: (e) -> @selection.deselectAll()
+  handleDeselect: (e) -> @context.selection.deselectAll()
 
   handleSelect: (e) ->
-    return @selection.deselect @ if e.altKey
-    @selection.deselectAll() if !e.shiftKey
-    @selection.select @
+    return @context.selection.deselect @ if e.altKey
+    @context.selection.deselectAll() if !e.shiftKey
+    @context.selection.select @
     false
 
-  select:   -> @selection.select   @
-  deselect: -> @selection.deselect @
+  select:   -> @context.selection.select   @
+  deselect: -> @context.selection.deselect @
 

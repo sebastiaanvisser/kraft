@@ -10,11 +10,11 @@ Qualified "visible.Shape",    As "VisibleShape"
 Register "Obj"
 Class
 
-  Handle: (pt, renderContext) ->
+  Handle: (context, pt) ->
     @pt = pt
-    @renderContext = renderContext
+    @context = context
     @define handle: mk Rect, 0, 0, 10, 10
-    @handle.decorate VisibleShape, renderContext
+    @handle.decorate VisibleShape, @context
     @handle.decorate VisibleEllipse
     @handle.decorate MoveableShape
     $(@handle.elem).addClass "handle"

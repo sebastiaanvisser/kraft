@@ -19,17 +19,17 @@ Class
 
     E.manager.bind @elem, "DOMCharacterDataModified", (e) =>
       @text = @elem.innerHTML
-      @renderContext.renderer.enqueue @
+      @context.renderer.enqueue @
       return true
 
   mkHandles: ->
-    ($ @elem).attr "contentEditable", true
+    $(@elem).attr "contentEditable", true
 
     @derive handles: new Obj
     @handles.define
-      topLeft:      mk Handle, @p0,     @renderContext
-      bottomRight:  mk Handle, @p1,     @renderContext
-      center:       mk Handle, @center, @renderContext
+      topLeft:      mk Handle, @context, @p0
+      bottomRight:  mk Handle, @context, @p1
+      center:       mk Handle, @context, @center
 
     # @handles.define "spine", (Line.make @parent, (Point.make @parent), (Point.make @parent), 2)
     # sp = @handles.spine
@@ -41,7 +41,7 @@ Class
     # Pc.eq sp.p1, @p1
 
   delHandles: ->
-    ($ @elem).attr "contentEditable", false
+    $(@elem).attr "contentEditable", false
     @handles.destructor()
     delete @handles
 
