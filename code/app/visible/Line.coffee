@@ -1,4 +1,4 @@
-Module "visible.VisibleLine"
+Module "visible.Line"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleLine: (w) ->
+  Line: (w) ->
     $(@elem).addClass "line"
     @define width: w
 

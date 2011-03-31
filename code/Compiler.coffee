@@ -10,7 +10,7 @@ top.js = js =
   current:    undefined
   modules:    {}
   errors:     []
-  importers:  "Qualified Import Register Stage".split ' '
+  importers:  "Import Qualified Register Stage".split ' '
   collectors: "Class Static Private".split ' '
 
 js.keywords = concat [js.importers, js.collectors]
@@ -29,6 +29,10 @@ top.Module = (q, rest...) ->
 
   # Build initial collector buckets.
   js.current[c] = [] for c in js.keywords
+
+# Only here to allow wrigin: Qualified "X", As "Y".
+
+top.As = (a) -> a
 
 # Install all other keywords in the global namespace.
 

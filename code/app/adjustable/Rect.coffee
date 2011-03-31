@@ -1,4 +1,4 @@
-Module "adjustable.AdjustableRect"
+Module "adjustable.Rect"
 
 Import "base.Obj"
 Import "base.Value"
@@ -6,12 +6,12 @@ Import "constraint.Constraint"
 Import "handle.Handle"
 Import "handle.HorizontalHandle"
 Import "handle.VerticalHandle"
-Qualified "shape.Point", "Pt"
+Qualified "shape.Point", As "Pt"
 
 Register "Obj"
 Class
 
-  AdjustableRect: ->
+  Rect: ->
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
     @

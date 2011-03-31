@@ -1,8 +1,8 @@
 Module "constraint.Point"
 
 Import "base.Obj"
-Qualified "shape.Point", "Pt"
-Qualified "constraint.Constraint", "C"
+Qualified "shape.Point", As "Pt"
+Qualified "constraint.Constraint", As "C"
 
 Static
 

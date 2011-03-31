@@ -1,4 +1,4 @@
-Module "visible.VisibleText"
+Module "visible.Text"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleText: () ->
+  Text: () ->
     $(@elem).addClass "text"
     @
 

@@ -1,4 +1,4 @@
-Module "visible.VisiblePointer"
+Module "visible.Pointer"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisiblePointer: () ->
+  Pointer: () ->
     $(@elem).addClass "pointer"
     @
 

@@ -1,4 +1,4 @@
-Module "adjustable.AdjustableTriangle"
+Module "adjustable.Triangle"
 
 Import "base.Obj"
 Import "handle.Handle"
@@ -8,7 +8,7 @@ Import "handle.HorizontalHandle"
 Register "Obj"
 Class
 
-  AdjustableTriangle: ->
+  Triangle: ->
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
     @

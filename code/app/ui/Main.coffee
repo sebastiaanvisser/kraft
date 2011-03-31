@@ -1,12 +1,8 @@
 Module "ui.Main"
 
 Import "Canvas"
+Import "RenderContext"
 Import "Units"
-Import "adjustable.AdjustableDocument"
-Import "adjustable.AdjustableLine"
-Import "adjustable.AdjustableRect"
-Import "adjustable.AdjustableText"
-Import "adjustable.AdjustableTriangle"
 Import "adjustable.MoveableShape"
 Import "adjustable.SelectableShape"
 Import "base.Obj"
@@ -19,17 +15,21 @@ Import "shape.Point"
 Import "shape.Rect"
 Import "shape.Text"
 Import "shape.Triangle"
-Import "visible.RenderContext"
-Import "visible.VisibleDocument"
-Import "visible.VisibleEllipse"
-Import "visible.VisibleLine"
-Import "visible.VisibleRect"
-Import "visible.VisiblePointer"
-Import "visible.VisibleShape"
-Import "visible.VisibleText"
-Import "visible.VisibleTriangle"
-Qualified "Events", "E"
-Qualified "constraint.Constraint", "C"
+Qualified "Events"
+Qualified "adjustable.Document",   As "AdjustableDocument"
+Qualified "adjustable.Line",       As "AdjustableLine"
+Qualified "adjustable.Rect",       As "AdjustableRect"
+Qualified "adjustable.Text",       As "AdjustableText"
+Qualified "adjustable.Triangle",   As "AdjustableTriangle"
+Qualified "constraint.Constraint", As "C"
+Qualified "visible.Document",      As "VisibleDocument"
+Qualified "visible.Ellipse",       As "VisibleEllipse"
+Qualified "visible.Line",          As "VisibleLine"
+Qualified "visible.Pointer",       As "VisiblePointer"
+Qualified "visible.Rect",          As "VisibleRect"
+Qualified "visible.Shape",         As "VisibleShape"
+Qualified "visible.Text",          As "VisibleText"
+Qualified "visible.Triangle",      As "VisibleTriangle"
 
 Class
 
@@ -68,20 +68,20 @@ Class
     @vguide = mk HorizontalGuide, @root, 420
 
   setupMenu: ->
-    E.manager.bind "#menu #rect",        "click", => @mkRect @root
-    E.manager.bind "#menu #line",        "click", => @mkLine @root
-    E.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
-    E.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
-    E.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
-    E.manager.bind "#menu #pointer",     "click", => @mkPointer @root
-    E.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
-    E.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
-    E.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
-    E.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
-    E.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
-    E.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
-    # E.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
-    # E.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
+    Events.manager.bind "#menu #rect",        "click", => @mkRect @root
+    Events.manager.bind "#menu #line",        "click", => @mkLine @root
+    Events.manager.bind "#menu #triangle",    "click", => @mkTriangle @root
+    Events.manager.bind "#menu #ellipse",     "click", => @mkEllipse @root
+    Events.manager.bind "#menu #text",        "click", => @mkText @root, prompt() || "..."
+    Events.manager.bind "#menu #pointer",     "click", => @mkPointer @root
+    Events.manager.bind "#menu #selectall",   "click", => @root.selection.selectAll()
+    Events.manager.bind "#menu #deselectall", "click", => @root.selection.deselectAll()
+    Events.manager.bind "#menu #togglegrid",  "click", => @canvas.gridShow = !@canvas.gridShow
+    Events.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
+    Events.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
+    Events.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
+    # Events.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
+    # Events.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320
@@ -156,7 +156,7 @@ Class
 
 Static
 
-  init: -> E.manager.documentReady startup
+  init: -> Events.manager.documentReady startup
 
   startup: -> window.main = new Main()
 

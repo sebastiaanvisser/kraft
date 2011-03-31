@@ -1,4 +1,4 @@
-Module "adjustable.AdjustableLine"
+Module "adjustable.Line"
 
 Import "handle.Handle"
 Import "adjustable.SelectableShape"
@@ -7,7 +7,7 @@ Import "base.Obj"
 Register "Obj"
 Class
 
-  AdjustableLine: ->
+  Line: ->
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
     @

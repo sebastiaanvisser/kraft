@@ -4,7 +4,7 @@ Import "base.Obj"
 Import "base.Value"
 Import "constraint.Constraint"
 Import "shape.Point"
-Qualified "constraint.Point", "Pc"
+Qualified "constraint.Point", As "Pc"
 
 Register "Obj"
 Class

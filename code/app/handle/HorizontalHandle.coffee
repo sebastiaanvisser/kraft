@@ -3,9 +3,9 @@ Module "handle.HorizontalHandle"
 Import "adjustable.MoveableShape"
 Import "base.Obj"
 Import "shape.Rect"
-Import "visible.VisibleRect"
-Import "visible.VisibleShape"
-Qualified "constraint.Point", "Pt"
+Qualified "constraint.Point", As "Pt"
+Qualified "visible.Rect",     As "VisibleRect"
+Qualified "visible.Shape",    As "VisibleShape"
 
 Register "Obj"
 Class

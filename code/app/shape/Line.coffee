@@ -1,8 +1,8 @@
 Module "shape.Line"
 
 Import "base.Obj"
-Qualified "constraint.Point", "Pc"
-Qualified "constraint.Constraint", "C"
+Qualified "constraint.Point", As "Pc"
+Qualified "constraint.Constraint", As "C"
 
 Register "Obj"
 Class

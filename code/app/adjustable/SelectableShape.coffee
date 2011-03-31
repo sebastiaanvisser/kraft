@@ -1,7 +1,7 @@
 Module "adjustable.SelectableShape"
 
 Import "base.Obj"
-Qualified "Events", "E"
+Qualified "Events", As "E"
 
 Register "Obj"
 Class

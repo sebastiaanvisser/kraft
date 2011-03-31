@@ -1,4 +1,4 @@
-Module "visible.VisibleTriangle"
+Module "visible.Triangle"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleTriangle: (revive, model) ->
+  Triangle: (revive, model) ->
     @model = model
     @setupElem()
 

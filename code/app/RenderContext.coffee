@@ -1,4 +1,4 @@
-Module "visible.RenderContext"
+Module "RenderContext"
 
 Import "Events"
 Import "Selection"

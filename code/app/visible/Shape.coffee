@@ -1,11 +1,11 @@
-Module "visible.VisibleShape"
+Module "visible.Shape"
 
 Import "base.Obj"
 
 Register "Obj"
 Class
 
-  VisibleShape: (renderContext) ->
+  Shape: (renderContext) ->
     @renderContext = renderContext
     @setupElem()
 

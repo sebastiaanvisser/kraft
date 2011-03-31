@@ -3,9 +3,9 @@ Module "handle.Handle"
 Import "adjustable.MoveableShape"
 Import "base.Obj"
 Import "shape.Rect"
-Import "visible.VisibleEllipse"
-Import "visible.VisibleShape"
-Qualified "constraint.Point", "Pt"
+Qualified "constraint.Point", As "Pt"
+Qualified "visible.Ellipse",  As "VisibleEllipse"
+Qualified "visible.Shape",    As "VisibleShape"
 
 Register "Obj"
 Class

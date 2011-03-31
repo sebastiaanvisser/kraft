@@ -1,4 +1,4 @@
-Module "visible.VisibleDocument"
+Module "visible.Document"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleDocument: () ->
+  Document: () ->
     $(@elem).addClass "document"
     @topLeft.onchange (_, p) =>
       $(@renderContext.canvas.gridElem).css "-webkit-mask-position", (px p.x) + ' ' + (px p.y)

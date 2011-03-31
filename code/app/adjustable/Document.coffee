@@ -1,4 +1,4 @@
-Module "adjustable.AdjustableDocument"
+Module "adjustable.Document"
 
 Import "base.Obj"
 Import "base.Value"
@@ -8,7 +8,7 @@ Import "handle.Handle"
 Register "Obj"
 Class
 
-  AdjustableDocument: ->
+  Document: ->
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
     @

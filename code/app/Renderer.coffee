@@ -1,7 +1,7 @@
 Module "Renderer"
 
 Import "Prelude"
-Qualified "Events", "E"
+Qualified "Events", As "E"
 
 Class
 

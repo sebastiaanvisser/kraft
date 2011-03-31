@@ -7,9 +7,9 @@ Import "shape.Point"
 Import "shape.Text"
 Import "adjustable.MoveableShape"
 Import "adjustable.SelectableShape"
-Import "visible.VisibleLine"
-Import "visible.VisibleText"
-Qualified "constraint.Constraint", "C"
+Qualified "constraint.Constraint", As "C"
+Qualified "visible.Line",          As "VisibleLine"
+Qualified "visible.Text",          As "VisibleText"
 
 Register "Obj"
 Class

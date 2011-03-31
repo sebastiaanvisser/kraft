@@ -1,25 +1,25 @@
-Module "adjustable.AdjustableText"
+Module "adjustable.Text"
 
 Import "adjustable.MoveableShape"
 Import "base.Obj"
 Import "handle.Handle"
 Import "shape.Line"
 Import "shape.Point"
-Import "visible.VisibleLine"
-Qualified "Events", "E"
-Qualified "constraint.Point", "Pc"
+Qualified "Events", As "E"
+Qualified "constraint.Point", As "Pc"
+Qualified "visible.Line", As "VisibleLine"
 
 Register "Obj"
 Class
 
-  AdjustableText: ->
+  Text: ->
     @onselect.push   => @mkHandles()
     @ondeselect.push => @delHandles()
     @
 
     E.manager.bind @elem, "DOMCharacterDataModified", (e) =>
       @text = @elem.innerHTML
-      @renderer.enqueue @
+      @renderContext.renderer.enqueue @
       return true
 
   mkHandles: ->

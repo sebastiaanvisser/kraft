@@ -1,6 +1,6 @@
 Module "Dragger"
 
-Qualified "Events", "E"
+Qualified "Events", As "E"
 
 Class
 

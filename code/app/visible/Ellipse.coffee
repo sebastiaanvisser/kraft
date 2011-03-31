@@ -1,4 +1,4 @@
-Module "visible.VisibleEllipse"
+Module "visible.Ellipse"
 
 Import "base.Obj"
 Import "Units"
@@ -6,7 +6,7 @@ Import "Units"
 Register "Obj"
 Class
 
-  VisibleEllipse: ->
+  Ellipse: ->
     $(@elem).addClass "ellipse"
 
   render: ->

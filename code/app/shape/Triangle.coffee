@@ -2,8 +2,8 @@ Module "shape.Triangle"
 
 Import "base.Obj"
 Import "constraint.Constraint"
-Qualified "constraint.Point", "Pc"
-Qualified "shape.Point", "Pt"
+Qualified "constraint.Point", As "Pc"
+Qualified "shape.Point", As "Pt"
 
 Register "Obj"
 Class

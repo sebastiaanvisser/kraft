@@ -1,4 +1,4 @@
-Module "visible.VisibleRect"
+Module "visible.Rect"
 
 Import "base.Obj"
 Import "Units"
@@ -7,7 +7,7 @@ Import "style.Color"
 Register "Obj"
 Class
 
-  VisibleRect: ->
+  Rect: ->
     @define background: mk Color, "#ffbb00"
     $(@elem).addClass "rect"
     @

@@ -3,7 +3,7 @@ Module "Canvas"
 Import "base.Obj"
 Import "shape.Rect"
 Import "Renderer"
-Qualified "Events", "E"
+Qualified "Events", As "E"
 
 Register "Obj"
 Class
