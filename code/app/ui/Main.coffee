@@ -31,6 +31,7 @@ Qualified "visible.Shape",         As "ShapeV"
 Qualified "visible.Text",          As "TextV"
 Qualified "visible.Triangle",      As "TriangleV"
 
+Register "Obj"
 Class
 
   Main: ->
@@ -54,18 +55,19 @@ Class
     @root.decorate RenderContext, @canvas, @canvas.renderer, @canvas.elem
 
   setupDocument: ->
-    @document = mk Rect, 30, 20, 230, 520
+    @document = mk Rect, 30, 20, 1030, 720
     @document.decorate ShapeV, @root
     @document.decorate DocumentV
     @document.decorate SelectableShape, @root.selection
     @document.decorate DocumentA
+    @document.elem.id = "infovis"
     ($ @document.elem).addClass "mydocument"
     ($ @document.elem).addClass "shape"
     @document
 
   setupGuides: ->
-    @vguide = mk VerticalGuide,   @root, 630
-    # @hguide = mk HorizontalGuide, @root, 420
+    @define vguide: mk VerticalGuide,   @root, 630
+    # @define hguide: mk HorizontalGuide, @root, 420
 
   setupMenu: ->
     Events.manager.bind "#menu #rect",        "click", => @mkRect @root
@@ -158,5 +160,5 @@ Static
 
   init: -> Events.manager.documentReady startup
 
-  startup: -> window.main = new Main()
+  startup: -> window.main = mk Main
 
