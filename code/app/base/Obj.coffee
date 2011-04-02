@@ -52,11 +52,7 @@ Class
   onchange: (f) -> @meta.reactors.push f
   changed: (args...) -> r.apply @, args.concat [@] for r in @meta.reactors
 
-  path: ->
-    prnt = if @parent and @parent.path then @parent.path() + "." else ""
-    ctor = @meta.constructors[0]
-    name = ctor and ctor.name.replace /_Constructor$/, ''
-    prnt + (name or "Anonymous") + '[' + @id + ']'
+  path: -> if @parent and @parent.path then @parent.path() else ""
 
   debug: () ->
     indent = (s) -> ("  " + l for l in s.split /\n/).join "\n"

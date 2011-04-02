@@ -3,18 +3,18 @@ Module "Canvas"
 Import "base.Obj"
 Import "shape.Rect"
 Import "Renderer"
-Qualified "Events", As "E"
+Qualified "Events"
 
 Register "Obj"
 Class
 
-  Canvas: (revive, container) ->
+  Canvas: (container) ->
 
     # Setup HTML canvas elements.
     @container = container
-    @zoomBox   = $(".zoombox", container)[0]
-    @elem      = $(".canvas", container)[0]
-    @gridElem  = $(".grid", container)[0]
+    @zoomBox   = $(".zoombox", @container)[0]
+    @elem      = $(".canvas", @container)[0]
+    @gridElem  = $(".grid", @container)[0]
 
     # Setup a rendere specific for this canvas.
     @renderer  = new Renderer
@@ -26,7 +26,7 @@ Class
 
     # Define active viewport.
     @define viewport: mk Rect, 0, 0, 100, 100
-    E.manager.bind ($ @container), "scroll", => @setViewport()
+    Events.manager.bind $(@container), "scroll", => @setViewport()
 
     # Define canvas grid.
     @define zoom:     1
@@ -42,14 +42,14 @@ Class
 
   setSize: ->
     for e in [@gridElem, @elem]
-      ($ e).css "width",  @width
-      ($ e).css "height", @height
+      $(e).css "width",  @width
+      $(e).css "height", @height
 
-  setZoom: -> ($ @zoomBox).css "zoom", @zoom
+  setZoom: -> $(@zoomBox).css "zoom", @zoom
 
   setGrid: ->
     g = $ @gridElem
-    (if @gridShow then g.addClass else g.removeClass) "grid"
+    if @gridShow then g.addClass "grid" else g.removeClass "grid"
 
   setViewport: ->
     @viewport.p0.x   = @container.scrollLeft   / @zoom

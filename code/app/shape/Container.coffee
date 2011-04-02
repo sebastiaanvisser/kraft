@@ -9,7 +9,7 @@ Class
 
   Container: ->
     @define shapes: {}
-    @selection = new Selection
+    @define selection: new Selection
     @
 
   addShape: (shape) -> @shapes[shape.id] = shape

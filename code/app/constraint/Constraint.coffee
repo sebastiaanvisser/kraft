@@ -7,36 +7,36 @@ Static
   _: -> _
 
   Stage
-  eq: -> constraint 1
+  eq: -> constraint "eq", 1
     , ((a, b) -> b.v = a.v)
     , ((a, b) -> a.v = b.v)
 
   Stage
-  mid: -> constraint 1
+  mid: -> constraint "mid", 1
     , ((a, b, c) -> d = (c.v - b.v) / 2; b.v = a.v - d; c.v = a.v + d)
     , ((a, b, c) -> a.v = b.v + (c.v - b.v) / 2)
     , ((a, b, c) -> a.v = b.v + (c.v - b.v) / 2)
 
   Stage
-  add0: -> constraint 1
+  add0: -> constraint "add", 1
     , ((a, b, c) -> b.v = a.v - c.v)
     , ((a, b, c) -> a.v = b.v + c.v)
     , ((a, b, c) -> a.v = b.v + c.v)
 
   Stage
-  sub0: -> constraint 1
+  sub0: -> constraint "sub0", 1
     , ((a, b, c) -> b.v = a.v + c.v)
     , ((a, b, c) -> a.v = b.v - c.v)
     , ((a, b, c) -> a.v = b.v - c.v)
 
   Stage
-  min: -> constraint 1
+  min: -> constraint "min", 1
     , ((a, b, c) -> d = a.v - Math.min b.v, c.v; b.v += d; c.v += d)
     , ((a, b, c) -> a.v = Math.min b.v, c.v)
     , ((a, b, c) -> a.v = Math.min b.v, c.v)
 
   Stage
-  max: -> constraint 1
+  max: -> constraint "max", 1
     , ((a, b, c) -> d = a.v - Math.max b.v, c.v; b.v -= d; c.v -= d)
     , ((a, b, c) -> a.v = Math.max b.v, c.v)
     , ((a, b, c) -> a.v = Math.max b.v, c.v)

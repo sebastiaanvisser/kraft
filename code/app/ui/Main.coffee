@@ -48,14 +48,14 @@ Class
     window.rect = mk Rect, 100, 200, 400, 600
 
   setupCanvas: ->
-    @canvas = mk Canvas, $("#mycanvas")[0]
+    @define canvas: mk Canvas, $("#mycanvas")[0]
 
   setupRootContainer: ->
-    @root = mk Container, @canvas
+    @define root: mk Container
     @root.decorate RenderContext, @canvas, @canvas.renderer, @canvas.elem
 
   setupDocument: ->
-    @document = mk Rect, 30, 20, 1030, 720
+    @define document: mk Rect, 30, 20, 1030, 720
     @document.decorate ShapeV, @root
     @document.decorate DocumentV
     @document.decorate SelectableShape, @root.selection
@@ -63,7 +63,6 @@ Class
     @document.elem.id = "infovis"
     ($ @document.elem).addClass "mydocument"
     ($ @document.elem).addClass "shape"
-    @document
 
   setupGuides: ->
     @define vguide: mk VerticalGuide,   @root, 630
@@ -82,8 +81,12 @@ Class
     Events.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
     Events.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
     Events.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
+    Events.manager.bind "#menu #debug",       "click", => @debug()
     # Events.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
     # Events.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
+
+  debug: ->
+    __tools_Grapher().graph(main.vguide.caption.p0.$.y)
 
   mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320

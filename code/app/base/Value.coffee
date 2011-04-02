@@ -38,7 +38,7 @@ Class
 
   path: ->
     prnt = if @parent and @parent.path then @parent.path() + "." else ""
-    prnt + (@name or "Value") + '[' + @id + ']'
+    prnt + (@name or "Value") # + '_' + @id
 
 Static
 
@@ -62,20 +62,23 @@ Static
 
   # Generic multi-directional lifting of plain JavaScript functions.
 
-  constraint: (init, fs...) ->
+  constraint: (name, init, fs...) ->
     con = (as...) ->
 
-      id = 'c' + Value.nextId++
+      id = name + '_' + Value.nextId++
       active = as.length
 
       mkU = (i) -> ->
         delete a.triggers[id] for a in as if --active < 2
         return
 
+      bs = {}
+      bs[a.id] = a for a in as
+
       mkT = (i) ->
         id: id
-        linked: as
-        triggers: as
+        linked: bs
+        triggers: bs
         set: -> fs[i](as...)
 
       for i in [0..as.length - 1] when as[i].triggers
@@ -90,4 +93,28 @@ Static
     con
 
   init: -> Value.nextId = 0
+
+
+
+
+
+  cycles: (v) ->
+
+    path = []
+    done = {}
+
+    inner = (w) ->
+      console.log (if w.path then w.path() else w.id)
+      if done[w.id]
+        return console.log "cycle", w.id
+      done[w.id] = true
+      for _, t of w.triggers
+        inner t
+
+    inner v
+
+    path
+
+
+
 

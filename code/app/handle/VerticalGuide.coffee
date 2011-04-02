@@ -29,21 +29,19 @@ Class
     @guide.decorate SelectableShape, @context.selection
     @guide.dragger.lockY = true
     $(@guide.elem).addClass "guide"
-    C.eq @$.x, @guide.p0.$.x
-    C.eq @$.x, @guide.p1.$.x
-    # C.eq @guide.p1.$.y, @context.canvas.$.width
+    C.eq @$.x, @guide.$.left
+    C.eq @guide.p1.$.y, @context.canvas.$.width
 
-#    @define caption: mk Line, @x, 0, @x, 100
-#    @caption.decorate Text, ""
-#    @caption.decorate VisibleShape, @context
-#    @caption.decorate VisibleText
-#    @caption.decorate MoveableShape
-#    @caption.dragger.lockY = true
-#    $(@caption.elem).addClass "guide-caption"
-#
-#    C.eq   @$.x, @caption.p0.$.x
-#    C.eq   @$.x, @caption.p1.$.x
-#    C.eq   @caption.$.text, @$.x
-#    C.eq   @caption.p0.$.y, @context.canvas.viewport.p0.$.y
-#    C.add0 @caption.p1.$.y, @context.canvas.viewport.p0.$.y, 50
+    @define caption: mk Line, 100, 100, 100, 200
+    @caption.decorate Text, ""
+    @caption.decorate VisibleShape, @context
+    @caption.decorate VisibleText
+    @caption.decorate MoveableShape
+    @caption.dragger.lockY = true
+    $(@caption.elem).addClass "guide-caption"
+
+    C.eq   @$.x, @caption.$.left
+    C.eq   @caption.$.text, @$.x
+    C.eq   @caption.$.top, @context.canvas.viewport.p0.$.y
+    # C.add0 @caption.$.top, @context.canvas.viewport.p0.$.y, 100
 

@@ -40,7 +40,7 @@ Static
     "rgba(" + s[0] + "," + s[1] + "," + s[2] + "," + s[3] + ")"
 
   Stage
-  channelsToHex: -> constraint 1
+  channelsToHex: -> constraint "channelsToHex", 1
     , (c, r, g, b) ->
         r.v = parseInt (c.v.slice 1, 3), 16
         g.v = parseInt (c.v.slice 3, 5), 16
@@ -50,7 +50,7 @@ Static
     , ((c, r, g, b) -> c.v = '#' + (padded r.v) + (padded g.v) + (padded b.v))
 
   Stage
-  channelsToRgba: -> constraint 1
+  channelsToRgba: -> constraint "channelsToRgba", 1
     , (c, r, g, b, a) ->
         s = c.v.match /[\d.]+/g
         r.v = 1 * s[0]
