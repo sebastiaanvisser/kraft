@@ -1,6 +1,7 @@
 Module "base.Value"
 
 Import "Prelude"
+Qualified "base.Transaction"
 
 # Basic reactive value.
 
@@ -14,7 +15,6 @@ Class
     @triggers = {}
     @reactors = {}
     @linked   = {}
-    @busy     = false
 
     @__defineGetter__ "v", @get
     @__defineSetter__ "v", @set
@@ -27,14 +27,15 @@ Class
   get: -> @value
 
   set: (v) ->
-    return if @value == v or @busy
-    @busy = true
+    return if @value == v
     @value = v
-    e     v for _, e of @effects
-    r.set v for _, r of @reactors
-    b.set v for _, b of @triggers
-    @parent.changed [@name, v] if @parent
-    @busy = false
+    Value.transaction.begin @id, =>
+      r.set v for _, r of @reactors
+      b.set v for _, b of @triggers
+    Value.transaction.end @id, =>
+      @parent.changed [@name, v] if @parent
+      e v for _, e of @effects
+    Value.transaction.commit @id
 
   path: ->
     prnt = if @parent and @parent.path then @parent.path() + "." else ""
@@ -68,9 +69,7 @@ Static
       id = name + '_' + Value.nextId++
       active = as.length
 
-      mkU = (i) -> ->
-        delete a.triggers[id] for a in as if --active < 2
-        return
+      mkU = (i) -> -> delete a.triggers[id] for a in as if --active < 2; return
 
       bs = {}
       bs[a.id] = a for a in as
@@ -92,29 +91,7 @@ Static
     con.f = (as...) -> r = val null; con r, as...; r
     con
 
-  init: -> Value.nextId = 0
-
-
-
-
-
-  cycles: (v) ->
-
-    path = []
-    done = {}
-
-    inner = (w) ->
-      console.log (if w.path then w.path() else w.id)
-      if done[w.id]
-        return console.log "cycle", w.id
-      done[w.id] = true
-      for _, t of w.triggers
-        inner t
-
-    inner v
-
-    path
-
-
-
+  init: ->
+    Value.nextId      = 0
+    Value.transaction = new Transaction
 
