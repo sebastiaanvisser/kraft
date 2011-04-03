@@ -52,7 +52,7 @@ Static
       onCreateLabel: (elem, node) ->
         elem.innerHTML += "<span class='graph-label'>#{node.name}</span>" +
                           "<span class='graph-del'>x</span>"
-        $(".graph-label", elem).click -> console.log "x"; gr.onClick node.id
+        $(".graph-label", elem).click -> gr.onClick node.id
         $(".graph-del", elem).click ->
           node.setData 'alpha', 0, 'end'
           node.eachAdjacency (adj) -> adj.setData 'alpha', 0, 'end'
@@ -96,7 +96,8 @@ Static
       node =
         adjacencies: edges
         data:
-          $color: if w.path then "#0000aa" else" #ffaa00"
+          $color: if w.path then "#ffaa00" else "#0055aa"
+          $dim:   if w.path then 8 else 5
           $type: "circle"
         id:   "#{w.id}"
         name: (if w.path then w.path() else w.id)
