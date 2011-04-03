@@ -40,8 +40,7 @@ Class
     @caption.dragger.lockY = true
     $(@caption.elem).addClass "guide-caption"
 
-    C.eq   @$.x, @caption.$.left
-    C.eq   @caption.$.text, @$.x
-    C.eq   @caption.$.top, @context.canvas.viewport.p0.$.y
-    # C.add0 @caption.$.top, @context.canvas.viewport.p0.$.y, 100
+    C.eq @$.x, @caption.$.left
+    C.eq @caption.$.text, @$.x
+    C.eq @caption.$.top, @context.canvas.viewport.p0.$.y
 

@@ -66,7 +66,7 @@ Class
 
   setupGuides: ->
     @define vguide: mk VerticalGuide,   @root, 630
-    # @define hguide: mk HorizontalGuide, @root, 420
+    @define hguide: mk HorizontalGuide, @root, 420
 
   setupMenu: ->
     Events.manager.bind "#menu #rect",        "click", => @mkRect @root

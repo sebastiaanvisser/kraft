@@ -29,11 +29,10 @@ Class
     @guide.decorate SelectableShape, @context.selection
     @guide.dragger.lockX = true
     $(@guide.elem).addClass "guide"
-    C.eq @$.y, @guide.p0.$.y
-    # C.eq @$.y, @guide.p1.$.y
-    C.eq @guide.p1.$.x, @context.canvas.$.width
+    C.eq @$.y, @guide.$.top
+    C.eq @guide.p1.$.x, @context.canvas.$.height
 
-    @define caption: mk Line, 0, @y, 100, @y
+    @define caption: mk Line, 100, 100, 200, 100
     @caption.decorate Text, ""
     @caption.decorate VisibleShape, @context
     @caption.decorate VisibleText
@@ -41,9 +40,7 @@ Class
     @caption.dragger.lockX = true
     $(@caption.elem).addClass "guide-caption"
 
-    C.eq   @$.y, @caption.p0.$.y
-    C.eq   @$.y, @caption.p1.$.y
-    C.eq   @caption.$.text, @$.y
-    C.eq   @caption.p0.$.x, @context.canvas.viewport.p0.$.x
-    C.add0 @caption.p1.$.x, @context.canvas.viewport.p0.$.x, 50
+    C.eq @$.y, @caption.$.top
+    C.eq @caption.$.text, @$.y
+    C.eq @caption.$.left, @context.canvas.viewport.p0.$.x
 
