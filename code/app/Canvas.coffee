@@ -52,8 +52,8 @@ Class
     if @gridShow then g.addClass "grid" else g.removeClass "grid"
 
   setViewport: ->
-    @viewport.p0.x   = @container.scrollLeft   / @zoom
-    @viewport.p0.y   = @container.scrollTop    / @zoom
     @viewport.width  = @container.clientWidth  / @zoom
     @viewport.height = @container.clientHeight / @zoom
+    @viewport.p0.x   = @container.scrollLeft   / @zoom
+    @viewport.p0.y   = @container.scrollTop    / @zoom
 
