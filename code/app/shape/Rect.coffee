@@ -37,13 +37,13 @@ Class
 
     @derive
       midLeft:   Pc.xy @p0, @center
-      midRight:  Pc.xy @p1, @center
       midTop:    Pc.yx @p0, @center
-      midBottom: Pc.yx @p2, @center
+      midRight:  Pc.xy @p3, @center
+      midBottom: Pc.yx @p3, @center
 
     @derive
-      width:  sub0.f @bottomRight.$.x, @topLeft.$.x
-      height: sub0.f @bottomRight.$.y, @topLeft.$.y
+      width:  sub0.f @$.right,  @$.left
+      height: sub0.f @$.bottom, @$.top
 
     @
 
