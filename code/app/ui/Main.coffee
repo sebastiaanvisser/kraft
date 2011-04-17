@@ -86,7 +86,9 @@ Class
     # Events.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   debug: ->
-    __tools_Grapher().graph(main.tmp.p0.$.y)
+    # __tools_Grapher().graph(main.document.p0.$.y)
+    window.DEBUG = true
+    rect.p0.x = 10
 
   mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320
@@ -100,7 +102,7 @@ Class
     # r.container = Container.mk r
     # r.container.decorate RenderContext
     # @target = r.container
-    r
+    window.rect = r
 
   mkEllipse: (ctx) ->
     e = mk Rect, 230, 120, 330, 320
