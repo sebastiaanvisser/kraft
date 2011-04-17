@@ -20,7 +20,7 @@ Static
       injectInto: 'infovis'
       background:
         CanvasStyles:
-          strokeStyle: '#aaa'
+          strokeStyle: '#ddd'
       Navigation:
          enable: true
          panning: 'avoid nodes'
@@ -96,11 +96,11 @@ Static
       node =
         adjacencies: edges
         data:
-          $color: if w.path then "#ffaa00" else "#0055aa"
-          $dim:   if w.path then 8 else 5
+          $color: if w.constraint then "#0055aa" else "#ffaa00"
+          $dim:   if w.constraint then 5 else 8
           $type: "circle"
         id:   "#{w.id}"
-        name: (if w.path then w.path() else w.id)
+        name: (if w.path then w.path() else w.id) + (if w.v != undefined then "=" + w.v else "")
 
       [node].concat (inner w, t for _, t of w.triggers)...
 

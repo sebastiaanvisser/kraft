@@ -86,7 +86,7 @@ Class
     # Events.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
   debug: ->
-    __tools_Grapher().graph(main.vguide.caption.p0.$.y)
+    __tools_Grapher().graph(main.tmp.p0.$.y)
 
   mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320
@@ -154,8 +154,8 @@ Class
     t.decorate TriangleA
     t.decorate MoveableShape
     ctx.addShape t
-    ($ t.elem).addClass "mytriangle"
-    ($ t.elem).addClass "shape"
+    $(t.elem).addClass "mytriangle"
+    $(t.elem).addClass "shape"
 
 ###
 
