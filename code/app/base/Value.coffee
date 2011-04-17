@@ -28,18 +28,18 @@ Class
 
   set: (v) ->
     return if @value == v
-    @value = v
-    Value.transaction.begin @id, =>
-      r.set v for _, r of @reactors
-      b.set v for _, b of @triggers
+    Value.transaction.start @id, =>
+      # console.log "set", @path(), "to", v
+      @value = v
+      r.set v, @id for _, r of @reactors
+      b.set v, @id for _, b of @triggers
     Value.transaction.end @id, =>
       @parent.changed [@name, v] if @parent
-      e v for _, e of @effects
+      e v, @id for _, e of @effects
     Value.transaction.commit @id
 
   path: ->
-    prnt = if @parent and @parent.path then @parent.path() + "." else ""
-    prnt + (@name or "Value") # + '_' + @id
+    (if @parent and @parent.path then @parent.path() + "." else "") + (@name or "Value")
 
 Static
 
@@ -69,20 +69,25 @@ Static
       id = name + '_' + Value.nextId++
       active = as.length
 
-      mkU = (i) -> -> delete a.triggers[id] for a in as if --active < 2; return
+      mkUnlinker = (i) -> -> delete a.triggers[id] for a in as if --active < 2; return
 
       bs = {}
       bs[a.id] = a for a in as
 
-      mkT = (i) ->
+      mkAction = (i) ->
         id: id
         linked: bs
         triggers: bs
-        set: -> fs[i](as...)
+        constraint: true
+        set: ->
+          Value.transaction.start id, =>
+            # console.log "via", id
+            fs[i](as...)
+          Value.transaction.commit id
 
       for i in [0..as.length - 1] when as[i].triggers
-        as[i].linked[id]   = mkU i
-        as[i].triggers[id] = mkT i
+        as[i].linked[id]   = mkUnlinker i
+        as[i].triggers[id] = mkAction   i
 
       fs[init](as...)
 

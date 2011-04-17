@@ -3,27 +3,34 @@ Module "base.Transaction"
 Class
 
   Transaction: ->
-    @tid    = 0
-    @busy   = 0
-    @done   = {}
-    @log    = []
-    @oncommit = []
+    @tid       = 0
+    @busy      = 0
+    @actions   = []
+    @commits   = []
+    @actionLog = {}
+    @commitLog = {}
     @
 
-  begin: (id, fn) -> @log.push [id, fn]
-  end:   (id, fn) -> @oncommit.push [id, fn]
+  start: (id, fn) ->
+    return if @actionLog[id]
+    @actions.push [id, fn]
+    @actionLog[id] = id
+
+  end: (id, fn) ->
+    return if @commitLog[id]
+    @commits.push [id, fn]
+    @commitLog[id] = id
 
   commit: (id) ->
     return if @busy
     @busy = true
-    @processQueue @log
-    @processQueue @oncommit
+    @processQueue @actions, @actionLog
+    @processQueue @commits, @commitLog
     @busy = false
 
-  processQueue: (q) ->
-    @done = {}
+  processQueue: (q, r) ->
     while q.length
       [id, action] = q.shift()
-      action() unless @done[id]
-      @done[id] = true
+      delete r[id]
+      action()
 
