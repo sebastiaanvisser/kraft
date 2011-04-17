@@ -25,7 +25,7 @@ Class
     @setSize()
 
     # Define active viewport.
-    @define viewport: mk Rect, 0, 0, 100, 100
+    @define viewport: mk Rect, 0, 0, @container.clientWidth, @container.clientHeight
     Events.manager.bind $(@container), "scroll", => @setViewport()
 
     # Define canvas grid.
