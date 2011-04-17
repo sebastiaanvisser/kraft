@@ -48,19 +48,6 @@ Static
 
   val: (v) -> if v and v.constructor == Value then v else new Value v
 
-  # Generic uni-directional lifting of plain JavaScript functions.
-
-  ###
-  lift: (f) -> (as...) ->
-    r = new Value null
-    r.linked.push a for a in as
-    update = () -> r.v = f (a.v or a for a in as)...
-    for i in [0..as.length - 1] when as[i].reactors
-      as[i].reactors.push update
-    update()
-    r
-  ###
-
   # Generic multi-directional lifting of plain JavaScript functions.
 
   constraint: (name, init, fs...) ->
@@ -99,4 +86,25 @@ Static
   init: ->
     Value.nextId      = 0
     Value.transaction = new Transaction
+
+
+
+
+
+
+
+
+
+  # Generic uni-directional lifting of plain JavaScript functions.
+
+  ###
+  lift: (f) -> (as...) ->
+    r = new Value null
+    r.linked.push a for a in as
+    update = () -> r.v = f (a.v or a for a in as)...
+    for i in [0..as.length - 1] when as[i].reactors
+      as[i].reactors.push update
+    update()
+    r
+  ###
 
