@@ -35,13 +35,17 @@ Class
     ctor.call @, args...
     @
 
-  define: (defs) -> @meta.defined[name] = @property name, v for name, v of defs; @
   derive: (defs) -> @meta.derived[name] = @property name, v for name, v of defs; @
+
+  define: (defs) ->
+    for name, v of defs
+      @meta.defined[name] = @property name, v
+      (v.onchange (a...) => @changed a...) if v.onchange
+    @
 
   Private
   property: (name, v) ->
     p = @$[name] = val v
-    # console.warn "Double bound of value: ", v.id if v.parent
     v.parent = p
     p.parent = @
     p.name = name
