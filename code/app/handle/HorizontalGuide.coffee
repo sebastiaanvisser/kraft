@@ -42,5 +42,5 @@ Class
 
     C.eq @$.y, @caption.$.top
     C.eq @caption.$.text, @$.y
-    C.eq @caption.$.left, @context.canvas.viewport.p0.$.x
+    C.eq @caption.$.left, @context.canvas.viewport.$.left
 
