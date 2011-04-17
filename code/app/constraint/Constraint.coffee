@@ -37,7 +37,19 @@ Static
 
   Stage
   max: -> constraint "max", 1
-    , ((a, b, c) -> d = a.v - Math.max b.v, c.v; b.v -= d; c.v -= d)
+    , ((a, b, c) -> d = a.v - Math.max b.v, c.v; b.v += d; c.v += d)
+    , ((a, b, c) -> a.v = Math.max b.v, c.v)
+    , ((a, b, c) -> a.v = Math.max b.v, c.v)
+
+  Stage
+  minI: -> constraint "minI", 1
+    , ((a, b, c) -> b.v = Math.max a.v, b.v; c.v = Math.max a.v, c.v)
+    , ((a, b, c) -> a.v = Math.min b.v, c.v)
+    , ((a, b, c) -> a.v = Math.min b.v, c.v)
+
+  Stage
+  maxI: -> constraint "minI", 1
+    , ((a, b, c) -> b.v = Math.min a.v, b.v; c.v = Math.min a.v, c.v)
     , ((a, b, c) -> a.v = Math.max b.v, c.v)
     , ((a, b, c) -> a.v = Math.max b.v, c.v)
 
