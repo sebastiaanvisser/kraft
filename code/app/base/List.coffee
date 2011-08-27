@@ -7,8 +7,8 @@ Register "Obj"
 Class
 
   List: (revive, ls) ->
-    @define "list", []
-    @derive "length", 0
+    @define list: []
+    @derive length: 0
 
     # Initialize.
     @push i for i in ls if ls
@@ -29,4 +29,7 @@ Class
   push: (a) -> @add @length, a
 
   debug: -> (@list.map (i) -> i.v[0] + ':' + i.v[1]).join ', '
+
+  map: (f) ->
+    output = mk List, []
 

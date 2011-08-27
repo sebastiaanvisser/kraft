@@ -7,11 +7,15 @@ Register "Obj"
 Class
 
   Gradient: ->
-    @define "ramp", List.make []
+    @define ramp: mk List, []
 
-    @derive "webkit", ""
+    @derive webkitSteps: @ramp.map (x) -> x.red
 
-    @ramp.onchange => @makeWebkitDefinition()
+    @derive webkit: ""
+
+    @ramp.onchange =>
+      @makeWebkitDefinition()
+      $(".mydocument").css "background", @webkit
 
   makeWebkitDefinition: ->
     stops = ("color-stop(" + g.v[1][0] + "," + g.v[1][1].rgba + ")" for g in @ramp.list).join ", "

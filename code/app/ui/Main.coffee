@@ -15,7 +15,10 @@ Import "shape.Point"
 Import "shape.Rect"
 Import "shape.Text"
 Import "shape.Triangle"
+
 Qualified "Events"
+Qualified "style.Color"
+Qualified "style.Gradient"
 Qualified "adjustable.Document",   As "DocumentA"
 Qualified "adjustable.Line",       As "LineA"
 Qualified "adjustable.Rect",       As "RectA"
@@ -81,14 +84,26 @@ Class
     Events.manager.bind "#menu #zoomin",      "click", => @canvas.zoom *= 2
     Events.manager.bind "#menu #zoomout",     "click", => @canvas.zoom /= 2
     Events.manager.bind "#menu #zoomreset",   "click", => @canvas.zoom = 1
-    Events.manager.bind "#menu #debug",       "click", => @debug()
+    Events.manager.bind "#menu #debug1",      "click", => @debug0()
+    Events.manager.bind "#menu #debug0",      "click", => @debug1()
     # Events.manager.bind("#menu #save",        "click", -> IO.save("mymodel.xml", "Saved document: mymodel", Serializer.toXml(@canvas))
     # Events.manager.bind("#menu #load",        "click", -> IO.load "mymodel.xml", (x) -> Deserializer.baseFromXml x.documentElement
 
-  debug: ->
-    # __tools_Grapher().graph(main.document.p0.$.y)
+  debug0: ->
     window.DEBUG = true
-    rect.p0.x = 10
+    __tools_Grapher().graph main.document.p0.$.y
+
+  debug1: ->
+    window.DEBUG = true
+
+    g = mk Gradient
+    g.ramp.push [0.0, mk Color, "#ffbb00"]
+    g.ramp.push [0.1, mk Color, "#0000ff"]
+    g.ramp.push [0.4, mk Color, "#ffffff"]
+    g.ramp.push [0.5, mk Color, "#ffff44"]
+    g.ramp.push [0.9, mk Color, "#ffbb00"]
+    g.ramp.push [1.0, mk Color, "#0000ff"]
+    window.gradient = g
 
   mkRect: (ctx) ->
     r = mk Rect, 130, 120, 230, 320
