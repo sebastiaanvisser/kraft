@@ -9,7 +9,7 @@ var __slice = Array.prototype.slice
 var __bind = function (fn, me) { return function bind () { return fn.apply(me, arguments); }; };
 
 // Generated JavaScript.
-<!--#exec cmd="./code/compile.sh server" -->
+<!--#exec cmd="./compiler/compile.sh server" -->
 
 // Startup application.
 __ui_Main()
