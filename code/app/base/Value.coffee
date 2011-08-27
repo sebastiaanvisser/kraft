@@ -87,24 +87,16 @@ Static
     Value.nextId      = 0
     Value.transaction = new Transaction
 
+# Generic uni-directional lifting of plain JavaScript functions.
 
-
-
-
-
-
-
-
-  # Generic uni-directional lifting of plain JavaScript functions.
-
-  ###
-  lift: (f) -> (as...) ->
-    r = new Value null
-    r.linked.push a for a in as
-    update = () -> r.v = f (a.v or a for a in as)...
-    for i in [0..as.length - 1] when as[i].reactors
-      as[i].reactors.push update
-    update()
-    r
-  ###
+###
+lift: (f) -> (as...) ->
+  r = new Value null
+  r.linked.push a for a in as
+  update = () -> r.v = f (a.v or a for a in as)...
+  for i in [0..as.length - 1] when as[i].reactors
+    as[i].reactors.push update
+  update()
+  r
+###
 
